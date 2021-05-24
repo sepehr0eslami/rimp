@@ -1,0 +1,28 @@
+# Defaults for all languages.
+BasedOnStyle: Google
+
+# Setting ColumnLimit to 0 so developer choices about where to break lines are maintained.
+# Developers are responsible for adhering to the 120 character maximum.
+ColumnLimit: 0
+IndentWidth: 4
+TabWidth: 4
+
+# if you want to customize when working locally see https://clang.llvm.org/docs/ClangFormatStyleOptions.html for options.
+# e.g. customizations to use Allman bracing and more indenting.
+# AccessModifierOffset: -3
+# BreakBeforeBraces: Allman
+# CompactNamespaces: false
+# IndentCaseLabels: true
+# NamespaceIndentation: All
+
+# Formatting
+# For Formatting this Project, First make sure you have clang-format installed.
+# Then open a terminal and go to the root directory of the Project(Rimp/) and run:
+
+# On Linux/macOS:
+# clang-format --style=file --verbose -i `find ./src/ \( -name \*.cpp -o -name \*.h \) -type f`
+
+# On Windows:
+# forfiles /P .\src\ /S /M *.cpp /C "clang-format --style=file --verbose -i @file"
+# forfiles /P .\src\ /S /M *.h /C "clang-format --style=file --verbose -i @file"
+
