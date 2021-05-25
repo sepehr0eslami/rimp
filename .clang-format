@@ -16,13 +16,5 @@ TabWidth: 4
 # NamespaceIndentation: All
 
 # Formatting
-# For Formatting this Project, First make sure you have clang-format installed.
-# Then open a terminal and go to the root directory of the Project(Rimp/) and run:
-
-# On Linux/macOS:
-# clang-format --style=file --verbose -i `find ./src/ \( -name \*.cpp -o -name \*.h \) -type f`
-
-# On Windows:
-# forfiles /P .\src\ /S /M *.cpp /C "clang-format --style=file --verbose -i @file"
-# forfiles /P .\src\ /S /M *.h /C "clang-format --style=file --verbose -i @file"
-
+# For Formatting this Project, refer to "Rimp/scripts/run_clang_format.sh" for Linux/OSX,
+# and "Rimp\scripts\run_clang_format.cmd" for Windows.

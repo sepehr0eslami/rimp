@@ -10,5 +10,7 @@ clang-format --style=file --verbose -i `find ../src/ \( -name \*.cpp -o -name \*
 # specified in "Rimp/.clang-format" file.
 # For formatting this project, first, make sure you have clang-format installed.
 # Then open a terminal and go to the scripts directory(Rimp/scripts/) 
-# and run this script by typing:
+# and give it execute permission by running:
+# chmod +x run_clang_format.sh
+# then run this script by typing:
 # ./run_clang_format.sh
