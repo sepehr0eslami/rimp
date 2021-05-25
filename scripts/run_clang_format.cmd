@@ -7,7 +7,7 @@ forfiles /P ..\src\ /S /M *.cpp /C "clang-format --style=file --verbose -i @file
 forfiles /P ..\src\ /S /M *.h /C "clang-format --style=file --verbose -i @file"
 PAUSE
 
-@REM This file will format every .cpp & .h files in the src directory(Rimp\src\). 
+@REM This file will format every .cpp & .h file in the src directory(Rimp\src\). 
 @REM After running this file the whole project should be formatted based on the options
 @REM specified in "Rimp\.clang-format" file.
 @REM For formatting this project, first, make sure you have clang-format installed.
