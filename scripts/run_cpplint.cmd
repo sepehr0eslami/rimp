@@ -19,6 +19,6 @@
 @REM and run this script by typing:
 @REM run_cpplint.cmd
 
-forfiles /P ..\src\ /S /M *.cpp /C "python2 cpplint.py @file"
-forfiles /P ..\src\ /S /M *.h /C "python2 cpplint.py @file"
+forfiles /P ..\src\ /S /M *.cpp /C "cmd /c python2 ..\scripts\cpplint.py @relpath"
+forfiles /P ..\src\ /S /M *.h /C "cmd /c python2 ..\scripts\cpplint.py @relpath"
 PAUSE
