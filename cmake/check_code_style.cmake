@@ -1,5 +1,8 @@
 # Code-style checking automation with CMake.
 
+# Variables for important folders.
+include("${PROJECT_SOURCE_DIR}/cmake/folders.cmake")
+
 # If in Linux or OSX, use .sh scripts.
 if((CMAKE_SYSTEM_NAME STREQUAL "Linux") OR (CMAKE_SYSTEM_NAME STREQUAL "Darwin"))
     set(FORMATTER "./run_clang_format.sh")
@@ -33,7 +36,7 @@ else()
     message(STATUS "Check for clang-format: Found")
     execute_process(
     COMMAND "${FORMATTER}"
-    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/scripts/"
+    WORKING_DIRECTORY "${scripts_dir}"
     )
 endif()
 
@@ -47,7 +50,7 @@ else()
     message(STATUS "Check for python2: Found")
     execute_process(
     COMMAND "${LINTER}"
-    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/scripts/"
+    WORKING_DIRECTORY "${scripts_dir}"
     RESULT_VARIABLE status
     )
     # Stop the compilation in case of any style issues.
