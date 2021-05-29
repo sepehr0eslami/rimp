@@ -38,7 +38,7 @@ class ArgsParser {
     string given_dest_ = "";
     string given_source_ = "";
     string given_subcmd_ = "";
-    int returned_;
+    int returned_ = 0;
 
  private:
     CLI::App *main_app_;
