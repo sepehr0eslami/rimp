@@ -21,6 +21,13 @@
 
 #include "build/rimp_version.h"
 
+/**
+ * When constructed, Initialize all of the Descriptions, Options & Subcommands
+ * and parse them to the respected variable of the object.
+ * 
+ * @param argc The standard arg count passed to main()
+ * @param argv The standard arg array passed to main()
+ */
 ArgsParser::ArgsParser(int argc, char **argv) {
     /* --------------------------- Version String --------------------------- */
     version_ =
@@ -109,6 +116,9 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         given_subcmd_ = main_app_->get_subcommands().front()->get_name();
 }
 
+/**
+ * Deallocate the dynamicly-allocated memory(new keyword) by "delete".
+ */
 ArgsParser::~ArgsParser() {
     delete main_app_;
 }
