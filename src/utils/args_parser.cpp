@@ -101,6 +101,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         main_app_->parse(argc, argv);
     } catch (const CLI::ParseError &e) {
         returned_ = main_app_->exit(e);
+        return;
     }
 
     /* ---------------------- Get the parsed Subcommand --------------------- */
