@@ -18,8 +18,8 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SRC_UTILS_ARGS_PARSER_H_
-#define SRC_UTILS_ARGS_PARSER_H_
+#ifndef SRC_PARSER_ARGS_PARSER_H_
+#define SRC_PARSER_ARGS_PARSER_H_
 
 #include <string>
 
@@ -47,4 +47,4 @@ class ArgsParser {
     CLI::App *edit_app_;
 };
 
-#endif  // SRC_UTILS_ARGS_PARSER_H_
+#endif  // SRC_PARSER_ARGS_PARSER_H_

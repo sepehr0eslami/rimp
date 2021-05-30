@@ -17,7 +17,8 @@
  * You should have received  a copy of the GNU General Public License along with
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
-#include "src/utils/args_parser.h"
+
+#include "src/parser/args_parser.h"
 
 #include "build/rimp_version.h"
 
