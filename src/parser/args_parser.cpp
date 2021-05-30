@@ -53,7 +53,14 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         "See rimp SUBCOMMAND --help to read about a specific subcommand.";
 
     /* ---------------------- Main App's Configuration ---------------------- */
-    main_app_ = new CLI::App(rimp_header_, "rimp");
+    try {
+        main_app_ = new CLI::App(rimp_header_, "rimp");
+    } catch (bad_alloc e) {
+        cerr << e.what() << " was catched in " << __FILE__ << "\n";
+        returned_ = 112;
+        return;
+    }
+
     main_app_->set_version_flag("-v, --version", version_);
     main_app_->require_subcommand(1);
     main_app_->footer(rimp_footer_);
