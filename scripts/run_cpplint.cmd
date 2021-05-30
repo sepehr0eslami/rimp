@@ -19,6 +19,9 @@
 @REM and run this script by typing:
 @REM run_cpplint.cmd
 
-forfiles /P ..\src\ /S /M *.cpp /C "cmd /c python2 ..\scripts\cpplint.py @relpath"
-forfiles /P ..\src\ /S /M *.h /C "cmd /c python2 ..\scripts\cpplint.py @relpath"
-PAUSE
+echo "%cd%\cpplint.py" > temp.txt
+set /p linter=< temp.txt
+del temp.txt
+
+forfiles /P ..\src\ /S /M *.cpp /C "cmd /c python2 %linter% --filter=-build/header_guard @path"
+forfiles /P ..\src\ /S /M *.h /C "cmd /c python2 %linter%  --filter=-build/header_guard @path"
