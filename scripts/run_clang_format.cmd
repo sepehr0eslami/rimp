@@ -18,4 +18,3 @@
 
 forfiles /P ..\src\ /S /M *.cpp /C "clang-format --style=file --verbose -i @file"
 forfiles /P ..\src\ /S /M *.h /C "clang-format --style=file --verbose -i @file"
-PAUSE
