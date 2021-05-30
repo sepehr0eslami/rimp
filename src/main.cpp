@@ -18,6 +18,18 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
-int main(int argc, char *argv[]) {
+#include "parser/args_parser.h"
+
+int main(int argc, char **argv) {
+    ArgsParser parser(argc, argv);
+    if (parser.returned_ != 0) {
+        return parser.returned_;
+    }
+
+    if (parser.given_subcmd_ == "paste") {
+    } else if (parser.given_subcmd_ == "add") {
+    } else if (parser.given_subcmd_ == "edit") {
+    }
+
     return 0;
 }
