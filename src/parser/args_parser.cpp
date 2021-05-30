@@ -50,6 +50,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
 
     /* ---------------------------- Footer String --------------------------- */
     rimp_footer_ =
+        "Enclosing in Square Brackets(\"[]\") means optional.\n"
         "See rimp SUBCOMMAND --help to read about a specific subcommand.";
 
     /* ---------------------- Main App's Configuration ---------------------- */
