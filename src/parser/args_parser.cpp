@@ -20,7 +20,10 @@
 
 #include "src/parser/args_parser.h"
 
+#include <memory>
+
 #include "build/rimp_version.h"
+#include "src/parser/formatter.h"
 
 /**
  * When constructed, Initialize all of the Descriptions, Options & Subcommands
@@ -54,6 +57,8 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     main_app_->set_version_flag("-v, --version", version_);
     main_app_->require_subcommand(1);
     main_app_->footer(rimp_footer_);
+    auto fmt = make_shared<CustomFormatter>();
+    main_app_->formatter(fmt);
 
     /* ---------------------- Paste App's Configuration --------------------- */
     paste_app_ = main_app_->add_subcommand("paste",
