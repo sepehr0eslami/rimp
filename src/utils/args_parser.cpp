@@ -56,7 +56,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
 
     /* ---------------------- Paste App's Configuration --------------------- */
     paste_app_ = main_app_->add_subcommand("paste",
-                                           "Inserts the file associated "
+                                           "Insert the file associated "
                                            "with TAG in [DEST].");
     auto paste_tag_option = paste_app_->add_option("TAG", given_tag_,
                                                    "ُThe desired Tag.");
