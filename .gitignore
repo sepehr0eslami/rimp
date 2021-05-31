@@ -108,3 +108,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+### External Project ###
+external

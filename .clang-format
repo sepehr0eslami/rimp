@@ -6,6 +6,7 @@ BasedOnStyle: Google
 ColumnLimit: 0
 IndentWidth: 4
 TabWidth: 4
+AccessModifierOffset: -3 
 
 # if you want to customize when working locally see https://clang.llvm.org/docs/ClangFormatStyleOptions.html for options.
 # e.g. customizations to use Allman bracing and more indenting.

@@ -18,18 +18,19 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "parser/args_parser.h"
+#ifndef SRC_PARSER_FORMATTER_H_
+#define SRC_PARSER_FORMATTER_H_
 
-int main(int argc, char **argv) {
-    ArgsParser parser(argc, argv);
-    if (parser.returned_ != 0) {
-        return parser.returned_;
-    }
+#include <string>
 
-    if (parser.given_subcmd_ == "paste") {
-    } else if (parser.given_subcmd_ == "add") {
-    } else if (parser.given_subcmd_ == "edit") {
-    }
+#include "external/CLI11/include/CLI/CLI.hpp"
 
-    return 0;
-}
+using namespace std;  // NOLINT
+
+class CustomFormatter : public CLI::Formatter {
+ public:
+    CustomFormatter() : Formatter() {}
+    string make_subcommand(const CLI::App *sub) const override;
+};
+
+#endif  // SRC_PARSER_FORMATTER_H_
