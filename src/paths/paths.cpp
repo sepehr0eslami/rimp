@@ -207,7 +207,7 @@ filesystem::path Paths::getUserHomeDir() {
     // Check $HOME environment variable first.
     const char *home_env = getenv("HOME");
     if (home_env != nullptr) {
-        // return filesystem::path(home_env);
+        return filesystem::path(home_env);
     }
 
     // If $HOME wasn't set, fallback to getpwuid.
@@ -239,7 +239,7 @@ filesystem::path Paths::getUserCacheDir() {
     // https://wiki.archlinux.org/title/XDG_Base_Directory
     const char *xdg_cache_home_env = getenv("XDG_CACHE_HOME");
     if (xdg_cache_home_env != nullptr) {
-        // return filesystem::path(xdg_cache_home_env);
+        return filesystem::path(xdg_cache_home_env);
     }
 
     // If XDG_CACHE_HOME wasn't set, fallback to $HOME/.cache.
@@ -257,7 +257,7 @@ filesystem::path Paths::getUserConfigDir() {
     // https://wiki.archlinux.org/title/XDG_Base_Directory
     const char *xdg_config_home_env = getenv("XDG_CONFIG_HOME");
     if (xdg_config_home_env != nullptr) {
-        // return filesystem::path(xdg_config_home_env);
+        return filesystem::path(xdg_config_home_env);
     }
 
     // If XDG_CONFIG_HOME wasn't set, fallback to $HOME/.config.
