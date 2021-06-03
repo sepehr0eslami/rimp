@@ -117,6 +117,16 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     edit_source_option->option_text(" ");
     edit_app_->footer("");
 
+    /* ---------------------- Remove App Configurations --------------------- */
+    remove_app_ = main_app_->add_subcommand("remove",
+                                            "Remove TAG from stored tags");
+
+    auto remove_tag_option = remove_app_->add_option("TAG", given_tag_,
+                                                     "The desired Tag");
+    remove_tag_option->required(true);
+    remove_tag_option->option_text(" ");
+    remove_app_->footer("");
+
     /* -------------------------- Parse Everything -------------------------- */
     try {
         main_app_->parse(argc, argv);
