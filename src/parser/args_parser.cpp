@@ -136,7 +136,8 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     }
 
     /* ---------------------- Get the parsed Subcommand --------------------- */
-    if (paste_app_->parsed() || add_app_->parsed() || edit_app_->parsed())
+    if (paste_app_->parsed() || add_app_->parsed() || edit_app_->parsed() ||
+        remove_app_->parsed())
         given_subcmd_ = main_app_->get_subcommands().front()->get_name();
 }
 
