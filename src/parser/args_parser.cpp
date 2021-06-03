@@ -53,7 +53,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         "Enclosing in Square Brackets(\"[]\") means optional.\n"
         "See rimp SUBCOMMAND --help to read about a specific subcommand.";
 
-    /* ---------------------- Main App's Configuration ---------------------- */
+    /* ---------------------- Main App Configurations ---------------------- */
     try {
         main_app_ = new CLI::App(rimp_header_, "rimp");
     } catch (bad_alloc e) {
@@ -68,7 +68,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     auto fmt = make_shared<CustomFormatter>();
     main_app_->formatter(fmt);
 
-    /* ---------------------- Paste App's Configuration --------------------- */
+    /* ---------------------- Paste App Configurations --------------------- */
     paste_app_ = main_app_->add_subcommand("paste",
                                            "Insert the file associated "
                                            "with TAG in [DEST].");
@@ -85,7 +85,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     paste_dest_option->option_text(" ");
     paste_app_->footer("");
 
-    /* ----------------------- Add App's Configuration ---------------------- */
+    /* ----------------------- Add App Configurations ---------------------- */
     add_app_ = main_app_->add_subcommand("add",
                                          "Attach the given TAG to "
                                          "SOURCE.");
@@ -101,7 +101,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     add_source_option->option_text(" ");
     add_app_->footer("");
 
-    /* ---------------------- Edit App's Configuration ---------------------- */
+    /* ---------------------- Edit App Configurations ---------------------- */
     edit_app_ = main_app_->add_subcommand("edit",
                                           "Detach TAG from its source and "
                                           "attach it to NEW_SOURCE");
