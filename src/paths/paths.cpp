@@ -101,7 +101,7 @@ filesystem::path Paths::getUserCacheDir() {
 
 filesystem::path Paths::getRimpCacheDir() {
     filesystem::path rimp_cache_dir = Paths::getUserCacheDir();
-    return rimp_cache_dir.concat("\rimp");
+    return rimp_cache_dir.append("rimp");
 }
 
 filesystem::path Paths::getUserConfigDir() {
@@ -141,7 +141,7 @@ filesystem::path Paths::getUserConfigDir() {
 
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_path = Paths::getUserConfigDir();
-    return rimp_config_path.concat("\rimp");
+    return rimp_config_path.append("rimp");
 }
 
 /* -------------------------------------------------------------------------- */
@@ -171,7 +171,7 @@ filesystem::path Paths::getUserCacheDir() {
 
 filesystem::path Paths::getRimpCacheDir() {
     filesystem::path rimp_cache_dir = Paths::getUserCacheDir();
-    return rimp_cache_dir.concat("/rimp");
+    return rimp_cache_dir.append("rimp");
 }
 
 filesystem::path Paths::getUserConfigDir() {
@@ -186,7 +186,7 @@ filesystem::path Paths::getUserConfigDir() {
 
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_path = Paths::getUserConfigDir();
-    return rimp_config_path.concat("/rimp");
+    return rimp_config_path.append("rimp");
 }
 
 /* -------------------------------------------------------------------------- */
@@ -235,12 +235,12 @@ filesystem::path Paths::getUserCacheDir() {
 
     // If XDG_CACHE_HOME wasn't set, fallback to $HOME/.cache.
     filesystem::path user_cache_path = Paths::getUserHomeDir();
-    return user_cache_path.concat("/.cache");
+    return user_cache_path.append(".cache");
 }
 
 filesystem::path Paths::getRimpCacheDir() {
     filesystem::path rimp_cache_path = Paths::getUserCacheDir();
-    return rimp_cache_path.concat("/rimp");
+    return rimp_cache_path.append("rimp");
 }
 
 filesystem::path Paths::getUserConfigDir() {
@@ -253,12 +253,12 @@ filesystem::path Paths::getUserConfigDir() {
 
     // If XDG_CONFIG_HOME wasn't set, fallback to $HOME/.config.
     filesystem::path user_config_dir = Paths::getUserHomeDir();
-    return user_config_dir.concat("/.config");
+    return user_config_dir.append(".config");
 }
 
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_dir = Paths::getUserConfigDir();
-    return rimp_config_dir.concat("/rimp");
+    return rimp_config_dir.append("rimp");
 }
 
 #endif
