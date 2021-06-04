@@ -18,21 +18,18 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
+// clang-format off
+#include "src/paths/includes.h"
+
 #include "src/paths/paths.h"
 
 #include "src/paths/filesystem.h"
+// clang-format on
 
 /* -------------------------------------------------------------------------- */
 /*                           Windows Implementation                           */
 /* -------------------------------------------------------------------------- */
 #if defined(_WIN32)
-
-#include <KnownFolders.h>
-#include <initguid.h>
-#include <shlobj_core.h>
-#include <windows.h>
-
-using namespace std;  // NOLINT
 
 filesystem::path Paths::getUserHomeDir() {
     // Use Windows API to get User's Home folder path.
@@ -148,12 +145,9 @@ filesystem::path Paths::getRimpConfigDir() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                            Apple Implementation                            */
+/*                            MacOS Implementation                            */
 /* -------------------------------------------------------------------------- */
 #elif defined(__APPLE__) || defined(__MACH__)
-
-#include <NSSystemDirectories.h>
-#include <limits.h>
 
 filesystem::path Paths::getUserHomeDir() {
     char home_path[PATH_MAX];
@@ -196,12 +190,9 @@ filesystem::path Paths::getRimpConfigDir() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                             Unix Implementation                            */
+/*                             Linux Implementation                           */
 /* -------------------------------------------------------------------------- */
 #elif defined(__unix__)
-
-#include <pwd.h>
-#include <unistd.h>
 
 filesystem::path Paths::getUserHomeDir() {
     // Check $HOME environment variable first.
