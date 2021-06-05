@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11.0)
 
-project(Rimp VERSION 0.0.0)
+project(rimp VERSION 0.0.0)
 
 # Variables for important folders.
 include("${PROJECT_SOURCE_DIR}/cmake/folders.cmake")
