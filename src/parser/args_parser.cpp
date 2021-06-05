@@ -53,7 +53,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         "Enclosing in Square Brackets(\"[]\") means optional.\n"
         "See rimp SUBCOMMAND --help to read about a specific subcommand.";
 
-    /* ---------------------- Main App's Configuration ---------------------- */
+    /* ---------------------- Main App Configurations ---------------------- */
     try {
         main_app_ = new CLI::App(rimp_header_, "rimp");
     } catch (bad_alloc e) {
@@ -68,7 +68,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     auto fmt = make_shared<CustomFormatter>();
     main_app_->formatter(fmt);
 
-    /* ---------------------- Paste App's Configuration --------------------- */
+    /* ---------------------- Paste App Configurations --------------------- */
     paste_app_ = main_app_->add_subcommand("paste",
                                            "Insert the file associated "
                                            "with TAG in [DEST].");
@@ -85,7 +85,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     paste_dest_option->option_text(" ");
     paste_app_->footer("");
 
-    /* ----------------------- Add App's Configuration ---------------------- */
+    /* ----------------------- Add App Configurations ---------------------- */
     add_app_ = main_app_->add_subcommand("add",
                                          "Attach the given TAG to "
                                          "SOURCE.");
@@ -101,7 +101,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     add_source_option->option_text(" ");
     add_app_->footer("");
 
-    /* ---------------------- Edit App's Configuration ---------------------- */
+    /* ---------------------- Edit App Configurations ---------------------- */
     edit_app_ = main_app_->add_subcommand("edit",
                                           "Detach TAG from its source and "
                                           "attach it to NEW_SOURCE");
@@ -117,6 +117,22 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     edit_source_option->option_text(" ");
     edit_app_->footer("");
 
+    /* ---------------------- Remove App Configurations --------------------- */
+    remove_app_ = main_app_->add_subcommand("remove",
+                                            "Remove TAG from stored tags");
+
+    auto remove_tag_option = remove_app_->add_option("TAG", given_tag_,
+                                                     "The desired Tag");
+
+    bool remove_force_flag;
+    remove_app_->add_flag("--force, -f", remove_force_flag,
+                          "Cause the remove subcommand to delete the file "
+                          "associated with TAG in adition to TAG "
+                          "itself.");
+    remove_tag_option->required(true);
+    remove_tag_option->option_text(" ");
+    remove_app_->footer("");
+
     /* -------------------------- Parse Everything -------------------------- */
     try {
         main_app_->parse(argc, argv);
@@ -126,8 +142,18 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     }
 
     /* ---------------------- Get the parsed Subcommand --------------------- */
-    if (paste_app_->parsed() || add_app_->parsed() || edit_app_->parsed())
-        given_subcmd_ = main_app_->get_subcommands().front()->get_name();
+    // Iterate through the list of all the subcommands and check whether any
+    // was parsed, If so, save its name and break.
+    for (auto subcommand : main_app_->get_subcommands({})) {
+        if (subcommand->parsed()) {
+            given_subcmd_ = subcommand->get_name();
+            break;
+        }
+    }
+
+    /* ------------------------ Get the parsed Flags ------------------------ */
+    if (remove_force_flag)
+        given_flags_ |= REMOVE_FORCE_FLAG;
 }
 
 /**

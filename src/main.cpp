@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
     if (parser.given_subcmd_ == "paste") {
     } else if (parser.given_subcmd_ == "add") {
     } else if (parser.given_subcmd_ == "edit") {
+    } else if (parser.given_subcmd_ == "remove") {
     }
 
     return 0;
