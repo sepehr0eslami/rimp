@@ -25,6 +25,8 @@
 
 #include "external/CLI11/include/CLI/CLI.hpp"
 
+#define REMOVE_FORCE_FLAG 1
+
 using namespace std;  // NOLINT
 
 class ArgsParser {
@@ -38,6 +40,7 @@ class ArgsParser {
     string given_dest_ = "";
     string given_source_ = "";
     string given_subcmd_ = "";
+    int given_flags_ = 0;
     int returned_ = 0;
 
  private:

@@ -123,6 +123,12 @@ ArgsParser::ArgsParser(int argc, char **argv) {
 
     auto remove_tag_option = remove_app_->add_option("TAG", given_tag_,
                                                      "The desired Tag");
+
+    bool remove_force_flag;
+    remove_app_->add_flag("--force, -f", remove_force_flag,
+                          "Cause the remove subcommand to delete the file "
+                          "associated with TAG in adition to TAG "
+                          "itself.");
     remove_tag_option->required(true);
     remove_tag_option->option_text(" ");
     remove_app_->footer("");
@@ -144,6 +150,10 @@ ArgsParser::ArgsParser(int argc, char **argv) {
             break;
         }
     }
+
+    /* ------------------------ Get the parsed Flags ------------------------ */
+    if (remove_force_flag)
+        given_flags_ |= REMOVE_FORCE_FLAG;
 }
 
 /**
