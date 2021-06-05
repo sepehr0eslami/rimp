@@ -26,11 +26,12 @@
 #include "src/paths/filesystem.h"
 // clang-format on
 
-/* -------------------------------------------------------------------------- */
-/*                           Windows Implementation                           */
-/* -------------------------------------------------------------------------- */
-#if defined(_WIN32)
+/* ------------------------------------------------------------------------- */
+/*                          OS-Dependent functions                           */
+/* ------------------------------------------------------------------------- */
 
+/* ------------------------- Windows Implementation ------------------------- */
+#if defined(_WIN32)
 filesystem::path Paths::getUserHomeDir() {
     // Use Windows API to get User's Home folder path.
     wchar_t *home_path = nullptr;
@@ -99,16 +100,6 @@ filesystem::path Paths::getUserCacheDir() {
     return path;
 }
 
-filesystem::path Paths::getRimpCacheDir() {
-    filesystem::path rimp_cache_dir = Paths::getUserCacheDir();
-    return rimp_cache_dir.append("rimp");
-}
-
-filesystem::path Paths::getUserCacheFile() {
-    filesystem::path user_cache_file = Paths::getRimpCacheDir();
-    return user_cache_file.append("tags.json");
-}
-
 filesystem::path Paths::getUserConfigDir() {
     // Use Windows API to get RoamingAppData folder path.
     wchar_t *config_path = nullptr;
@@ -144,19 +135,7 @@ filesystem::path Paths::getUserConfigDir() {
     return path;
 }
 
-filesystem::path Paths::getRimpConfigDir() {
-    filesystem::path rimp_config_path = Paths::getUserConfigDir();
-    return rimp_config_path.append("rimp");
-}
-
-filesystem::path Paths::getUserConfigFile() {
-    filesystem::path user_config_file = Paths::getRimpConfigDir();
-    return user_config_file.append("settings.json");
-}
-
-/* -------------------------------------------------------------------------- */
-/*                            MacOS Implementation                            */
-/* -------------------------------------------------------------------------- */
+/* -------------------------- MacOS Implementation -------------------------- */
 #elif defined(__APPLE__) || defined(__MACH__)
 
 filesystem::path Paths::getUserHomeDir() {
@@ -179,16 +158,6 @@ filesystem::path Paths::getUserCacheDir() {
     }
 }
 
-filesystem::path Paths::getRimpCacheDir() {
-    filesystem::path rimp_cache_dir = Paths::getUserCacheDir();
-    return rimp_cache_dir.append("rimp");
-}
-
-filesystem::path Paths::getUserCacheFile() {
-    filesystem::path user_cache_file = Paths::getRimpCacheDir();
-    return user_cache_file.append("tags.json");
-}
-
 filesystem::path Paths::getUserConfigDir() {
     char config_path[PATH_MAX];
     NSSearchPathEnumerationState state = NSStartSearchPathEnumeration(
@@ -199,19 +168,7 @@ filesystem::path Paths::getUserConfigDir() {
     }
 }
 
-filesystem::path Paths::getRimpConfigDir() {
-    filesystem::path rimp_config_path = Paths::getUserConfigDir();
-    return rimp_config_path.append("rimp");
-}
-
-filesystem::path Paths::getUserConfigFile() {
-    filesystem::path user_config_file = Paths::getRimpConfigDir();
-    return user_config_file.append("settings.json");
-}
-
-/* -------------------------------------------------------------------------- */
-/*                             Linux Implementation                           */
-/* -------------------------------------------------------------------------- */
+/* -------------------------- Linux Implementation -------------------------- */
 #elif defined(__unix__)
 
 filesystem::path Paths::getUserHomeDir() {
@@ -258,16 +215,6 @@ filesystem::path Paths::getUserCacheDir() {
     return user_cache_path.append(".cache");
 }
 
-filesystem::path Paths::getRimpCacheDir() {
-    filesystem::path rimp_cache_path = Paths::getUserCacheDir();
-    return rimp_cache_path.append("rimp");
-}
-
-filesystem::path Paths::getUserCacheFile() {
-    filesystem::path user_cache_file = Paths::getRimpCacheDir();
-    return user_cache_file.append("tags.json");
-}
-
 filesystem::path Paths::getUserConfigDir() {
     // Check XDG_CONFIG_HOME environment variable first.
     // https://wiki.archlinux.org/title/XDG_Base_Directory
@@ -281,14 +228,28 @@ filesystem::path Paths::getUserConfigDir() {
     return user_config_dir.append(".config");
 }
 
+#endif
+
+/* -------------------------------------------------------------------------- */
+/*                          OS-Independet functions                           */
+/* -------------------------------------------------------------------------- */
+
+filesystem::path Paths::getRimpCacheDir() {
+    filesystem::path rimp_cache_path = Paths::getUserCacheDir();
+    return rimp_cache_path.append("rimp");
+}
+
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_dir = Paths::getUserConfigDir();
     return rimp_config_dir.append("rimp");
+}
+
+filesystem::path Paths::getUserCacheFile() {
+    filesystem::path user_cache_file = Paths::getRimpCacheDir();
+    return user_cache_file.append("tags.json");
 }
 
 filesystem::path Paths::getUserConfigFile() {
     filesystem::path user_config_file = Paths::getRimpConfigDir();
     return user_config_file.append("settings.json");
 }
-
-#endif

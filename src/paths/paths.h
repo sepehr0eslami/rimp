@@ -28,12 +28,15 @@ using namespace std;  // NOLINT
 class Paths {
  public:
     Paths() = default;
+    // OS-Dependent functions.
     static filesystem::path getUserHomeDir();
     static filesystem::path getUserCacheDir();
-    static filesystem::path getRimpCacheDir();
-    static filesystem::path getUserCacheFile();
     static filesystem::path getUserConfigDir();
+
+    // OS-Independent functions.
+    static filesystem::path getRimpCacheDir();
     static filesystem::path getRimpConfigDir();
+    static filesystem::path getUserCacheFile();
     static filesystem::path getUserConfigFile();
 };
 
