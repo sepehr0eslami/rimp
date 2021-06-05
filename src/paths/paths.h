@@ -31,8 +31,10 @@ class Paths {
     static filesystem::path getUserHomeDir();
     static filesystem::path getUserCacheDir();
     static filesystem::path getRimpCacheDir();
+    static filesystem::path getUserCacheFile();
     static filesystem::path getUserConfigDir();
     static filesystem::path getRimpConfigDir();
+    static filesystem::path getUserConfigFile();
 };
 
 #endif  // SRC_PATHS_PATHS_H_

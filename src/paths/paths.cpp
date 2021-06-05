@@ -104,6 +104,11 @@ filesystem::path Paths::getRimpCacheDir() {
     return rimp_cache_dir.append("rimp");
 }
 
+filesystem::path Paths::getUserCacheFile() {
+    filesystem::path user_cache_file = Paths::getRimpCacheDir();
+    return user_cache_file.append("tags.json");
+}
+
 filesystem::path Paths::getUserConfigDir() {
     // Use Windows API to get RoamingAppData folder path.
     wchar_t *config_path = nullptr;
@@ -144,6 +149,11 @@ filesystem::path Paths::getRimpConfigDir() {
     return rimp_config_path.append("rimp");
 }
 
+filesystem::path Paths::getUserConfigFile() {
+    filesystem::path user_config_file = Paths::getRimpConfigDir();
+    return user_config_file.append("settings.json");
+}
+
 /* -------------------------------------------------------------------------- */
 /*                            MacOS Implementation                            */
 /* -------------------------------------------------------------------------- */
@@ -174,6 +184,11 @@ filesystem::path Paths::getRimpCacheDir() {
     return rimp_cache_dir.append("rimp");
 }
 
+filesystem::path Paths::getUserCacheFile() {
+    filesystem::path user_cache_file = Paths::getRimpCacheDir();
+    return user_cache_file.append("tags.json");
+}
+
 filesystem::path Paths::getUserConfigDir() {
     char config_path[PATH_MAX];
     NSSearchPathEnumerationState state = NSStartSearchPathEnumeration(
@@ -187,6 +202,11 @@ filesystem::path Paths::getUserConfigDir() {
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_path = Paths::getUserConfigDir();
     return rimp_config_path.append("rimp");
+}
+
+filesystem::path Paths::getUserConfigFile() {
+    filesystem::path user_config_file = Paths::getRimpConfigDir();
+    return user_config_file.append("settings.json");
 }
 
 /* -------------------------------------------------------------------------- */
@@ -243,6 +263,11 @@ filesystem::path Paths::getRimpCacheDir() {
     return rimp_cache_path.append("rimp");
 }
 
+filesystem::path Paths::getUserCacheFile() {
+    filesystem::path user_cache_file = Paths::getRimpCacheDir();
+    return user_cache_file.append("tags.json");
+}
+
 filesystem::path Paths::getUserConfigDir() {
     // Check XDG_CONFIG_HOME environment variable first.
     // https://wiki.archlinux.org/title/XDG_Base_Directory
@@ -259,6 +284,11 @@ filesystem::path Paths::getUserConfigDir() {
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_dir = Paths::getUserConfigDir();
     return rimp_config_dir.append("rimp");
+}
+
+filesystem::path Paths::getUserConfigFile() {
+    filesystem::path user_config_file = Paths::getRimpConfigDir();
+    return user_config_file.append("settings.json");
 }
 
 #endif
