@@ -65,13 +65,13 @@ filesystem::path Paths::getUserHomeDir() {
     return path;
 }
 
-filesystem::path Paths::getUserCacheDir() {
+filesystem::path Paths::getUserDataDir() {
     // Use Windows API to get LocalAppData folder path.
-    wchar_t *cache_path = nullptr;
+    wchar_t *data_path = nullptr;
     auto result = SHGetKnownFolderPath(FOLDERID_LocalAppData,
                                        KF_FLAG_CREATE,
                                        nullptr,
-                                       &cache_path);
+                                       &data_path);
 
     if (result == E_FAIL) {
         throw runtime_error{
@@ -95,8 +95,8 @@ filesystem::path Paths::getUserCacheDir() {
             "https://github.com/sepehr0eslami/Rimp/issues\n"};
     }
 
-    filesystem::path path(cache_path);
-    CoTaskMemFree(cache_path);
+    filesystem::path path(data_path);
+    CoTaskMemFree(data_path);
     return path;
 }
 
@@ -169,9 +169,9 @@ filesystem::path Paths::getUserHomeDir() {
     return filesystem::path(home_env);
 }
 
-filesystem::path Paths::getUserCacheDir() {
-    filesystem::path user_cache_dir = Paths::getUserHomeDir();
-    return user_cache_dir.append(MAC_CACHE_DIR_SUFFIX);
+filesystem::path Paths::getUserDataDir() {
+    filesystem::path user_data_dir = Paths::getUserHomeDir();
+    return user_data_dir.append(MAC_DATA_DIR_SUFFIX);
 }
 
 filesystem::path Paths::getUserConfigDir() {
@@ -213,17 +213,17 @@ filesystem::path Paths::getUserHomeDir() {
     return filesystem::path(home_env);
 }
 
-filesystem::path Paths::getUserCacheDir() {
-    // Check XDG_CACHE_HOME environment variable first.
+filesystem::path Paths::getUserDataDir() {
+    // Check XDG_DATA_HOME environment variable first.
     // https://wiki.archlinux.org/title/XDG_Base_Directory
-    const char *xdg_cache_home_env = getenv("XDG_CACHE_HOME");
-    if (xdg_cache_home_env != nullptr) {
-        return filesystem::path(xdg_cache_home_env);
+    const char *xdg_data_home_env = getenv("XDG_DATA_HOME");
+    if (xdg_data_home_env != nullptr) {
+        return filesystem::path(xdg_data_home_env);
     }
 
-    // If XDG_CACHE_HOME wasn't set, fallback to $HOME/.cache.
-    filesystem::path user_cache_dir = Paths::getUserHomeDir();
-    return user_cache_dir.append(".cache");
+    // If XDG_DATA_HOME wasn't set, fallback to $HOME/.local/share.
+    filesystem::path user_data_dir = Paths::getUserHomeDir();
+    return user_data_dir.append(".local/share");
 }
 
 filesystem::path Paths::getUserConfigDir() {
@@ -245,9 +245,9 @@ filesystem::path Paths::getUserConfigDir() {
 /*                          OS-Independet functions                           */
 /* -------------------------------------------------------------------------- */
 
-filesystem::path Paths::getRimpCacheDir() {
-    filesystem::path rimp_cache_dir = Paths::getUserCacheDir();
-    return rimp_cache_dir.append(RIMP_DIRECTORY_NAME);
+filesystem::path Paths::getRimpDataDir() {
+    filesystem::path rimp_data_dir = Paths::getUserDataDir();
+    return rimp_data_dir.append(RIMP_DIRECTORY_NAME);
 }
 
 filesystem::path Paths::getRimpConfigDir() {
@@ -255,9 +255,9 @@ filesystem::path Paths::getRimpConfigDir() {
     return rimp_config_dir.append(RIMP_DIRECTORY_NAME);
 }
 
-filesystem::path Paths::getUserCacheFile() {
-    filesystem::path user_cache_file = Paths::getRimpCacheDir();
-    return user_cache_file.append(RIMP_CACHE_FILE_NAME);
+filesystem::path Paths::getUserDataFile() {
+    filesystem::path user_data_file = Paths::getRimpDataDir();
+    return user_data_file.append(RIMP_DATA_FILE_NAME);
 }
 
 filesystem::path Paths::getUserConfigFile() {
