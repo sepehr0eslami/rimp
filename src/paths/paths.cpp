@@ -236,20 +236,20 @@ filesystem::path Paths::getUserConfigDir() {
 
 filesystem::path Paths::getRimpCacheDir() {
     filesystem::path rimp_cache_path = Paths::getUserCacheDir();
-    return rimp_cache_path.append("rimp");
+    return rimp_cache_path.append(RIMP_DIRECTORY_NAME);
 }
 
 filesystem::path Paths::getRimpConfigDir() {
     filesystem::path rimp_config_dir = Paths::getUserConfigDir();
-    return rimp_config_dir.append("rimp");
+    return rimp_config_dir.append(RIMP_DIRECTORY_NAME);
 }
 
 filesystem::path Paths::getUserCacheFile() {
     filesystem::path user_cache_file = Paths::getRimpCacheDir();
-    return user_cache_file.append("tags.json");
+    return user_cache_file.append(RIMP_CACHE_FILE_NAME);
 }
 
 filesystem::path Paths::getUserConfigFile() {
     filesystem::path user_config_file = Paths::getRimpConfigDir();
-    return user_config_file.append("settings.json");
+    return user_config_file.append(RIMP_CONFIG_FILE_NAME);
 }
