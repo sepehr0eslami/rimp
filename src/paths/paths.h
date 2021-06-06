@@ -28,6 +28,8 @@ using namespace std;  // NOLINT
 const char RIMP_DIRECTORY_NAME[] = "rimp";
 const char RIMP_CONFIG_FILE_NAME[] = "settings.json";
 const char RIMP_CACHE_FILE_NAME[] = "tags.json";
+const char MAC_CACHE_DIR_SUFFIX[] = "Library";
+const char MAC_CONFIG_DIR_SUFFIX[] = "Library/Preferences";
 
 class Paths {
  public:

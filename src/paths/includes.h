@@ -42,8 +42,9 @@
 /* -------------------------------------------------------------------------- */
 #elif defined(__APPLE__) || defined(__MACH__)
 
-#include <NSSystemDirectories.h>
-#include <limits.h>
+#include <pwd.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 /* -------------------------------------------------------------------------- */
 /*                               Linux includes                               */

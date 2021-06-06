@@ -139,33 +139,44 @@ filesystem::path Paths::getUserConfigDir() {
 #elif defined(__APPLE__) || defined(__MACH__)
 
 filesystem::path Paths::getUserHomeDir() {
-    char home_path[PATH_MAX];
-    NSSearchPathEnumerationState state = NSStartSearchPathEnumeration(
-        NSUserDirectory,
-        NSUserDomainMask);
-    while (state = NSGetNextSearchPathEnumeration(state, home_path)) {
-        return filesystem::path(home_path);
+    // Check $HOME environment variable first.
+    const char *home_env = getenv("HOME");
+    if (home_env != nullptr) {
+        return filesystem::path(home_env);
     }
+
+    // If $HOME wasn't set, fallback to getpwuid.
+    const struct passwd *user_info = getpwuid(getuid());  // NOLINT
+    if (user_info == nullptr) {
+        throw runtime_error{
+            __FILE__
+            ":\n"
+            "Error getting your home directory path (getpwuid).\n"
+            "Please file a bug report at:\n"
+            "https://github.com/sepehr0eslami/Rimp/issues\n"};
+    }
+
+    home_env = user_info->pw_dir;
+    if (home_env == nullptr) {
+        throw runtime_error{
+            __FILE__
+            ":\n"
+            "Error getting your home directory path (pw_dir).\n"
+            "Please file a bug report at\n"
+            "https://github.com/sepehr0eslami/Rimp/issues\n"};
+    }
+
+    return filesystem::path(home_env);
 }
 
 filesystem::path Paths::getUserCacheDir() {
-    char cache_path[PATH_MAX];
-    NSSearchPathEnumerationState state = NSStartSearchPathEnumeration(
-        NSApplicationSupportDirectory,
-        NSUserDomainMask);
-    while (state = NSGetNextSearchPathEnumeration(state, cache_path)) {
-        return filesystem::path(cache_path);
-    }
+    filesystem::path user_cache_dir = Paths::getUserHomeDir();
+    return user_cache_dir.append(MAC_CACHE_DIR_SUFFIX);
 }
 
 filesystem::path Paths::getUserConfigDir() {
-    char config_path[PATH_MAX];
-    NSSearchPathEnumerationState state = NSStartSearchPathEnumeration(
-        NSPreferencePanesDirectory,
-        NSUserDomainMask);
-    while (state = NSGetNextSearchPathEnumeration(state, config_path)) {
-        return filesystem::path(config_path);
-    }
+    filesystem::path user_config_dir = Paths::getUserHomeDir();
+    return user_config_dir.append(MAC_CONFIG_DIR_SUFFIX);
 }
 
 /* -------------------------- Linux Implementation -------------------------- */
@@ -211,8 +222,8 @@ filesystem::path Paths::getUserCacheDir() {
     }
 
     // If XDG_CACHE_HOME wasn't set, fallback to $HOME/.cache.
-    filesystem::path user_cache_path = Paths::getUserHomeDir();
-    return user_cache_path.append(".cache");
+    filesystem::path user_cache_dir = Paths::getUserHomeDir();
+    return user_cache_dir.append(".cache");
 }
 
 filesystem::path Paths::getUserConfigDir() {
@@ -235,8 +246,8 @@ filesystem::path Paths::getUserConfigDir() {
 /* -------------------------------------------------------------------------- */
 
 filesystem::path Paths::getRimpCacheDir() {
-    filesystem::path rimp_cache_path = Paths::getUserCacheDir();
-    return rimp_cache_path.append(RIMP_DIRECTORY_NAME);
+    filesystem::path rimp_cache_dir = Paths::getUserCacheDir();
+    return rimp_cache_dir.append(RIMP_DIRECTORY_NAME);
 }
 
 filesystem::path Paths::getRimpConfigDir() {
