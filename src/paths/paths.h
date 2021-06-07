@@ -26,8 +26,8 @@
 using namespace std;  // NOLINT
 
 const char RIMP_DIRECTORY_NAME[] = "rimp";
-const char RIMP_DATA_FILE_NAME[] = "tags.json";
-const char RIMP_CONFIG_FILE_NAME[] = "settings.json";
+const char RIMP_DATA_FILE_NAME[] = "tags.yml";
+const char RIMP_CONFIG_FILE_NAME[] = "settings.yml";
 const char MAC_DATA_DIR_SUFFIX[] = "Library";
 const char MAC_CONFIG_DIR_SUFFIX[] = "Library/Preferences";
 
