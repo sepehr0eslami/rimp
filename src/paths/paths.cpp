@@ -249,8 +249,7 @@ filesystem::path Paths::getRimpDataDir() {
     filesystem::path rimp_data_dir = Paths::getUserDataDir();
     rimp_data_dir.append(RIMP_DIRECTORY_NAME);
 
-    string error;
-    Paths::createDir(rimp_data_dir, error);
+    Paths::createDir(rimp_data_dir);
 
     return rimp_data_dir;
 }
@@ -264,8 +263,7 @@ filesystem::path Paths::getUserDataFile() {
     filesystem::path user_data_file = Paths::getRimpDataDir();
     user_data_file.append(RIMP_DATA_FILE_NAME);
 
-    string error;
-    Paths::createFile(user_data_file, error);
+    Paths::createFile(user_data_file);
 
     return user_data_file;
 }
@@ -275,14 +273,14 @@ filesystem::path Paths::getUserConfigFile() {
     return user_config_file.append(RIMP_CONFIG_FILE_NAME);
 }
 
-bool Paths::createDir(filesystem::path path, string &error_msg) {
+bool Paths::createDir(filesystem::path path) {
     if (filesystem::exists(path))
         return true;
 
     try {
         filesystem::create_directories(path);
     } catch (...) {
-        error_msg = __FILE__
+        string error_msg = __FILE__
             ":\n"
             "Error Creating \"";
         error_msg.append(path.string());
@@ -299,14 +297,14 @@ bool Paths::createDir(filesystem::path path, string &error_msg) {
     return true;
 }
 
-bool Paths::createFile(filesystem::path path, string &error_msg) {
+bool Paths::createFile(filesystem::path path) {
     if (filesystem::exists(path))
         return true;
 
     ofstream file(path.string());
     if (!file.is_open()) {
         file.close();
-        error_msg = __FILE__
+        string error_msg = __FILE__
             ":\n"
             "Error Creating \"";
         error_msg.append(path.string());

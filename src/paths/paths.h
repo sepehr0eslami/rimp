@@ -48,8 +48,8 @@ class Paths {
     static filesystem::path getRimpConfigDir();
     static filesystem::path getUserDataFile();
     static filesystem::path getUserConfigFile();
-    static bool createDir(filesystem::path path, string &error_msg);   // NOLINT
-    static bool createFile(filesystem::path path, string &error_msg);  // NOLINT
+    static bool createDir(filesystem::path path);
+    static bool createFile(filesystem::path path);
 };
 
 #endif  // SRC_PATHS_PATHS_H_
