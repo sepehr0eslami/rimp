@@ -262,7 +262,12 @@ filesystem::path Paths::getRimpConfigDir() {
 
 filesystem::path Paths::getUserDataFile() {
     filesystem::path user_data_file = Paths::getRimpDataDir();
-    return user_data_file.append(RIMP_DATA_FILE_NAME);
+    user_data_file.append(RIMP_DATA_FILE_NAME);
+
+    string error;
+    Paths::createFile(user_data_file, error);
+
+    return user_data_file;
 }
 
 filesystem::path Paths::getUserConfigFile() {
@@ -291,5 +296,31 @@ bool Paths::createDir(filesystem::path path, string &error_msg) {
         return false;
     }
 
+    return true;
+}
+
+bool Paths::createFile(filesystem::path path, string &error_msg) {
+    if (filesystem::exists(path))
+        return true;
+
+    ofstream file(path.string());
+    if (!file.is_open()) {
+        file.close();
+        error_msg = __FILE__
+            ":\n"
+            "Error Creating \"";
+        error_msg.append(path.string());
+        error_msg.append("\" file.\nMake sure Its parent directory is ");
+        error_msg.append("accessible for normal user; You should be the ");
+        error_msg.append("owner and not root(Administrator in Windows) and ");
+        error_msg.append("should have Read/Write access\n");
+        error_msg.append("If the issue didn't resolve, Please file a bug ");
+        error_msg.append("report at:\n");
+        error_msg.append("https://github.com/sepehr0eslami/Rimp/issues\n");
+        throw runtime_error{error_msg};
+        return false;
+    }
+
+    file.close();
     return true;
 }

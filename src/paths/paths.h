@@ -21,7 +21,9 @@
 #ifndef SRC_PATHS_PATHS_H_
 #define SRC_PATHS_PATHS_H_
 
+#include <fstream>
 #include <string>
+#include <vector>
 
 #include "src/paths/filesystem.h"
 
@@ -46,7 +48,8 @@ class Paths {
     static filesystem::path getRimpConfigDir();
     static filesystem::path getUserDataFile();
     static filesystem::path getUserConfigFile();
-    static bool createDir(filesystem::path path, string &error_msg);  // NOLINT
+    static bool createDir(filesystem::path path, string &error_msg);   // NOLINT
+    static bool createFile(filesystem::path path, string &error_msg);  // NOLINT
 };
 
 #endif  // SRC_PATHS_PATHS_H_
