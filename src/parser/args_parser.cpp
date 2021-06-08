@@ -46,7 +46,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         "Rimp is a small tool that allows you to attach tags to various files "
         "and access those files in the future using only their tags.\n\n"
         "For more information please visit:\n"
-        "https://github.com/sepehr0eslami/Rimp\n";
+        "https://github.com/sepehr0eslami/rimp\n";
 
     /* ---------------------------- Footer String --------------------------- */
     rimp_footer_ =
