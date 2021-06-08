@@ -21,6 +21,8 @@
 #ifndef SRC_PATHS_PATHS_H_
 #define SRC_PATHS_PATHS_H_
 
+#include <string>
+
 #include "src/paths/filesystem.h"
 
 using namespace std;  // NOLINT
@@ -44,6 +46,7 @@ class Paths {
     static filesystem::path getRimpConfigDir();
     static filesystem::path getUserDataFile();
     static filesystem::path getUserConfigFile();
+    static bool createDir(filesystem::path path, string &error_msg);  // NOLINT
 };
 
 #endif  // SRC_PATHS_PATHS_H_

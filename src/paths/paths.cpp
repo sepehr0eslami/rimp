@@ -247,7 +247,12 @@ filesystem::path Paths::getUserConfigDir() {
 
 filesystem::path Paths::getRimpDataDir() {
     filesystem::path rimp_data_dir = Paths::getUserDataDir();
-    return rimp_data_dir.append(RIMP_DIRECTORY_NAME);
+    rimp_data_dir.append(RIMP_DIRECTORY_NAME);
+
+    string error;
+    Paths::createDir(rimp_data_dir, error);
+
+    return rimp_data_dir;
 }
 
 filesystem::path Paths::getRimpConfigDir() {
@@ -263,4 +268,28 @@ filesystem::path Paths::getUserDataFile() {
 filesystem::path Paths::getUserConfigFile() {
     filesystem::path user_config_file = Paths::getRimpConfigDir();
     return user_config_file.append(RIMP_CONFIG_FILE_NAME);
+}
+
+bool Paths::createDir(filesystem::path path, string &error_msg) {
+    if (filesystem::exists(path))
+        return true;
+
+    try {
+        filesystem::create_directories(path);
+    } catch (...) {
+        error_msg = __FILE__
+            ":\n"
+            "Error Creating \"";
+        error_msg.append(path.string());
+        error_msg.append("\" directory.\nMake sure Its parent directory is ");
+        error_msg.append("accessible for normal user or try creating the ");
+        error_msg.append("directory yourself.\n");
+        error_msg.append("If the issue didn't resolve, Please file a bug ");
+        error_msg.append("report at:\n");
+        error_msg.append("https://github.com/sepehr0eslami/Rimp/issues\n");
+        throw runtime_error{error_msg};
+        return false;
+    }
+
+    return true;
 }
