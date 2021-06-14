@@ -33,3 +33,13 @@ SQLTable::SQLTable(string table_name, vector<string> table_columns,
     columns_ = table_columns;
     types_ = columns_type;
 }
+
+string SQLTable::getSchema() {
+    string schema = "CREATE TABLE IF NOT EXISTS " + name_ + "(";
+    for (int i = 0; i < columns_.size(); i++) {
+        schema.append(columns_[i]);
+        schema.append((i < columns_.size() - 1) ? ", " : "");
+    }
+    schema.append(");");
+    return schema;
+}
