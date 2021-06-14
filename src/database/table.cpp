@@ -34,6 +34,18 @@ SQLTable::SQLTable(string table_name, vector<string> table_columns,
     types_ = columns_type;
 }
 
+string SQLTable::getName() const {
+    return name_;
+}
+
+vector<string> SQLTable::getColumns() const {
+    return columns_;
+}
+
+vector<SQLDataTypes> SQLTable::getTypes() const {
+    return types_;
+}
+
 string SQLTable::getSchema() {
     string schema = "CREATE TABLE IF NOT EXISTS " + name_ + "(";
     for (int i = 0; i < columns_.size(); i++) {

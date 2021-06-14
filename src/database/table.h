@@ -38,6 +38,9 @@ class SQLTable {
     SQLTable(string table_name, vector<string> table_columns,
              vector<SQLDataTypes> columns_type);
 
+    string getName() const;
+    vector<string> getColumns() const;
+    vector<SQLDataTypes> getTypes() const;
     string getSchema();
 
  private:
