@@ -31,12 +31,12 @@ vector<string> SQLTable::getColumns() const {
     return columns_;
 }
 
-string SQLTable::getSchema() {
+string SQLTable::getSchema() const {
     string schema = "CREATE TABLE IF NOT EXISTS " + name_ + "(";
     for (int i = 0; i < columns_.size(); i++) {
         schema.append(columns_[i]);
-        schema.append((i < columns_.size() - 1) ? ", " : "");
+        schema.append((i < columns_.size() - 1) ? ", " : ");");
     }
-    schema.append(");");
+
     return schema;
 }

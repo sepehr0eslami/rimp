@@ -33,7 +33,7 @@ class SQLTable {
 
     string getName() const;
     vector<string> getColumns() const;
-    string getSchema();
+    string getSchema() const;
 
  private:
     string name_;
