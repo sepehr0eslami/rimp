@@ -20,19 +20,8 @@
 
 #include "src/database/table.h"
 
-SQLTable::SQLTable(string table_name, vector<string> table_columns,
-                   vector<SQLDataTypes> columns_type) {
-    if (table_columns.size() != columns_type.size()) {
-        throw runtime_error{
-            "Error while creating an instance of \"SQLTable\": Given columns "
-            "don't match the given types.\nPlease file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
-    }
-
-    name_ = table_name;
-    columns_ = table_columns;
-    types_ = columns_type;
-}
+SQLTable::SQLTable(string table_name, vector<string> table_columns)
+    : name_(table_name), columns_(table_columns) {}
 
 string SQLTable::getName() const {
     return name_;
@@ -40,10 +29,6 @@ string SQLTable::getName() const {
 
 vector<string> SQLTable::getColumns() const {
     return columns_;
-}
-
-vector<SQLDataTypes> SQLTable::getTypes() const {
-    return types_;
 }
 
 string SQLTable::getSchema() {

@@ -27,26 +27,17 @@
 
 using namespace std;  // NOLINT
 
-enum SQLDataTypes {
-    Integral,
-    Text,
-    Blob
-};
-
 class SQLTable {
  public:
-    SQLTable(string table_name, vector<string> table_columns,
-             vector<SQLDataTypes> columns_type);
+    SQLTable(string table_name, vector<string> table_columns);
 
     string getName() const;
     vector<string> getColumns() const;
-    vector<SQLDataTypes> getTypes() const;
     string getSchema();
 
  private:
     string name_;
     vector<string> columns_;
-    vector<SQLDataTypes> types_;
 };
 
 #endif  // SRC_DATABASE_TABLE_H_
