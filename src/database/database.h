@@ -24,6 +24,7 @@
 #include <sqlite3.h>
 
 #include <string>
+#include <vector>
 
 #include "src/database/table.h"
 #include "src/paths/filesystem.h"
@@ -37,8 +38,8 @@ class SQLDatabase {
 
     filesystem::path getDatabaseFile() const;
     sqlite3 *getSqliteObject() const;
-
-    int createTable(SQLTable table, string &error_msg);  // NOLINT
+    int createTable(SQLTable table, string &error_msg);                           // NOLINT
+    int insert(vector<string> values, SQLTable target_table, string &error_msg);  // NOLINT
 
  private:
     filesystem::path database_file_;

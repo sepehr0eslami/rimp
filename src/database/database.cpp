@@ -59,3 +59,21 @@ int SQLDatabase::createTable(SQLTable table, string &error_msg) {
     sqlite3_free(error_char);
     return returned;
 }
+
+int SQLDatabase::insert(vector<string> values, SQLTable target_table, string &error_msg) {  // NOLINT
+    string query = "INSERT INTO " + target_table.getName() + " VALUES(";
+    for (int i = 0; i < values.size(); i++) {
+        query.append(values[i]);
+        query.append((i < values.size() - 1) ? ", " : ");");
+    }
+
+    int returned = 0;
+    char *error_char = nullptr;
+    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
+                            &error_char);
+
+    if (error_char != nullptr)
+        error_msg = error_char;
+    sqlite3_free(error_char);
+    return returned;
+}
