@@ -26,7 +26,7 @@ SQLTable::SQLTable(string table_name, vector<string> table_columns,
         throw runtime_error{
             "Error while creating an instance of \"SQLTable\": Given columns "
             "don't match the given types.\nPlease file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp"};
+            "https://github.com/sepehr0eslami/rimp/issues\n"};
     }
 
     name_ = table_name;
