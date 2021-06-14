@@ -25,6 +25,7 @@
 
 #include <string>
 
+#include "src/database/table.h"
 #include "src/paths/filesystem.h"
 
 using namespace std;  // NOLINT
@@ -36,6 +37,8 @@ class SQLDatabase {
 
     filesystem::path getDatabaseFile() const;
     sqlite3 *getSqliteObject() const;
+
+    int createTable(SQLTable table, string &error_msg);  // NOLINT
 
  private:
     filesystem::path database_file_;

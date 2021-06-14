@@ -47,3 +47,15 @@ filesystem::path SQLDatabase::getDatabaseFile() const {
 sqlite3 *SQLDatabase::getSqliteObject() const {
     return sqlite_object_;
 }
+
+int SQLDatabase::createTable(SQLTable table, string &error_msg) {
+    int returned = 0;
+    char *error_char = nullptr;
+    returned = sqlite3_exec(sqlite_object_, table.getSchema().c_str(), nullptr,
+                            nullptr, &error_char);
+
+    if (error_char != nullptr)
+        error_msg = error_char;
+    sqlite3_free(error_char);
+    return returned;
+}
