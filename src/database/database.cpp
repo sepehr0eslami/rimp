@@ -39,3 +39,11 @@ SQLDatabase::SQLDatabase(filesystem::path database_path)
 SQLDatabase::~SQLDatabase() {
     sqlite3_close(sqlite_object_);
 }
+
+filesystem::path SQLDatabase::getDatabaseFile() const {
+    return database_file_;
+}
+
+sqlite3 *SQLDatabase::getSqliteObject() const {
+    return sqlite_object_;
+}

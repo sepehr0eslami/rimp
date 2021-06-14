@@ -34,6 +34,9 @@ class SQLDatabase {
     explicit SQLDatabase(filesystem::path database_file);
     ~SQLDatabase();
 
+    filesystem::path getDatabaseFile() const;
+    sqlite3 *getSqliteObject() const;
+
  private:
     filesystem::path database_file_;
     sqlite3 *sqlite_object_;
