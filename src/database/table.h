@@ -18,36 +18,26 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SRC_PATHS_PATHS_H_
-#define SRC_PATHS_PATHS_H_
+#ifndef SRC_DATABASE_TABLE_H_
+#define SRC_DATABASE_TABLE_H_
 
-#include <fstream>
+#include <iostream>
 #include <string>
 #include <vector>
 
-#include "src/paths/filesystem.h"
-
 using namespace std;  // NOLINT
 
-const char RIMP_DIRECTORY_NAME[] = "rimp";
-const char RIMP_DATA_FILE_NAME[] = "tags.db";
-const char RIMP_CONFIG_FILE_NAME[] = "rimp.yml";
-const char MAC_DATA_DIR_SUFFIX[] = "Library";
-const char MAC_CONFIG_DIR_SUFFIX[] = "Library/Preferences";
+class SQLTable {
+ public:
+    SQLTable(string table_name, vector<string> table_columns);
 
-namespace Paths {
-// OS-Dependent functions.
-filesystem::path getUserHomeDir();
-filesystem::path getUserDataDir();
-filesystem::path getUserConfigDir();
+    string getName() const;
+    vector<string> getColumns() const;
+    string getSchema() const;
 
-// OS-Independent functions.
-filesystem::path getRimpDataDir();
-filesystem::path getRimpConfigDir();
-filesystem::path getUserDataFile();
-filesystem::path getUserConfigFile();
-bool createDir(filesystem::path path);
-bool createFile(filesystem::path path);
-}  // namespace Paths
+ private:
+    string name_;
+    vector<string> columns_;
+};
 
-#endif  // SRC_PATHS_PATHS_H_
+#endif  // SRC_DATABASE_TABLE_H_

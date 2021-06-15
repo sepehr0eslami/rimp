@@ -8,7 +8,7 @@ include("${PROJECT_SOURCE_DIR}/cmake/folders.cmake")
 # Using modern C++.
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${cmake_dir}/Modules")
 # So I can include configured files from "src/" directory without using "../"
 set(CMAKE_INCLUDE_CURRENT_DIR On)
 
@@ -21,11 +21,21 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     include("${cmake_dir}/check_code_style.cmake")
 endif()
 
+find_package(SQLite3 REQUIRED)
+
 # Include the file which fetchs the "CLI11" repository.
-include("${cmake_dir}/Modules/CLI11.cmake")
+include("${cmake_dir}/CLI11.cmake")
 
 # Variable for the actuall source files that need to be compiled.
 file(GLOB_RECURSE source_files "${source_dir}/*.cpp")
 
 # Build the project's executable
 add_executable(${PROJECT_NAME} ${source_files})
+
+target_include_directories(${PROJECT_NAME} PUBLIC 
+    ${SQLITE3_INCLUDE_DIRS}
+)
+
+target_link_libraries (${PROJECT_NAME} 
+    ${SQLITE3_LIBRARIES}
+)
