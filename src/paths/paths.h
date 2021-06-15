@@ -35,21 +35,19 @@ const char RIMP_CONFIG_FILE_NAME[] = "rimp.yml";
 const char MAC_DATA_DIR_SUFFIX[] = "Library";
 const char MAC_CONFIG_DIR_SUFFIX[] = "Library/Preferences";
 
-class Paths {
- public:
-    Paths() = default;
-    // OS-Dependent functions.
-    static filesystem::path getUserHomeDir();
-    static filesystem::path getUserDataDir();
-    static filesystem::path getUserConfigDir();
+namespace Paths {
+// OS-Dependent functions.
+filesystem::path getUserHomeDir();
+filesystem::path getUserDataDir();
+filesystem::path getUserConfigDir();
 
-    // OS-Independent functions.
-    static filesystem::path getRimpDataDir();
-    static filesystem::path getRimpConfigDir();
-    static filesystem::path getUserDataFile();
-    static filesystem::path getUserConfigFile();
-    static bool createDir(filesystem::path path);
-    static bool createFile(filesystem::path path);
-};
+// OS-Independent functions.
+filesystem::path getRimpDataDir();
+filesystem::path getRimpConfigDir();
+filesystem::path getUserDataFile();
+filesystem::path getUserConfigFile();
+bool createDir(filesystem::path path);
+bool createFile(filesystem::path path);
+}  // namespace Paths
 
 #endif  // SRC_PATHS_PATHS_H_
