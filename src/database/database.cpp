@@ -97,3 +97,19 @@ int SQLDatabase::update(vector<string> new_values, string condition,
     sqlite3_free(error_char);
     return returned;
 }
+
+int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
+                              string &error_msg) {
+    string query = "DELETE FROM " + target_table.getName() +
+                   " WHERE " + condition + ";";
+
+    int returned = 0;
+    char *error_char = nullptr;
+    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
+                            &error_char);
+
+    if (error_char != nullptr)
+        error_msg = error_char;
+    sqlite3_free(error_char);
+    return returned;
+}

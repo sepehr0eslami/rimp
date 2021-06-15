@@ -41,7 +41,8 @@ class SQLDatabase {
     int createTable(SQLTable table, string &error_msg);                           // NOLINT
     int insert(vector<string> values, SQLTable target_table, string &error_msg);  // NOLINT
     int update(vector<string> new_values, string condition,
-               SQLTable target_table, string &error_msg);  // NOLINT
+               SQLTable target_table, string &error_msg);                          // NOLINT
+    int deleteRecord(SQLTable target_table, string condition, string &error_msg);  // NOLINT
 
  private:
     filesystem::path database_file_;
