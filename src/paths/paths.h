@@ -30,7 +30,7 @@
 using namespace std;  // NOLINT
 
 const char RIMP_DIRECTORY_NAME[] = "rimp";
-const char RIMP_DATA_FILE_NAME[] = "tags.yml";
+const char RIMP_DATA_FILE_NAME[] = "tags.db";
 const char RIMP_CONFIG_FILE_NAME[] = "rimp.yml";
 const char MAC_DATA_DIR_SUFFIX[] = "Library";
 const char MAC_CONFIG_DIR_SUFFIX[] = "Library/Preferences";
