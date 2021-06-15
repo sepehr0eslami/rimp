@@ -20,6 +20,14 @@
 
 #include "src/database/database.h"
 
+int select_callback(void *result, int argc, char **argv, char **columns_name) {
+    for (int i = 0; i < argc; i++) {
+        string str = argv[i];
+        *reinterpret_cast<string *>(result) = str;
+    }
+    return 0;
+}
+
 SQLDatabase::SQLDatabase(filesystem::path database_path)
     : database_file_(database_path) {
     int returned = 0;
@@ -107,6 +115,22 @@ int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
     char *error_char = nullptr;
     returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
                             &error_char);
+
+    if (error_char != nullptr)
+        error_msg = error_char;
+    sqlite3_free(error_char);
+    return returned;
+}
+
+int SQLDatabase::select(SQLTable target_table, string column, string condition,
+                        string &result, string &error_msg) {
+    string query = "SELECT " + column + " FROM " + target_table.getName() +
+                   " WHERE " + condition;
+
+    int returned = 0;
+    char *error_char = nullptr;
+    returned = sqlite3_exec(sqlite_object_, query.c_str(), select_callback,
+                            &result, &error_char);
 
     if (error_char != nullptr)
         error_msg = error_char;

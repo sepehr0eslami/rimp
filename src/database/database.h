@@ -31,6 +31,8 @@
 
 using namespace std;  // NOLINT
 
+int select_callback(void *result, int argc, char **argv, char **columns_name);
+
 class SQLDatabase {
  public:
     explicit SQLDatabase(filesystem::path database_file);
@@ -43,6 +45,8 @@ class SQLDatabase {
     int update(vector<string> new_values, string condition,
                SQLTable target_table, string &error_msg);                          // NOLINT
     int deleteRecord(SQLTable target_table, string condition, string &error_msg);  // NOLINT
+    int select(SQLTable target_table, string column, string condition,
+               string &result, string &error_msg);  // NOLINT
 
  private:
     filesystem::path database_file_;
