@@ -34,7 +34,6 @@ build
 *.lai
 *.la
 *.a
-*.lib
 
 # Executables
 *.exe
@@ -109,5 +108,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-### External Project ###
-external
+### External Projects ###
+external/CLI11

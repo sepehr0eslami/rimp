@@ -5,11 +5,35 @@
 # SQLITE3_LIBRARIES	- List of libraries when using sqlite.
 # SQLITE3_FOUND	- True if sqlite found.
 
-# Look for the header file.
-find_path(SQLITE3_INCLUDE_DIR NAMES sqlite3.h)
+include("${PROJECT_SOURCE_DIR}/cmake/folders.cmake")
 
-# Look for the library.
-find_library(SQLITE3_LIBRARY NAMES sqlite3)
+# If on Windows.
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    # If Windows is 64-bit.
+    if(CMAKE_SIZEOF_VOID_P STREQUAL "8")
+        # Look for the header file.
+        find_path(SQLITE3_INCLUDE_DIR NAMES sqlite3.h HINTS "${external_dir}/sqlite3")
+        # Look for the library.
+        find_library(SQLITE3_LIBRARY NAMES sqlite3 HINTS "${external_dir}/sqlite3/win64")
+
+    # If Windows is 32-bit
+    elseif(CMAKE_SIZEOF_VOID_P STREQUAL "4")
+        message(STATUS "System: x86")
+        # Look for the header file.
+        find_path(SQLITE3_INCLUDE_DIR NAMES sqlite3.h HINTS "${external_dir}/sqlite3")
+        # Look for the library.
+        find_library(SQLITE3_LIBRARY NAMES sqlite3 HINTS "${external_dir}/sqlite3/win32")
+
+    endif()
+
+# If on Linux/MacOS
+else()
+    # Look for the header file.
+    find_path(SQLITE3_INCLUDE_DIR NAMES sqlite3.h)
+    # Look for the library.
+    find_library(SQLITE3_LIBRARY NAMES sqlite3)
+
+endif()
 
 # Handle the QUIETLY and REQUIRED arguments and set SQLITE3_FOUND to TRUE if all listed variables are TRUE.
 include(FindPackageHandleStandardArgs)
