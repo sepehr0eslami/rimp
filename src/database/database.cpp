@@ -31,7 +31,7 @@ int select_callback(void *result, int argc, char **argv, char **columns_name) {
 SQLDatabase::SQLDatabase(filesystem::path database_path)
     : database_file_(database_path) {
     int returned = 0;
-    returned = sqlite3_open(database_file_.c_str(), &sqlite_object_);
+    returned = sqlite3_open(database_file_.string().c_str(), &sqlite_object_);
     if (returned) {
         string error_msg = sqlite3_errmsg(sqlite_object_);
         error_msg.append(": " + database_file_.string() + "\n");
