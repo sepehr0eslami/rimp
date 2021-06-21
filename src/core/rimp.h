@@ -34,8 +34,9 @@ using namespace std;  // NOLINT
 
 namespace rimp {
 SQLDatabase setup();
-int paste(string tag, filesystem::path dest, string &error_msg);  // NOLINT
-int add(string tag, filesystem::path source, string &error_msg);  // NOLINT
+int paste(string tag, filesystem::path dest, string &error_msg);       // NOLINT
+int add(string tag, filesystem::path source, string &error_msg);       // NOLINT
+int edit(string tag, filesystem::path new_source, string &error_msg);  // NOLINT
 }  // namespace rimp
 
 #endif  // SRC_CORE_RIMP_H_

@@ -113,3 +113,44 @@ int rimp::add(string tag, filesystem::path source, string &error_msg) {
 
     return returned;
 }
+
+int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
+    if (tag.empty()) {
+        error_msg = "Please enter a non-empty Tag.";
+        return EINVAL;
+    }
+    if (new_source.empty()) {
+        error_msg =
+            "The given source is empty. Please enter a valid source "
+            "file/directory.";
+        return EINVAL;
+    }
+    if (!filesystem::exists(new_source)) {
+        error_msg = "No such file or directory \'" + new_source.string() +
+                    "\'. "
+                    "Please enter a path to an existing file or directory.";
+        return ENOENT;
+    }
+
+    auto data_file = rimp::setup();
+
+    string old_source;
+    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
+                                    "Tag == \"" + tag + "\"", old_source,
+                                    error_msg);
+    if (returned != SQLITE_OK)
+        return returned;
+    if (old_source.empty()) {
+        error_msg = "The Tag \'" + tag +
+                    "\' doesn't exist. Please enter an "
+                    "existing tag.";
+        return EINVAL;
+    }
+
+    returned = data_file.update({"Tag = \"" + tag + "\"",
+                                 "Path = \"" + new_source.string() + "\""},
+                                "Tag == \"" + tag + "\"",
+                                DEFAULT_TAGS_TABLE, error_msg);
+
+    return returned;
+}
