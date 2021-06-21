@@ -86,3 +86,30 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
     error_msg = code.message();
     return code.value();
 }
+
+int rimp::add(string tag, filesystem::path source, string &error_msg) {
+    if (tag.empty()) {
+        error_msg = "Please enter a non-empty Tag.";
+        return EINVAL;
+    }
+    if (source.empty()) {
+        error_msg =
+            "The given source is empty. Please enter a valid source "
+            "file/directory.";
+        return EINVAL;
+    }
+    if (!filesystem::exists(source)) {
+        error_msg = "No such file or directory \'" + source.string() +
+                    "\'. "
+                    "Please enter a path to an existing file or directory.";
+        return ENOENT;
+    }
+
+    auto data_file = rimp::setup();
+
+    int returned = data_file.insert({"\"" + tag + "\"",
+                                     "\"" + source.string() + "\""},
+                                    DEFAULT_TAGS_TABLE, error_msg);
+
+    return returned;
+}
