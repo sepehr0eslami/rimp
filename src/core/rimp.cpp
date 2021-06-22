@@ -154,3 +154,39 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
 
     return returned;
 }
+
+int rimp::remove(string tag, int flags, string &error_msg) {
+    if (tag.empty()) {
+        error_msg = "Please enter a non-empty Tag.";
+        return EINVAL;
+    }
+
+    auto data_file = rimp::setup();
+
+    if ((flags & REMOVE_FORCE_FLAG) == REMOVE_FORCE_FLAG) {
+        string source;
+        int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
+                                        "Tag == \"" + tag + "\"", source,
+                                        error_msg);
+        if (returned != SQLITE_OK)
+            return returned;
+        if (source.empty()) {
+            error_msg = "The Tag \'" + tag +
+                        "\' doesn't exist. Please enter an "
+                        "existing tag.";
+            return EINVAL;
+        }
+
+        error_code issue;
+        filesystem::remove_all(filesystem::path(source), issue);
+        if (issue.value()) {
+            error_msg = issue.message();
+            return issue.value();
+        }
+    }
+
+    int returned = data_file.deleteRecord(DEFAULT_TAGS_TABLE,
+                                          "Tag == \"" + tag + "\"", error_msg);
+
+    return returned;
+}
