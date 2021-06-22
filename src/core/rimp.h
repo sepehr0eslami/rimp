@@ -18,36 +18,27 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SRC_PARSER_ARGS_PARSER_H_
-#define SRC_PARSER_ARGS_PARSER_H_
+#ifndef SRC_CORE_RIMP_H_
+#define SRC_CORE_RIMP_H_
 
+#include <cerrno>
 #include <string>
 
-#include "external/CLI11/include/CLI/CLI.hpp"
+#include "src/database/database.h"
 #include "src/parser/flags.h"
+#include "src/paths/paths.h"
+
+const SQLTable DEFAULT_TAGS_TABLE("Mappings", {"Tag TEXT PRIMARY KEY NOT NULL",
+                                               "Path TEXT NOT NULL"});
 
 using namespace std;  // NOLINT
 
-class ArgsParser {
- public:
-    ArgsParser(int argc, char **argv);
-    ~ArgsParser();
-    string version_;
-    string rimp_header_;
-    string rimp_footer_;
-    string given_tag_ = "";
-    string given_dest_ = "";
-    string given_source_ = "";
-    string given_subcmd_ = "";
-    int given_flags_ = 0;
-    int returned_ = 0;
+namespace rimp {
+SQLDatabase setup();
+int paste(string tag, filesystem::path dest, string &error_msg);       // NOLINT
+int add(string tag, filesystem::path source, string &error_msg);       // NOLINT
+int edit(string tag, filesystem::path new_source, string &error_msg);  // NOLINT
+int remove(string tag, int flags, string &error_msg);                  // NOLINT
+}  // namespace rimp
 
- private:
-    CLI::App *main_app_;
-    CLI::App *paste_app_;
-    CLI::App *add_app_;
-    CLI::App *edit_app_;
-    CLI::App *remove_app_;
-};
-
-#endif  // SRC_PARSER_ARGS_PARSER_H_
+#endif  // SRC_CORE_RIMP_H_

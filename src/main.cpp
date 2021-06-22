@@ -18,18 +18,46 @@
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
+#include <string>
+
+#include "core/rimp.h"
 #include "parser/args_parser.h"
 
+using namespace std;  // NOLINT
+
 int main(int argc, char **argv) {
-    ArgsParser parser(argc, argv);
-    if (parser.returned_ != 0) {
-        return parser.returned_;
+    string errors;
+    int ret = 0;
+
+    try {
+        ArgsParser parser(argc, argv);
+        if (parser.returned_ != 0)
+            return parser.returned_;
+
+        if (parser.given_subcmd_ == "paste") {
+            ret = rimp::paste(parser.given_tag_,
+                              filesystem::path(parser.given_dest_), errors);
+        } else if (parser.given_subcmd_ == "add") {
+            ret = rimp::add(parser.given_tag_,
+                            filesystem::path(parser.given_source_), errors);
+        } else if (parser.given_subcmd_ == "edit") {
+            ret = rimp::edit(parser.given_tag_,
+                             filesystem::path(parser.given_source_),
+                             errors);
+
+        } else if (parser.given_subcmd_ == "remove") {
+            ret = rimp::remove(parser.given_tag_, parser.given_flags_,
+                               errors);
+        }
+    } catch (runtime_error e) {
+        cerr << e.what() << "\n";
+        return 134;
     }
 
-    if (parser.given_subcmd_ == "paste") {
-    } else if (parser.given_subcmd_ == "add") {
-    } else if (parser.given_subcmd_ == "edit") {
-    } else if (parser.given_subcmd_ == "remove") {
+    if (ret != 0) {
+        cerr << errors << "\n";
+        return ret;
     }
 
     return 0;

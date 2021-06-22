@@ -17,37 +17,9 @@
  * You should have received  a copy of the GNU General Public License along with
  * Rimp. If not, see <https://www.gnu.org/licenses/>.
  */
+#ifndef SRC_PARSER_FLAGS_H_
+#define SRC_PARSER_FLAGS_H_
 
-#ifndef SRC_PARSER_ARGS_PARSER_H_
-#define SRC_PARSER_ARGS_PARSER_H_
+#define REMOVE_FORCE_FLAG 1
 
-#include <string>
-
-#include "external/CLI11/include/CLI/CLI.hpp"
-#include "src/parser/flags.h"
-
-using namespace std;  // NOLINT
-
-class ArgsParser {
- public:
-    ArgsParser(int argc, char **argv);
-    ~ArgsParser();
-    string version_;
-    string rimp_header_;
-    string rimp_footer_;
-    string given_tag_ = "";
-    string given_dest_ = "";
-    string given_source_ = "";
-    string given_subcmd_ = "";
-    int given_flags_ = 0;
-    int returned_ = 0;
-
- private:
-    CLI::App *main_app_;
-    CLI::App *paste_app_;
-    CLI::App *add_app_;
-    CLI::App *edit_app_;
-    CLI::App *remove_app_;
-};
-
-#endif  // SRC_PARSER_ARGS_PARSER_H_
+#endif  // SRC_PARSER_FLAGS_H_
