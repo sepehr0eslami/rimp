@@ -39,3 +39,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 target_link_libraries (${PROJECT_NAME} 
     ${SQLITE3_LIBRARIES}
 )
+
+install(TARGETS ${PROJECT_NAME} DESTINATION "bin")
