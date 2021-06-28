@@ -107,8 +107,9 @@ int rimp::add(string tag, filesystem::path source, string &error_msg) {
 
     auto data_file = rimp::setup();
 
+    auto abs_path = filesystem::absolute(source);
     int returned = data_file.insert({"\"" + tag + "\"",
-                                     "\"" + source.string() + "\""},
+                                     "\"" + abs_path.string() + "\""},
                                     DEFAULT_TAGS_TABLE, error_msg);
 
     return returned;
@@ -147,8 +148,9 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
         return EINVAL;
     }
 
+    auto abs_path = filesystem::absolute(new_source);
     returned = data_file.update({"Tag = \"" + tag + "\"",
-                                 "Path = \"" + new_source.string() + "\""},
+                                 "Path = \"" + abs_path.string() + "\""},
                                 "Tag == \"" + tag + "\"",
                                 DEFAULT_TAGS_TABLE, error_msg);
 
