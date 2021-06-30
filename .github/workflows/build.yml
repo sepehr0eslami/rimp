@@ -8,7 +8,6 @@ on:
       - 'v*'
 
 env:
-  # CMake build type
   BUILD_TYPE: Release
 
 jobs:
@@ -17,11 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Generate BuildSystem in 'build' subdirectory.
     - name: Generate BuildSystem
       run: cmake -S${{github.workspace}} -B${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    # Build the Project
     - name: Build
       run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}}
 
@@ -30,11 +27,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Generate BuildSystem in 'build' subdirectory.
     - name: Generate BuildSystem
       run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    # Build the Project
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
@@ -43,10 +38,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Generate BuildSystem in 'build' subdirectory.
     - name: Generate BuildSystem
       run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    # Build the Project
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}

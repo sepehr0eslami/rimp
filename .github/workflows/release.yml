@@ -16,8 +16,7 @@ jobs:
   Windows:
     runs-on: windows-latest
     steps:
-    - name: Clone the Project
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Generate BuildSystem
       run: cmake -S${{github.workspace}} -B${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -39,8 +38,7 @@ jobs:
   MacOS:
     runs-on: macos-latest
     steps:
-    - name: Clone the Project
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Generate BuildSystem
       run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
@@ -62,8 +60,7 @@ jobs:
   Linux:
     runs-on: ubuntu-latest
     steps:
-    - name: Clone the Project
-      uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
     - name: Generate BuildSystem
       run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
