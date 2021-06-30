@@ -1,0 +1,83 @@
+name: Release
+
+on: 
+  push:
+    tags:
+      - 'v*'
+
+env:
+  BUILD_TYPE: Release
+  WIN64_ARCHIVE: rimp-win64.zip
+  MACOS_ARCHIVE: rimp-macos.tar.gz
+  LINUX_ARCHIVE: rimp-linux64.tar.gz
+  RELEASE_BODY: "**For Installation please refer to the [README](https://github.com/sepehr0eslami/rimp/blob/master/README.md).**\n"
+
+jobs:
+  Windows:
+    runs-on: windows-latest
+    steps:
+    - name: Clone the Project
+      uses: actions/checkout@v2
+
+    - name: Generate BuildSystem
+      run: cmake -S${{github.workspace}} -B${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}}
+
+    - name: Make Zip Archive 
+      run: Compress-Archive ${{github.workspace}}\build\Release\rimp.exe ${{env.WIN64_ARCHIVE}}
+    
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with: 
+        artifacts: "${{env.WIN64_ARCHIVE}}"
+        body: "${{env.RELEASE_BODY}}"
+        allowUpdates: true
+        token: ${{secrets.GITHUB_TOKEN}}
+
+  MacOS:
+    runs-on: macos-latest
+    steps:
+    - name: Clone the Project
+      uses: actions/checkout@v2
+
+    - name: Generate BuildSystem
+      run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Make GZip Archive 
+      run: tar -C ${{github.workspace}}/build/ -czf ${{env.MACOS_ARCHIVE}} rimp
+    
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with: 
+        artifacts: "${{env.MACOS_ARCHIVE}}"
+        body: "${{env.RELEASE_BODY}}"
+        allowUpdates: true
+        token: ${{secrets.GITHUB_TOKEN}}
+
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone the Project
+      uses: actions/checkout@v2
+
+    - name: Generate BuildSystem
+      run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Make GZip Archive 
+      run: tar -C ${{github.workspace}}/build/ -czf ${{env.LINUX_ARCHIVE}} rimp
+    
+    - name: Release
+      uses: ncipollo/release-action@v1
+      with: 
+        artifacts: "${{env.LINUX_ARCHIVE}}"
+        body: "${{env.RELEASE_BODY}}"
+        allowUpdates: true
+        token: ${{secrets.GITHUB_TOKEN}}
