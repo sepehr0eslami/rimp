@@ -77,3 +77,23 @@ $ rimp --version
 
 Rimp X.X.X.
 ```
+
+# Usage
+`rimp` is used through multiple sub-commands that each does a special task; exactly like `git` and `apt`.
+
+```sh
+Usage: rimp [OPTIONS] SUBCOMMAND
+
+Options:
+  -h,--help                   Print this help message and exit
+  -v,--version                Display program version information and exit
+
+Subcommands:
+  paste TAG [DEST]            Insert the file associated with TAG in [DEST].
+  add TAG SOURCE              Attach the given TAG to SOURCE.
+  edit TAG NEW_SOURCE         Detach TAG from its source and attach it to NEW_SOURCE
+  remove TAG                  Remove TAG from stored tags
+
+Enclosing in Square Brackets("[]") means optional.
+See rimp SUBCOMMAND --help to read about a specific subcommand.
+```
