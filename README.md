@@ -107,3 +107,7 @@ See rimp SUBCOMMAND --help to read about a specific subcommand.
 - UNICODE Support for Tag names
 
 - Easy to use Installer in addition to compiled binaries
+
+# License
+
+[GPL v3](https://opensource.org/licenses/GPL-3.0)
