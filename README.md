@@ -97,3 +97,13 @@ Subcommands:
 Enclosing in Square Brackets("[]") means optional.
 See rimp SUBCOMMAND --help to read about a specific subcommand.
 ```
+
+# Roadmap
+
+- Tab Completion for sub-commands and tags
+
+- A new sub-command to run shell commands on File/Folders associated with a Tag
+
+- UNICODE Support for Tag names
+
+- Easy to use Installer in addition to compiled binaries
