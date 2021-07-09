@@ -9,3 +9,17 @@
 </p>
 
 ---
+
+# Rimp(Reimplementer)
+
+`rimp` is a Cross-Platform command-line tool which makes working with files/folders you need regularly much easier, by allowing you to tag and access them in the future only by their tags.
+
+
+## :thinking: Why?
+I wanted a tool that allows you to:
+
+- Tag files/folders using the command line 
+
+- Paste those files/folders elsewhere with one simple command.
+
+- Remove or update an existing tag
