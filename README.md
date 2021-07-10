@@ -78,6 +78,11 @@ $ rimp --version
 Rimp X.X.X.
 ```
 
+## From Source
+
+You can compile the source code yourself by following the instructions available in the [HACKING.md](https://github.com/sepehr0eslami/rimp/blob/master/HACKING.md) file.
+
+
 # Usage
 `rimp` is used through multiple sub-commands that each does a special task; exactly like `git` and `apt`.
 
