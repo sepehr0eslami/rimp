@@ -12,7 +12,7 @@
 
 # Rimp(Reimplementer)
 
-`rimp` is a Cross-Platform command-line tool which makes working with files/folders you need regularly much easier, by allowing you to tag and access them in the future only by their tags.
+`rimp` is a Cross-Platform command-line tool which makes working with files/folders you need regularly much easier, by allowing you to tag and access them in the future using only their tags.
 
 
 ## :thinking: Why?
