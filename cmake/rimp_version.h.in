@@ -1,0 +1,6 @@
+// clang-format off
+#define RIMP_VERSION "@rimp_VERSION@"
+#define RIMP_VERSION_MAJOR @rimp_VERSION_MAJOR@
+#define RIMP_VERSION_MINOR @rimp_VERSION_MINOR@
+#define RIMP_VERSION_PATCH @rimp_VERSION_PATCH@
+// clang-format on

@@ -1,0 +1,45 @@
+name: Build
+
+on: 
+  push:
+    branches:
+      - '*'
+    tags-ignore:
+      - 'v*'
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  Windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate BuildSystem
+      run: cmake -S${{github.workspace}} -B${{github.workspace}}\build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}}
+
+  MacOS:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate BuildSystem
+      run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+  Linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Generate BuildSystem
+      run: cmake -S${{github.workspace}} -B${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
