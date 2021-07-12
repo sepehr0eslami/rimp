@@ -39,7 +39,7 @@ Now, create a folder called `Rimp` in `C:\Program Files(x86)`. Then simply [Down
 First, [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` for MacOS (**rimp-macos.tar.gz**). Then open a terminal and extract it by running:
 
 ```sh
-tar -xf rimp-macos.tar.gz --one-top-level
+tar -xf rimp-macos.tar.gz 
 ```
 
 Now you have a folder called `rimp-macos` containing the `rimp` executable. Move it to somewhere in `$PATH` using the command below:
@@ -61,7 +61,7 @@ Rimp X.X.X.
 First, [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` for Linux (**rimp-linux64.tar.gz**). Then open a terminal and extract it by running:
 
 ```sh
-tar -xf rimp-linux64.tar.gz --one-top-level
+tar -xf rimp-linux64.tar.gz
 ```
 
 Now you have a folder called `rimp-linux64` containing the `rimp` executable. Move it to somewhere in `$PATH` using the command below:

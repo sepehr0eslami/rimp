@@ -7,9 +7,9 @@ on:
 
 env:
   BUILD_TYPE: Release
-  WIN64_ARCHIVE: rimp-win64.zip
-  MACOS_ARCHIVE: rimp-macos.tar.gz
-  LINUX_ARCHIVE: rimp-linux64.tar.gz
+  WIN64_ARCHIVE: rimp-win64
+  MACOS_ARCHIVE: rimp-macos
+  LINUX_ARCHIVE: rimp-linux64
   RELEASE_BODY: "**For Installation please refer to the [README](https://github.com/sepehr0eslami/rimp/blob/master/README.md).**\n"
 
 jobs:
@@ -25,12 +25,17 @@ jobs:
       run: cmake --build ${{github.workspace}}\build --config ${{env.BUILD_TYPE}}
 
     - name: Make Zip Archive 
-      run: Compress-Archive ${{github.workspace}}\build\Release\rimp.exe ${{env.WIN64_ARCHIVE}}
+      run: |
+        mkdir ${{env.WIN64_ARCHIVE}}
+        cp LICENSE.md ${{env.WIN64_ARCHIVE}}
+        cp README.md ${{env.WIN64_ARCHIVE}}
+        cp build\Release\rimp.exe ${{env.WIN64_ARCHIVE}}
+        Compress-Archive ${{env.WIN64_ARCHIVE}} ${{env.WIN64_ARCHIVE}}.zip
     
     - name: Release
       uses: ncipollo/release-action@v1
       with: 
-        artifacts: "${{env.WIN64_ARCHIVE}}"
+        artifacts: "${{env.WIN64_ARCHIVE}}.zip"
         body: "${{env.RELEASE_BODY}}"
         allowUpdates: true
         token: ${{secrets.GITHUB_TOKEN}}
@@ -47,12 +52,17 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Make GZip Archive 
-      run: tar -C ${{github.workspace}}/build/ -czf ${{env.MACOS_ARCHIVE}} rimp
+      run: |
+        mkdir ${{env.MACOS_ARCHIVE}}
+        cp LICENSE.md ${{env.MACOS_ARCHIVE}}
+        cp README.md ${{env.MACOS_ARCHIVE}}
+        cp build/rimp ${{env.MACOS_ARCHIVE}}
+        tar -czf ${{env.MACOS_ARCHIVE}}.tar.gz ${{env.MACOS_ARCHIVE}}
     
     - name: Release
       uses: ncipollo/release-action@v1
       with: 
-        artifacts: "${{env.MACOS_ARCHIVE}}"
+        artifacts: "${{env.MACOS_ARCHIVE}}.tar.gz"
         body: "${{env.RELEASE_BODY}}"
         allowUpdates: true
         token: ${{secrets.GITHUB_TOKEN}}
@@ -69,12 +79,17 @@ jobs:
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Make GZip Archive 
-      run: tar -C ${{github.workspace}}/build/ -czf ${{env.LINUX_ARCHIVE}} rimp
+      run: |
+        mkdir ${{env.LINUX_ARCHIVE}}
+        cp LICENSE.md ${{env.LINUX_ARCHIVE}}
+        cp README.md ${{env.LINUX_ARCHIVE}}
+        cp build/rimp ${{env.LINUX_ARCHIVE}}
+        tar -czf ${{env.LINUX_ARCHIVE}}.tar.gz ${{env.LINUX_ARCHIVE}}
     
     - name: Release
       uses: ncipollo/release-action@v1
       with: 
-        artifacts: "${{env.LINUX_ARCHIVE}}"
+        artifacts: "${{env.LINUX_ARCHIVE}}.tar.gz"
         body: "${{env.RELEASE_BODY}}"
         allowUpdates: true
         token: ${{secrets.GITHUB_TOKEN}}
