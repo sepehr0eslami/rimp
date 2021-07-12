@@ -10,7 +10,7 @@ env:
   WIN64_ARCHIVE: rimp-win64
   MACOS_ARCHIVE: rimp-macos
   LINUX_ARCHIVE: rimp-linux64
-  RELEASE_BODY: "**For Installation please refer to the [README](https://github.com/sepehr0eslami/rimp/blob/master/README.md).**\n"
+  RELEASE_BODY: "**For Installation please refer to the [README](https://github.com/sepehr0eslami/rimp#installation).**\n"
 
 jobs:
   Windows:
