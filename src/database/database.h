@@ -49,6 +49,7 @@ class SQLDatabase {
     int deleteRecord(SQLTable target_table, string condition, string &error_msg);  // NOLINT
     int select(SQLTable target_table, Records &result, string &error_msg,          // NOLINT
                string column = "*", string condition = "");
+    bool exists(SQLTable target_table, string tag, string &error_msg);  // NOLINT
 
  private:
     filesystem::path database_file_;

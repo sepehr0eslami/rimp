@@ -55,13 +55,7 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    Records source_path;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, source_path, error_msg,
-                                    "Path", "Tag == \"" + tag + "\"");
-
-    if (returned != SQLITE_OK)
-        return returned;
-    if (source_path.empty()) {
+    if (!data_file.exists(DEFAULT_TAGS_TABLE, tag, error_msg)) {
         error_msg =
             "The Tag \'" + tag +
             "\' doesn't exist. You can add it by running:\n"
@@ -70,6 +64,10 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
             " [SOURCE]\'. See \'rimp --help\' for more information.";
         return EINVAL;
     }
+    Records source_path;
+    data_file.select(DEFAULT_TAGS_TABLE, source_path, error_msg, "Path",
+                     "Tag == \"" + tag + "\"");
+
     if (!filesystem::exists(source_path[1].front())) {
         error_msg = "No such file or directory \'" + source_path[1].front() +
                     "\'. The file "
@@ -134,13 +132,7 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    Records old_source;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, old_source, error_msg,
-                                    "Path", "Tag == \"" + tag + "\"");
-
-    if (returned != SQLITE_OK)
-        return returned;
-    if (old_source.empty()) {
+    if (!data_file.exists(DEFAULT_TAGS_TABLE, tag, error_msg)) {
         error_msg = "The Tag \'" + tag +
                     "\' doesn't exist. Please enter an "
                     "existing tag.";
@@ -148,10 +140,10 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
     }
 
     auto abs_path = filesystem::absolute(new_source);
-    returned = data_file.update({"Tag = \"" + tag + "\"",
-                                 "Path = \"" + abs_path.string() + "\""},
-                                "Tag == \"" + tag + "\"",
-                                DEFAULT_TAGS_TABLE, error_msg);
+    int returned = data_file.update({"Tag = \"" + tag + "\"",
+                                     "Path = \"" + abs_path.string() + "\""},
+                                    "Tag == \"" + tag + "\"",
+                                    DEFAULT_TAGS_TABLE, error_msg);
 
     return returned;
 }
@@ -164,18 +156,15 @@ int rimp::remove(string tag, int flags, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    Records source;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, source, error_msg,
-                                    "Path", "Tag == \"" + tag + "\"");
-
-    if (returned != SQLITE_OK)
-        return returned;
-    if (source.empty()) {
+    if (!data_file.exists(DEFAULT_TAGS_TABLE, tag, error_msg)) {
         error_msg = "The Tag \'" + tag +
                     "\' doesn't exist. Please enter an "
                     "existing tag.";
         return EINVAL;
     }
+    Records source;
+    data_file.select(DEFAULT_TAGS_TABLE, source, error_msg,
+                     "Path", "Tag == \"" + tag + "\"");
 
     if ((flags & REMOVE_FORCE_FLAG) == REMOVE_FORCE_FLAG) {
         error_code issue;
@@ -186,8 +175,8 @@ int rimp::remove(string tag, int flags, string &error_msg) {
         }
     }
 
-    returned = data_file.deleteRecord(DEFAULT_TAGS_TABLE,
-                                      "Tag == \"" + tag + "\"", error_msg);
+    int returned = data_file.deleteRecord(DEFAULT_TAGS_TABLE,
+                                          "Tag == \"" + tag + "\"", error_msg);
 
     return returned;
 }

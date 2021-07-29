@@ -147,3 +147,14 @@ int SQLDatabase::select(SQLTable target_table, Records &result,
     sqlite3_free(error_char);
     return returned;
 }
+
+bool SQLDatabase::exists(SQLTable target_table, string tag, string &error_msg) {
+    Records records;
+    int returned = this->select(target_table, records, error_msg,
+                                "*", "Tag == \"" + tag + "\"");
+
+    if (returned != SQLITE_OK)
+        throw runtime_error{error_msg};
+
+    return !records.empty();
+}
