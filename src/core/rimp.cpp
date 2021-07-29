@@ -55,10 +55,9 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    string source_path;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
-                                    "Tag == \"" + tag + "\"", source_path,
-                                    error_msg);
+    Records source_path;
+    int returned = data_file.select(DEFAULT_TAGS_TABLE, source_path, error_msg,
+                                    "Path", "Tag == \"" + tag + "\"");
 
     if (returned != SQLITE_OK)
         return returned;
@@ -71,8 +70,8 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
             " [SOURCE]\'. See \'rimp --help\' for more information.";
         return EINVAL;
     }
-    if (!filesystem::exists(source_path)) {
-        error_msg = "No such file or directory \'" + source_path +
+    if (!filesystem::exists(source_path[1].front())) {
+        error_msg = "No such file or directory \'" + source_path[1].front() +
                     "\'. The file "
                     " or directory associated with \'" +
                     tag + "\' Tag is missing.";
@@ -81,7 +80,7 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
     }
 
     error_code code;
-    filesystem::copy(filesystem::path(source_path), dest,  // NOLINT
+    filesystem::copy(filesystem::path(source_path[1].front()), dest,  // NOLINT
                      filesystem::copy_options::recursive, code);
     error_msg = code.message();
     return code.value();
@@ -135,10 +134,10 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    string old_source;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
-                                    "Tag == \"" + tag + "\"", old_source,
-                                    error_msg);
+    Records old_source;
+    int returned = data_file.select(DEFAULT_TAGS_TABLE, old_source, error_msg,
+                                    "Path", "Tag == \"" + tag + "\"");
+
     if (returned != SQLITE_OK)
         return returned;
     if (old_source.empty()) {
@@ -165,10 +164,10 @@ int rimp::remove(string tag, int flags, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    string source;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
-                                    "Tag == \"" + tag + "\"", source,
-                                    error_msg);
+    Records source;
+    int returned = data_file.select(DEFAULT_TAGS_TABLE, source, error_msg,
+                                    "Path", "Tag == \"" + tag + "\"");
+
     if (returned != SQLITE_OK)
         return returned;
     if (source.empty()) {
@@ -180,7 +179,7 @@ int rimp::remove(string tag, int flags, string &error_msg) {
 
     if ((flags & REMOVE_FORCE_FLAG) == REMOVE_FORCE_FLAG) {
         error_code issue;
-        filesystem::remove_all(filesystem::path(source), issue);
+        filesystem::remove_all(filesystem::path(source[1].front()), issue);
         if (issue.value()) {
             error_msg = issue.message();
             return issue.value();
