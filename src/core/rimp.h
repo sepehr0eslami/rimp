@@ -41,7 +41,7 @@ int paste(string tag, filesystem::path dest, string &error_msg);       // NOLINT
 int add(string tag, filesystem::path source, string &error_msg);       // NOLINT
 int edit(string tag, filesystem::path new_source, string &error_msg);  // NOLINT
 int remove(string tag, int flags, string &error_msg);                  // NOLINT
-int list(ostream &out, string &error_msg);                             //NOLINT
+int list(ostream &out, int flags, string &error_msg);                  //NOLINT
 }  // namespace rimp
 
 #endif  // SRC_CORE_RIMP_H_

@@ -138,6 +138,10 @@ ArgsParser::ArgsParser(int argc, char **argv) {
                                           "List stored Tags and the "
                                           "Path they point to");
 
+    bool list_tag_flag;
+    list_app_->add_flag("--tags, -t", list_tag_flag,
+                        "Only show the stored Tags");
+
     list_app_->footer("");
 
     /* -------------------------- Parse Everything -------------------------- */
@@ -161,6 +165,8 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     /* ------------------------ Get the parsed Flags ------------------------ */
     if (remove_force_flag)
         given_flags_ |= REMOVE_FORCE_FLAG;
+    else if (list_tag_flag)
+        given_flags_ |= LIST_TAGS_FLAG;
 }
 
 /**

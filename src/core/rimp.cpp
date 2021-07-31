@@ -181,11 +181,17 @@ int rimp::remove(string tag, int flags, string &error_msg) {
     return returned;
 }
 
-int rimp::list(ostream &out, string &error_msg) {
+int rimp::list(ostream &out, int flags, string &error_msg) {
     auto data_file = rimp::setup();
 
     Records records;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg);
+    int returned = 0;
+    if ((flags & LIST_TAGS_FLAG) == LIST_TAGS_FLAG) {
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
+                                    "Tag");
+    } else {
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg);
+    }
 
     if (returned != SQLITE_OK) {
         return returned;
