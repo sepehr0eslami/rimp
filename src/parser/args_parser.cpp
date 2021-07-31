@@ -133,6 +133,13 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     remove_tag_option->option_text(" ");
     remove_app_->footer("");
 
+    /* ----------------------- List App Configuration ----------------------- */
+    list_app_ = main_app_->add_subcommand("list",
+                                          "List stored Tags and the "
+                                          "Path they point to");
+
+    list_app_->footer("");
+
     /* -------------------------- Parse Everything -------------------------- */
     try {
         main_app_->parse(argc, argv);

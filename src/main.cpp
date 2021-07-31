@@ -49,6 +49,8 @@ int main(int argc, char **argv) {
         } else if (parser.given_subcmd_ == "remove") {
             ret = rimp::remove(parser.given_tag_, parser.given_flags_,
                                errors);
+        } else if (parser.given_subcmd_ == "list") {
+            ret = rimp::list(cout, errors);
         }
     } catch (runtime_error e) {
         cerr << e.what() << "\n";

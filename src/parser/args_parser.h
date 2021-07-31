@@ -48,6 +48,7 @@ class ArgsParser {
     CLI::App *add_app_;
     CLI::App *edit_app_;
     CLI::App *remove_app_;
+    CLI::App *list_app_;
 };
 
 #endif  // SRC_PARSER_ARGS_PARSER_H_

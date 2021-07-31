@@ -180,3 +180,58 @@ int rimp::remove(string tag, int flags, string &error_msg) {
 
     return returned;
 }
+
+int rimp::list(ostream &out, string &error_msg) {
+    auto data_file = rimp::setup();
+
+    Records records;
+    int returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg);
+
+    if (returned != SQLITE_OK) {
+        return returned;
+    } else if (records.empty()) {
+        out << "No tag is available!"
+            << "\n";
+        return 0;
+    }
+
+    string col_sep = "  ", row_sep = "\n";
+    char main_sep = '-';
+
+    vector<int> lengths;
+    int total_length = (records.front().size() - 1) * col_sep.size();
+    for (int i = 0; i < records.front().size(); i++) {
+        int tmp = 0;
+        for (int j = 0; j < records.size(); j++) {
+            tmp = max(tmp, static_cast<int>(records[j][i].size()));
+        }
+        lengths.push_back(tmp);
+        total_length += tmp;
+    }
+
+    // Printing the Top border.
+    out << string(total_length, main_sep) << "\n";
+    // Printing the Header.
+    for (int i = 0; i < records.front().size(); i++) {
+        out << setfill(' ') << setw(lengths[i]) << left << records.front()[i]
+            << col_sep;
+    }
+    cout << "\n";
+    // Printing Header seperator.
+    for (int k = 0; k < records.front().size(); k++) {
+        out << string(lengths[k], main_sep) << col_sep;
+    }
+    cout << "\n";
+    // Printing the Records.
+    for (int i = 1; i < records.size(); i++) {
+        for (int j = 0; j < records[i].size(); j++) {
+            out << setfill(' ') << setw(lengths[j]) << left << records[i][j]
+                << col_sep;
+        }
+        out << row_sep;
+    }
+    // Printing the Bottom border.
+    out << string(total_length, main_sep) << "\n";
+
+    return returned;
+}
