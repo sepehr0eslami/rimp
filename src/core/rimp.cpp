@@ -189,6 +189,9 @@ int rimp::list(ostream &out, int flags, string &error_msg) {
     if ((flags & LIST_TAGS_FLAG) == LIST_TAGS_FLAG) {
         returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
                                     "Tag");
+    } else if ((flags & LIST_PATHS_FLAG) == LIST_PATHS_FLAG) {
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
+                                    "Path");
     } else {
         returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg);
     }

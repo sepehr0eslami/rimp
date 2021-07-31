@@ -23,5 +23,6 @@
 #define REMOVE_FORCE_FLAG 1
 
 #define LIST_TAGS_FLAG 1
+#define LIST_PATHS_FLAG 2
 
 #endif  // SRC_PARSER_FLAGS_H_
