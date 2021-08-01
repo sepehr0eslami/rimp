@@ -144,6 +144,9 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     bool list_paths_flag;
     list_app_->add_flag("--paths, -p", list_paths_flag,
                         "Only show the stored Paths");
+    bool list_no_decorate_flag;
+    list_app_->add_flag("--no-decorate, -d", list_no_decorate_flag,
+                        "Do not decorate the output at all");
 
     list_app_->footer("");
 
@@ -172,6 +175,8 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         given_flags_ |= LIST_TAGS_FLAG;
     else if (list_paths_flag)
         given_flags_ |= LIST_PATHS_FLAG;
+    if (list_no_decorate_flag)
+        given_flags_ |= LIST_NO_DECORATE_FLAG;
 }
 
 /**

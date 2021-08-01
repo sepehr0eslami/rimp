@@ -207,40 +207,50 @@ int rimp::list(ostream &out, int flags, string &error_msg) {
     string col_sep = "  ", row_sep = "\n";
     char main_sep = '-';
 
-    vector<int> lengths;
-    int total_length = (records.front().size() - 1) * col_sep.size();
-    for (int i = 0; i < records.front().size(); i++) {
-        int tmp = 0;
-        for (int j = 0; j < records.size(); j++) {
-            tmp = max(tmp, static_cast<int>(records[j][i].size()));
+    if ((flags & LIST_NO_DECORATE_FLAG) == LIST_NO_DECORATE_FLAG) {
+        for (int i = 0; i < records.size(); i++) {
+            for (int j = 0; j < records[i].size(); j++) {
+                out << records[i][j]
+                    << (j < records[i].size() - 1 ? col_sep : "");
+            }
+            out << (i < records.size() - 1 ? row_sep : "\n");
         }
-        lengths.push_back(tmp);
-        total_length += tmp;
-    }
+    } else {
+        vector<int> lengths;
+        int total_length = (records.front().size() - 1) * col_sep.size();
+        for (int i = 0; i < records.front().size(); i++) {
+            int tmp = 0;
+            for (int j = 0; j < records.size(); j++) {
+                tmp = max(tmp, static_cast<int>(records[j][i].size()));
+            }
+            lengths.push_back(tmp);
+            total_length += tmp;
+        }
 
-    // Printing the Top border.
-    out << string(total_length, main_sep) << "\n";
-    // Printing the Header.
-    for (int i = 0; i < records.front().size(); i++) {
-        out << setfill(' ') << setw(lengths[i]) << left << records.front()[i]
-            << col_sep;
-    }
-    cout << "\n";
-    // Printing Header seperator.
-    for (int k = 0; k < records.front().size(); k++) {
-        out << string(lengths[k], main_sep) << col_sep;
-    }
-    cout << "\n";
-    // Printing the Records.
-    for (int i = 1; i < records.size(); i++) {
-        for (int j = 0; j < records[i].size(); j++) {
-            out << setfill(' ') << setw(lengths[j]) << left << records[i][j]
-                << col_sep;
+        // Printing the Top border.
+        out << string(total_length, main_sep) << "\n";
+        // Printing the Header.
+        for (int i = 0; i < records.front().size(); i++) {
+            out << setfill(' ') << setw(lengths[i]) << left
+                << records.front()[i] << col_sep;
         }
-        out << row_sep;
+        cout << "\n";
+        // Printing Header seperator.
+        for (int k = 0; k < records.front().size(); k++) {
+            out << string(lengths[k], main_sep) << col_sep;
+        }
+        cout << "\n";
+        // Printing the Records.
+        for (int i = 1; i < records.size(); i++) {
+            for (int j = 0; j < records[i].size(); j++) {
+                out << setfill(' ') << setw(lengths[j]) << left << records[i][j]
+                    << col_sep;
+            }
+            out << row_sep;
+        }
+        // Printing the Bottom border.
+        out << string(total_length, main_sep) << "\n";
     }
-    // Printing the Bottom border.
-    out << string(total_length, main_sep) << "\n";
 
     return returned;
 }
