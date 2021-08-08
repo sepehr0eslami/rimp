@@ -50,7 +50,8 @@ int main(int argc, char **argv) {
             ret = rimp::remove(parser.given_tag_, parser.given_flags_,
                                errors);
         } else if (parser.given_subcmd_ == "list") {
-            ret = rimp::list(cout, parser.given_flags_, errors);
+            ret = rimp::list(cout, parser.given_flags_, errors,
+                             parser.given_format_);
         }
     } catch (runtime_error e) {
         cerr << e.what() << "\n";

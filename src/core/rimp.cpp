@@ -181,7 +181,7 @@ int rimp::remove(string tag, int flags, string &error_msg) {
     return returned;
 }
 
-int rimp::list(ostream &out, int flags, string &error_msg) {
+int rimp::list(ostream &out, int flags, string &error_msg, string format) {
     auto data_file = rimp::setup();
 
     Records records;
@@ -214,6 +214,43 @@ int rimp::list(ostream &out, int flags, string &error_msg) {
                     << (j < records[i].size() - 1 ? col_sep : "");
             }
             out << (i < records.size() - 1 ? row_sep : "\n");
+        }
+    } else if (!format.empty()) {
+        for (int i = 0; i < records.size(); i++) {
+            for (int j = 0; j < format.size(); j++) {
+                if (format[j] != '%') {
+                    out << format[j];
+                    continue;
+                }
+
+                j++;
+                switch (format[j]) {
+                    case 't':
+                        out << records[i][0];
+                        break;
+                    case 'p':
+                        out << records[i][1];
+                        break;
+                    case 'i':
+                        out << i + 1;
+                        break;
+                    case 'n':
+                        out << "\n";
+                        break;
+                    case 'b':
+                        out << "\t";
+                        break;
+                    case 'c':
+                        out << col_sep;
+                        break;
+                    case 'r':
+                        out << row_sep;
+                        break;
+                    default:
+                        out << "%" << format[j];
+                        break;
+                }
+            }
         }
     } else {
         vector<int> lengths;

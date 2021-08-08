@@ -139,14 +139,35 @@ ArgsParser::ArgsParser(int argc, char **argv) {
                                           "Path they point to");
 
     bool list_tags_flag;
-    list_app_->add_flag("--tags, -t", list_tags_flag,
-                        "Only show the stored Tags");
+    auto t_flag = list_app_->add_flag("--tags, -t", list_tags_flag,
+                                      "Only show the stored Tags");
     bool list_paths_flag;
-    list_app_->add_flag("--paths, -p", list_paths_flag,
-                        "Only show the stored Paths");
+    auto p_flag = list_app_->add_flag("--paths, -p", list_paths_flag,
+                                      "Only show the stored Paths");
+
+    t_flag->excludes(p_flag);
+
     bool list_no_decorate_flag;
-    list_app_->add_flag("--no-decorate, -d", list_no_decorate_flag,
-                        "Do not decorate the output at all");
+    auto d_flag = list_app_->add_flag("--no-decorate, -d",
+                                      list_no_decorate_flag,
+                                      "Do not decorate the output at all");
+
+    string f_flag_help =
+        "Pretty-print the stored data in the given format (Make sure it's "
+        "always wrapped in single or double quotes), where the format can "
+        "contain any letter and some placeholders.\n"
+        "Available placeholders are as follows:\n"
+        "%t --> current Tag \n"
+        "%p --> current Path \n"
+        "%i --> current index \n"
+        "%n --> new-line \n"
+        "%b --> tab \n"
+        "%c --> column seperator (default: \'  \')\n"
+        "%r --> row seperator (default: new-line)\n";
+    auto f_flag = list_app_->add_option("--format, -f", given_format_,
+                                        f_flag_help);
+
+    d_flag->excludes(f_flag);
 
     list_app_->footer("");
 

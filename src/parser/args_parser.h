@@ -39,6 +39,7 @@ class ArgsParser {
     string given_dest_ = "";
     string given_source_ = "";
     string given_subcmd_ = "";
+    string given_format_ = "";
     int given_flags_ = 0;
     int returned_ = 0;
 
