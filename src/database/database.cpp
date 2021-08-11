@@ -38,6 +38,18 @@ int getRecords(void *result, int argc, char **argv, char **columns_name) {
     return 0;
 }
 
+int getRecordsNoHeader(void *result, int argc, char **argv,
+                       char **columns_name) {
+    auto records = reinterpret_cast<Records *>(result);
+    vector<string> data;
+    for (int i = 0; i < argc; i++) {
+        data.push_back(argv[i]);
+    }
+    records->push_back(data);
+
+    return 0;
+}
+
 SQLDatabase::SQLDatabase(filesystem::path database_path)
     : database_file_(database_path) {
     int returned = 0;
@@ -133,14 +145,18 @@ int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
 }
 
 int SQLDatabase::select(SQLTable target_table, Records &result,
-                        string &error_msg, string column, string condition) {
+                        string &error_msg, string column, string condition,
+                        bool header) {
     string query = "SELECT " + column + " FROM " + target_table.getName() +
                    (condition.empty() ? "" : " WHERE " + condition) + ";";
 
     int returned = 0;
     char *error_char = nullptr;
-    returned = sqlite3_exec(sqlite_object_, query.c_str(), getRecords, &result,
-                            &error_char);
+    returned = (header == true
+                    ? sqlite3_exec(sqlite_object_, query.c_str(), getRecords,
+                                   &result, &error_char)
+                    : sqlite3_exec(sqlite_object_, query.c_str(),
+                                   getRecordsNoHeader, &result, &error_char));
 
     if (error_char != nullptr)
         error_msg = error_char;

@@ -168,6 +168,15 @@ ArgsParser::ArgsParser(int argc, char **argv) {
                                         f_flag_help);
 
     d_flag->excludes(f_flag);
+    t_flag->excludes(f_flag);
+    p_flag->excludes(f_flag);
+
+    bool list_no_header_flag;
+    list_app_->add_flag("--no-header, -e",
+                        list_no_header_flag,
+                        "Don't print the Header");
+
+    f_flag->excludes("-e");
 
     list_app_->footer("");
 
@@ -198,6 +207,8 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         given_flags_ |= LIST_PATHS_FLAG;
     if (list_no_decorate_flag)
         given_flags_ |= LIST_NO_DECORATE_FLAG;
+    if (list_no_header_flag)
+        given_flags_ |= LIST_NO_HEADER_FLAG;
 }
 
 /**

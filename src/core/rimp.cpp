@@ -186,14 +186,19 @@ int rimp::list(ostream &out, int flags, string &error_msg, string format) {
 
     Records records;
     int returned = 0;
+    bool header = true;
+    if ((flags & LIST_NO_HEADER_FLAG) == LIST_NO_HEADER_FLAG) {
+        header = false;
+    }
     if ((flags & LIST_TAGS_FLAG) == LIST_TAGS_FLAG) {
         returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
-                                    "Tag");
+                                    "Tag", "", header);
     } else if ((flags & LIST_PATHS_FLAG) == LIST_PATHS_FLAG) {
         returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
-                                    "Path");
+                                    "Path", "", header);
     } else {
-        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg);
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
+                                    "*", "", header);
     }
 
     if (returned != SQLITE_OK) {
@@ -266,24 +271,27 @@ int rimp::list(ostream &out, int flags, string &error_msg, string format) {
 
         // Printing the Top border.
         out << string(total_length, main_sep) << "\n";
-        // Printing the Header.
-        for (int i = 0; i < records.front().size(); i++) {
-            out << setfill(' ') << setw(lengths[i]) << left
-                << records.front()[i] << col_sep;
-        }
-        cout << "\n";
-        // Printing Header seperator.
-        for (int k = 0; k < records.front().size(); k++) {
-            out << string(lengths[k], main_sep) << col_sep;
-        }
-        cout << "\n";
         // Printing the Records.
-        for (int i = 1; i < records.size(); i++) {
+        for (int i = 0; i < records.size(); i++) {
+            if (i == 0 && header) {
+                // Printing the Header.
+                for (int j = 0; j < records[i].size(); j++) {
+                    out << setfill(' ') << setw(lengths[j]) << left
+                        << records[i][j]
+                        << ((j < records[i].size() - 1) ? col_sep : "\n");
+                }
+                // Printing Header seperator.
+                for (int j = 0; j < lengths.size(); j++) {
+                    out << string(lengths[j], main_sep)
+                        << ((j < lengths.size() - 1) ? col_sep : "\n");
+                }
+                i++;
+            }
             for (int j = 0; j < records[i].size(); j++) {
                 out << setfill(' ') << setw(lengths[j]) << left << records[i][j]
-                    << col_sep;
+                    << ((j < records[i].size() - 1) ? col_sep : "");
             }
-            out << row_sep;
+            out << (i < records.size() - 1 ? row_sep : "\n");
         }
         // Printing the Bottom border.
         out << string(total_length, main_sep) << "\n";

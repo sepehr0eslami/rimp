@@ -25,5 +25,6 @@
 #define LIST_TAGS_FLAG 1
 #define LIST_PATHS_FLAG 2
 #define LIST_NO_DECORATE_FLAG 4
+#define LIST_NO_HEADER_FLAG 8
 
 #endif  // SRC_PARSER_FLAGS_H_
