@@ -51,7 +51,8 @@ int main(int argc, char **argv) {
                                errors);
         } else if (parser.given_subcmd_ == "list") {
             ret = rimp::list(cout, parser.given_flags_, errors,
-                             parser.given_format_);
+                             parser.given_format_, parser.given_col_sep_,
+                             parser.given_row_sep_);
         }
     } catch (runtime_error e) {
         cerr << e.what() << "\n";

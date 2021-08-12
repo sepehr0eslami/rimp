@@ -181,7 +181,8 @@ int rimp::remove(string tag, int flags, string &error_msg) {
     return returned;
 }
 
-int rimp::list(ostream &out, int flags, string &error_msg, string format) {
+int rimp::list(ostream &out, int flags, string &error_msg, string format,
+               string col_sep, string row_sep) {
     auto data_file = rimp::setup();
 
     Records records;
@@ -209,7 +210,6 @@ int rimp::list(ostream &out, int flags, string &error_msg, string format) {
         return 0;
     }
 
-    string col_sep = "  ", row_sep = "\n";
     char main_sep = '-';
 
     if ((flags & LIST_NO_DECORATE_FLAG) == LIST_NO_DECORATE_FLAG) {

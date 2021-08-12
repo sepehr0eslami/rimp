@@ -145,38 +145,42 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     auto p_flag = list_app_->add_flag("--paths, -p", list_paths_flag,
                                       "Only show the stored Paths");
 
-    t_flag->excludes(p_flag);
-
     bool list_no_decorate_flag;
     auto d_flag = list_app_->add_flag("--no-decorate, -d",
                                       list_no_decorate_flag,
                                       "Do not decorate the output at all");
 
+    bool list_no_header_flag;
+    auto e_flag = list_app_->add_flag("--no-header, -e",
+                                      list_no_header_flag,
+                                      "Don't print the Header");
+
+    list_app_->add_option("--column-separator, -c", given_col_sep_,
+                          "Use the given TEXT as the column separator instead "
+                          "of the default (two spaces)");
+    list_app_->add_option("--row-separator, -r", given_row_sep_,
+                          "Use the given TEXT as the row separator instead "
+                          "of the default (new-line)");
+
     string f_flag_help =
-        "Pretty-print the stored data in the given format (Make sure it's "
-        "always wrapped in single or double quotes), where the format can "
-        "contain any letter and some placeholders.\n"
+        "Pretty-print the stored data in the given format, where the format "
+        "can contain any letter and some placeholders.\n"
         "Available placeholders are as follows:\n"
         "%t --> current Tag \n"
         "%p --> current Path \n"
         "%i --> current index \n"
         "%n --> new-line \n"
         "%b --> tab \n"
-        "%c --> column seperator (default: \'  \')\n"
-        "%r --> row seperator (default: new-line)\n";
+        "%c --> column seperator (default: two spaces)\n"
+        "%r --> row seperator (default: new-line)";
     auto f_flag = list_app_->add_option("--format, -f", given_format_,
                                         f_flag_help);
 
-    d_flag->excludes(f_flag);
+    t_flag->excludes(p_flag);
     t_flag->excludes(f_flag);
     p_flag->excludes(f_flag);
-
-    bool list_no_header_flag;
-    list_app_->add_flag("--no-header, -e",
-                        list_no_header_flag,
-                        "Don't print the Header");
-
-    f_flag->excludes("-e");
+    d_flag->excludes(f_flag);
+    e_flag->excludes(f_flag);
 
     list_app_->footer("");
 

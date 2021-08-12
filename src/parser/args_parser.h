@@ -40,6 +40,8 @@ class ArgsParser {
     string given_source_ = "";
     string given_subcmd_ = "";
     string given_format_ = "";
+    string given_col_sep_ = "  ";
+    string given_row_sep_ = "\n";
     int given_flags_ = 0;
     int returned_ = 0;
 
