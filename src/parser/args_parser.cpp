@@ -71,15 +71,15 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     /* ---------------------- Paste App Configurations --------------------- */
     paste_app_ = main_app_->add_subcommand("paste",
                                            "Insert the file associated "
-                                           "with TAG in [DEST].");
+                                           "with TAG in [DEST]");
     auto paste_tag_option = paste_app_->add_option("TAG", given_tag_,
-                                                   "ُThe desired Tag.");
+                                                   "ُThe desired Tag");
     auto paste_dest_option = paste_app_->add_option("DEST", given_dest_,
                                                     "The path to put the file "
                                                     "associated with TAG in;\n"
                                                     "Current directory is "
                                                     "assumed when nothing is "
-                                                    "given.");
+                                                    "given");
     paste_tag_option->required(true);
     paste_tag_option->option_text(" ");
     paste_dest_option->option_text(" ");
@@ -88,12 +88,12 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     /* ----------------------- Add App Configurations ---------------------- */
     add_app_ = main_app_->add_subcommand("add",
                                          "Attach the given TAG to "
-                                         "SOURCE.");
+                                         "SOURCE");
     auto add_tag_option = add_app_->add_option("TAG", given_tag_,
-                                               "The desired Tag.");
+                                               "The desired Tag");
     auto add_source_option = add_app_->add_option("SOURCE", given_source_,
                                                   "The path to the file which "
-                                                  "TAG should attach to.");
+                                                  "TAG should attach to");
 
     add_tag_option->required(true);
     add_source_option->required(true);
@@ -109,7 +109,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
                                                  "The desired Tag");
     auto edit_source_option = edit_app_->add_option("NEW_SOURCE", given_source_,
                                                     "Path to the new file that "
-                                                    "TAG should point to.");
+                                                    "TAG should point to");
 
     edit_tag_option->required(true);
     edit_source_option->required(true);
@@ -128,7 +128,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     remove_app_->add_flag("--force, -f", remove_force_flag,
                           "Cause the remove subcommand to delete the file "
                           "associated with TAG in adition to TAG "
-                          "itself.");
+                          "itself");
     remove_tag_option->required(true);
     remove_tag_option->option_text(" ");
     remove_app_->footer("");
