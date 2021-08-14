@@ -39,6 +39,9 @@ class ArgsParser {
     string given_dest_ = "";
     string given_source_ = "";
     string given_subcmd_ = "";
+    string given_format_ = "";
+    string given_col_sep_ = "  ";
+    string given_row_sep_ = "\n";
     int given_flags_ = 0;
     int returned_ = 0;
 
@@ -48,6 +51,7 @@ class ArgsParser {
     CLI::App *add_app_;
     CLI::App *edit_app_;
     CLI::App *remove_app_;
+    CLI::App *list_app_;
 };
 
 #endif  // SRC_PARSER_ARGS_PARSER_H_

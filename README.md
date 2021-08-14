@@ -24,6 +24,8 @@ I wanted a tool that allows you to:
 
 - Remove or update an existing tag
 
+- List previously added Tags and the Path they point to, prettily formatted. 
+
 # Installation
 
 ## Windows
@@ -94,10 +96,11 @@ Options:
   -v,--version                Display program version information and exit
 
 Subcommands:
-  paste TAG [DEST]            Insert the file associated with TAG in [DEST].
-  add TAG SOURCE              Attach the given TAG to SOURCE.
+  paste TAG [DEST]            Insert the file associated with TAG in [DEST]
+  add TAG SOURCE              Attach the given TAG to SOURCE
   edit TAG NEW_SOURCE         Detach TAG from its source and attach it to NEW_SOURCE
   remove TAG                  Remove TAG from stored tags
+  list                        List stored Tags and the Path they point to
 
 Enclosing in Square Brackets("[]") means optional.
 See rimp SUBCOMMAND --help to read about a specific subcommand.

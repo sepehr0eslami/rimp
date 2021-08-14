@@ -31,7 +31,11 @@
 
 using namespace std;  // NOLINT
 
-int select_callback(void *result, int argc, char **argv, char **columns_name);
+typedef vector<vector<string>> Records;
+
+int getRecords(void *result, int argc, char **argv, char **columns_name);
+int getRecordsNoHeader(void *result, int argc, char **argv,
+                       char **columns_name);
 
 class SQLDatabase {
  public:
@@ -45,8 +49,9 @@ class SQLDatabase {
     int update(vector<string> new_values, string condition,
                SQLTable target_table, string &error_msg);                          // NOLINT
     int deleteRecord(SQLTable target_table, string condition, string &error_msg);  // NOLINT
-    int select(SQLTable target_table, string column, string condition,
-               string &result, string &error_msg);  // NOLINT
+    int select(SQLTable target_table, Records &result, string &error_msg,          // NOLINT
+               string column = "*", string condition = "", bool header = true);
+    bool exists(SQLTable target_table, string tag, string &error_msg);  // NOLINT
 
  private:
     filesystem::path database_file_;

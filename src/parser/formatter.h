@@ -31,6 +31,9 @@ class CustomFormatter : public CLI::Formatter {
  public:
     CustomFormatter() : Formatter() {}
     string make_subcommand(const CLI::App *sub) const override;
+    string make_option_opts(const CLI::Option *opt) const override;
+    string make_option_name(const CLI::Option *opt, bool is_positional) const
+        override;
 };
 
 #endif  // SRC_PARSER_FORMATTER_H_
