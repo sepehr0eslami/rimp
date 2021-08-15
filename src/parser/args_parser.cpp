@@ -180,7 +180,6 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     t_flag->excludes(f_flag);
     p_flag->excludes(f_flag);
     d_flag->excludes(f_flag);
-    e_flag->excludes(f_flag);
 
     list_app_->footer("");
 
