@@ -205,9 +205,8 @@ int rimp::list(ostream &out, int flags, string &error_msg, string format,
     if (returned != SQLITE_OK) {
         return returned;
     } else if (records.empty()) {
-        out << "No tag is available!"
-            << "\n";
-        return 0;
+        error_msg = "No tag is available!";
+        return 1;
     }
 
     char main_sep = '-';
