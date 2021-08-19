@@ -15,7 +15,7 @@
 `rimp` is a Cross-Platform command-line tool which makes working with files/folders you need regularly much easier, by allowing you to tag and access them in the future using only their tags.
 
 
-## :thinking: Why?
+## Why?
 I wanted a tool that allows you to:
 
 - Tag files/folders using the command line 
@@ -32,9 +32,9 @@ I wanted a tool that allows you to:
 
 To run this application, you just need SQLite3. [Download](https://www.sqlite.org/download.html) the latest version of SQLite3 for Windows, then extract it and move `sqlite3.dll` to `C:\System32`.
 
-Now, create a folder called `Rimp` in `C:\Program Files(x86)`. Then simply [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` for Windows (**rimp-win64.zip**), extract it and move the `rimp.exe` file to the previously created folder. Finally, add that folder to the Path Environment Variable (You can google how to do it or get help from this [Link](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)).
+Now, create a folder called `rimp`, containing another folder called `bin`, in `C:\Program Files(x86)`. Then simply [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` for Windows (**rimp-win64.zip**), extract it and move the `rimp.exe` file to the `bin` folder. Finally, add that folder to the Path Environment Variable (You can google how to do it or get help from this [Link](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)).
 
-> :warning: You need to replace the Drive Letter Windows is installed on in the path to the `System32` and `Program File(86)` folder, in case it is not 'C'
+> ⚠️ You need to replace the Drive Letter Windows is installed on in the path to the `System32` and `Program File(86)` folder, in case it is not 'C'
 
 ## MacOS
 
@@ -44,10 +44,10 @@ First, [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` 
 tar -xf rimp-macos.tar.gz 
 ```
 
-Now you have a folder called `rimp-macos` containing the `rimp` executable. Move it to somewhere in `$PATH` using the command below:
+Now you have a folder called `rimp-macos` containing the `rimp` executable. Install it using the command below:
 
 ```sh
-sudo cp rimp-macos/rimp $(echo $PATH | awk -F ":" '{print $1}')
+sudo install rimp-macos/rimp /usr/local/bin
 ```
 
 Close your terminal and open it again. Make sure `rimp` is correctly installed by running:
@@ -66,10 +66,10 @@ First, [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` 
 tar -xf rimp-linux64.tar.gz
 ```
 
-Now you have a folder called `rimp-linux64` containing the `rimp` executable. Move it to somewhere in `$PATH` using the command below:
+Now you have a folder called `rimp-linux64` containing the `rimp` executable. Install it using the command below:
 
 ```sh
-cp rimp-linux64/rimp $(echo $PATH | awk -F ":" '{print $1}')
+sudo install rimp-linux64/rimp /usr/local/bin
 ```
 
 Close your terminal and open it again. Make sure `rimp` is correctly installed by running:

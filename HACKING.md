@@ -5,7 +5,7 @@ Before you start coding, you will need to install some dependencies:
 
 Download and Install the latest version of [Git](https://git-scm.com/downloads), [CMake](https://cmake.org/download/), and a C++ compiler of choice. 
 
-> :warning: This Project heavily relies on features of C++17, so make sure you compiler support C++17 (or later).
+> ⚠️ This Project heavily relies on features of C++17, so make sure you compiler support C++17 (or newer).
 
 ## MacOS
 
@@ -48,9 +48,29 @@ cmake --build build
 # Installation
 After building the source code, you can install `rimp` by running:
 
+## Windows
+Run CMD or Powershell as Administrator and then run the following command:
+
 ```sh
-sudo cmake --install build
-rimp # Run Rimp
+cmake --install build --config Release
+```
+
+Now all you have to do is adding the Installation Folder (`C:\Program Files(x86)\rimp\bin`)to the PATH environment variable (You can google how to do it or get help from this [Link](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)). Now close your terminal and open it again and make sure `rimp` is correctly installed by running:
+
+```sh
+$ rimp --version
+
+Rimp X.X.X.
+```
+
+## MacOS and Linux
+
+```sh
+sudo cmake --install build --config Release
+
+$ rimp --version
+
+Rimp X.X.X.
 ```
 
 # Code Style
