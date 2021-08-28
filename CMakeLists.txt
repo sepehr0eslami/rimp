@@ -41,3 +41,8 @@ target_link_libraries (${PROJECT_NAME}
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION "bin")
+
+option(COMP_INSTALL "Whether to Install Shell Completion Scripts or Not" ON)
+if(${COMP_INSTALL})
+    include ("${cmake_dir}/completion_install.cmake")
+endif()
