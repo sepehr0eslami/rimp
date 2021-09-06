@@ -84,8 +84,60 @@ Rimp X.X.X.
 
 You can compile the source code yourself by following the instructions available in the [HACKING.md](https://github.com/sepehr0eslami/rimp/blob/master/HACKING.md) file.
 
+## Completion Scripts
+
+Currently, completion scripts are available for the following shells:
+
+<!-- TODO: Update the Links before merge -->
+
+| Shell | Script                                                                                                             |
+| ----- | ------------------------------------------------------------------------------------------------------------------ |
+| ZSH   | [rimp_completion.zsh](https://github.com/sepehr0eslami/rimp/blob/develop/scripts/completion/rimp_completion.zsh)   |
+| Fish  | [rimp_completion.fish](https://github.com/sepehr0eslami/rimp/blob/develop/scripts/completion/rimp_completion.fish) |
+| Bash  | [rimp_completion.bash](https://github.com/sepehr0eslami/rimp/blob/develop/scripts/completion/rimp_completion.bash) |
+
+> Since Powershell doesn't support Programmable Completions (or at least I don't know how), Tab-Completion isn't available on Windows.
+
+<!-- TODO: Update the Links before merge -->
+
+### ZSH
+
+The completion system needs to be activated. If you’re using something like `oh-my-zsh` then this is already taken care of, otherwise you’ll need to add the following to your `.zshrc`
+
+```sh
+autoload -U compinit
+compinit
+```
+Then, simply run the command below to download and install `rimp`'s completion script:
+
+```sh
+curl -o "_rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/scripts/completion/rimp_completion.zsh" && sudo install -D -m '0644' _rimp $(echo $FPATH | awk -F ':' '{print $2"/_rimp"}') && rm _rimp
+```
+
+### Fish
+
+Just run the command below to download and install `rimp`'s completion script:
+
+```sh
+curl -o "rimp.fish" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/scripts/completion/rimp_completion.fish" && sudo install -D -m '0644' rimp.fish /usr/share/fish/completions/rimp.fish && rm rimp.fish
+```
+
+### Bash
+
+First, run the command below to download and install `rimp`'s completion script:
+
+```sh
+curl -o "rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/scripts/completion/rimp_completion.bash" && sudo install -D -m '0644' rimp /usr/share/bash-completion/completions/rimp && rm rimp
+```
+
+Then add the following line to your `.bashrc` to load the script at shell startup:
+
+```sh
+[ -r /usr/share/bash-completion/completions/rimp ] && source /usr/share/bash-completion/completions/rimp
+```
 
 # Usage
+
 `rimp` is used through multiple sub-commands that each does a special task; exactly like `git` and `apt`.
 
 ```sh
@@ -105,6 +157,10 @@ Subcommands:
 Enclosing in Square Brackets("[]") means optional.
 See rimp SUBCOMMAND --help to read about a specific subcommand.
 ```
+
+## Tab-Completion
+
+Just hit Tab while typing a sub-command, tag name, option, or path and the shell environment will automatically complete what you’re typing or suggest options to you.
 
 # Roadmap
 

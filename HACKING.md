@@ -44,6 +44,15 @@ cd rimp
 cmake -S. -B.//build -DCMAKE_BUILD_TYPE=Release
 cmake --build build 
 ```
+## Compilation flags
+
+In addition to the default CMake flags, this compilation option is available too:
+
+### cmake -DCOMP_INSTALL=[ON|OFF]
+
+Determine whether to install Shell Completion scripts alongside rimp executable or not. These scripts will enable tab-completion for the subcommands, tag names, paths, etc.
+
+By default this flag is set to `ON`, i.e., Completion scripts will be installed.
 
 # Installation
 After building the source code, you can install `rimp` by running:
@@ -71,6 +80,26 @@ sudo cmake --install build --config Release
 $ rimp --version
 
 Rimp X.X.X.
+```
+
+# Tab-Completion
+
+After the Installation, Completion scripts are installed for available shells on your computer. Available shells are read from `/etc/shells` file.
+
+> Since Powershell doesn't support Programmable Completions (or at least I don't know how), Tab-Completion isn't available on Windows.
+
+**ZSH**: The completion system needs to be activated. If you’re using something like `oh-my-zsh` then this is already taken care of, otherwise you’ll need to add the following to your `.zshrc`
+
+```sh
+autoload -U compinit
+compinit
+```
+**Fish**: Just reload your shell and you are good to go.
+
+**Bash**: Add the following line to your `.bashrc` to load the script at shell startup:
+
+```sh
+[ -r /usr/share/bash-completion/completions/rimp ] && source /usr/share/bash-completion/completions/rimp
 ```
 
 # Code Style
