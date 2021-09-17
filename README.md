@@ -167,8 +167,6 @@ Just hit Tab while typing a sub-command, tag name, option, or path and the shell
 
 # Roadmap
 
-- Tab Completion for sub-commands and tags
-
 - A new sub-command to run shell commands on File/Folders associated with a Tag
 
 - UNICODE Support for Tag names
