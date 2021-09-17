@@ -16,15 +16,18 @@
 
 
 ## Why?
+
 I wanted a tool that allows you to:
 
-- Tag files/folders using the command line 
+- Tag files/folders using the command line.
 
-- Paste those files/folders elsewhere with one simple command
+- Paste those files/folders elsewhere with one simple command.
 
-- Remove or update an existing tag
+- Remove or update an existing tag.
 
-- List previously added Tags and the Path they point to, prettily formatted. 
+- List previously added Tags and the Path they point to, prettily formatted.
+
+- Use proper Tab Completion in any modern Shell
 
 # Installation
 
