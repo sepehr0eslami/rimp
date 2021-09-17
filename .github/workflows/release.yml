@@ -10,7 +10,9 @@ env:
   WIN64_ARCHIVE: rimp-win64
   MACOS_ARCHIVE: rimp-macos
   LINUX_ARCHIVE: rimp-linux64
-  RELEASE_BODY: "**For Installation please refer to the [README](https://github.com/sepehr0eslami/rimp#installation).**\n"
+  RELEASE_SAMPLE_BODY: | 
+      # Installation
+      **For Installation please refer to the [README](https://github.com/sepehr0eslami/rimp#installation).**
 
 jobs:
   Windows:
@@ -36,7 +38,6 @@ jobs:
       uses: ncipollo/release-action@v1
       with: 
         artifacts: "${{env.WIN64_ARCHIVE}}.zip"
-        body: "${{env.RELEASE_BODY}}"
         allowUpdates: true
         token: ${{secrets.GITHUB_TOKEN}}
 
@@ -63,11 +64,11 @@ jobs:
       uses: ncipollo/release-action@v1
       with: 
         artifacts: "${{env.MACOS_ARCHIVE}}.tar.gz"
-        body: "${{env.RELEASE_BODY}}"
         allowUpdates: true
         token: ${{secrets.GITHUB_TOKEN}}
 
   Linux:
+    needs: [Windows, MacOS]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -85,11 +86,19 @@ jobs:
         cp README.md ${{env.LINUX_ARCHIVE}}
         cp build/rimp ${{env.LINUX_ARCHIVE}}
         tar -czf ${{env.LINUX_ARCHIVE}}.tar.gz ${{env.LINUX_ARCHIVE}}
+      
+    - name: Generate Release Body
+      run: |
+        FHEAD=$(grep -m 1 "^## " CHANGELOG.md)
+        FTAIL=$(grep -m 2 "^## " CHANGELOG.md | tail -1)
+        echo "# Release Notes" > release_body.md
+        awk "/$FHEAD/{text=1;print;next}/$FTAIL/{text=0} text" CHANGELOG.md >> release_body.md
+        echo "${{env.RELEASE_SAMPLE_BODY}}" >> release_body.md
     
     - name: Release
       uses: ncipollo/release-action@v1
       with: 
         artifacts: "${{env.LINUX_ARCHIVE}}.tar.gz"
-        body: "${{env.RELEASE_BODY}}"
+        bodyFile: "release_body.md"
         allowUpdates: true
         token: ${{secrets.GITHUB_TOKEN}}

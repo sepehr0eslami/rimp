@@ -71,15 +71,15 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     /* ---------------------- Paste App Configurations --------------------- */
     paste_app_ = main_app_->add_subcommand("paste",
                                            "Insert the file associated "
-                                           "with TAG in [DEST].");
+                                           "with TAG in [DEST]");
     auto paste_tag_option = paste_app_->add_option("TAG", given_tag_,
-                                                   "ُThe desired Tag.");
+                                                   "ُThe desired Tag");
     auto paste_dest_option = paste_app_->add_option("DEST", given_dest_,
                                                     "The path to put the file "
                                                     "associated with TAG in;\n"
                                                     "Current directory is "
                                                     "assumed when nothing is "
-                                                    "given.");
+                                                    "given");
     paste_tag_option->required(true);
     paste_tag_option->option_text(" ");
     paste_dest_option->option_text(" ");
@@ -88,12 +88,12 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     /* ----------------------- Add App Configurations ---------------------- */
     add_app_ = main_app_->add_subcommand("add",
                                          "Attach the given TAG to "
-                                         "SOURCE.");
+                                         "SOURCE");
     auto add_tag_option = add_app_->add_option("TAG", given_tag_,
-                                               "The desired Tag.");
+                                               "The desired Tag");
     auto add_source_option = add_app_->add_option("SOURCE", given_source_,
                                                   "The path to the file which "
-                                                  "TAG should attach to.");
+                                                  "TAG should attach to");
 
     add_tag_option->required(true);
     add_source_option->required(true);
@@ -109,7 +109,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
                                                  "The desired Tag");
     auto edit_source_option = edit_app_->add_option("NEW_SOURCE", given_source_,
                                                     "Path to the new file that "
-                                                    "TAG should point to.");
+                                                    "TAG should point to");
 
     edit_tag_option->required(true);
     edit_source_option->required(true);
@@ -128,10 +128,60 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     remove_app_->add_flag("--force, -f", remove_force_flag,
                           "Cause the remove subcommand to delete the file "
                           "associated with TAG in adition to TAG "
-                          "itself.");
+                          "itself");
     remove_tag_option->required(true);
     remove_tag_option->option_text(" ");
     remove_app_->footer("");
+
+    /* ----------------------- List App Configuration ----------------------- */
+    list_app_ = main_app_->add_subcommand("list",
+                                          "List stored Tags and the "
+                                          "Path they point to");
+
+    bool list_tags_flag;
+    auto t_flag = list_app_->add_flag("--tags, -t", list_tags_flag,
+                                      "Only show the stored Tags");
+    bool list_paths_flag;
+    auto p_flag = list_app_->add_flag("--paths, -p", list_paths_flag,
+                                      "Only show the stored Paths");
+
+    bool list_no_decorate_flag;
+    auto d_flag = list_app_->add_flag("--no-decorate, -d",
+                                      list_no_decorate_flag,
+                                      "Do not decorate the output at all");
+
+    bool list_no_header_flag;
+    auto e_flag = list_app_->add_flag("--no-header, -e",
+                                      list_no_header_flag,
+                                      "Don't print the Header");
+
+    list_app_->add_option("--column-separator, -c", given_col_sep_,
+                          "Use the given TEXT as the column separator instead "
+                          "of the default (two spaces)");
+    list_app_->add_option("--row-separator, -r", given_row_sep_,
+                          "Use the given TEXT as the row separator instead "
+                          "of the default (new-line)");
+
+    string f_flag_help =
+        "Pretty-print the stored data in the given format, where the format "
+        "can contain any letter and some placeholders.\n"
+        "Available placeholders are as follows:\n"
+        "%t --> current Tag \n"
+        "%p --> current Path \n"
+        "%i --> current index \n"
+        "%n --> new-line \n"
+        "%b --> tab \n"
+        "%c --> column seperator (default: two spaces)\n"
+        "%r --> row seperator (default: new-line)";
+    auto f_flag = list_app_->add_option("--format, -f", given_format_,
+                                        f_flag_help);
+
+    t_flag->excludes(p_flag);
+    t_flag->excludes(f_flag);
+    p_flag->excludes(f_flag);
+    d_flag->excludes(f_flag);
+
+    list_app_->footer("");
 
     /* -------------------------- Parse Everything -------------------------- */
     try {
@@ -154,6 +204,14 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     /* ------------------------ Get the parsed Flags ------------------------ */
     if (remove_force_flag)
         given_flags_ |= REMOVE_FORCE_FLAG;
+    if (list_tags_flag)
+        given_flags_ |= LIST_TAGS_FLAG;
+    else if (list_paths_flag)
+        given_flags_ |= LIST_PATHS_FLAG;
+    if (list_no_decorate_flag)
+        given_flags_ |= LIST_NO_DECORATE_FLAG;
+    if (list_no_header_flag)
+        given_flags_ |= LIST_NO_HEADER_FLAG;
 }
 
 /**

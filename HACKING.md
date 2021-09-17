@@ -5,7 +5,7 @@ Before you start coding, you will need to install some dependencies:
 
 Download and Install the latest version of [Git](https://git-scm.com/downloads), [CMake](https://cmake.org/download/), and a C++ compiler of choice. 
 
-> :warning: This Project heavily relies on features of C++17, so make sure you compiler support C++17 (or later).
+> ⚠️ This Project heavily relies on features of C++17, so make sure you compiler support C++17 (or newer).
 
 ## MacOS
 
@@ -44,13 +44,62 @@ cd rimp
 cmake -S. -B.//build -DCMAKE_BUILD_TYPE=Release
 cmake --build build 
 ```
+## Compilation flags
+
+In addition to the default CMake flags, this compilation option is available too:
+
+### cmake -DCOMP_INSTALL=[ON|OFF]
+
+Determine whether to install Shell Completion scripts alongside rimp executable or not. These scripts will enable tab-completion for the subcommands, tag names, paths, etc.
+
+By default this flag is set to `ON`, i.e., Completion scripts will be installed.
 
 # Installation
 After building the source code, you can install `rimp` by running:
 
+## Windows
+Run CMD or Powershell as Administrator and then run the following command:
+
 ```sh
-sudo cmake --install build
-rimp # Run Rimp
+cmake --install build --config Release
+```
+
+Now all you have to do is adding the Installation Folder (`C:\Program Files(x86)\rimp\bin`)to the PATH environment variable (You can google how to do it or get help from this [Link](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)). Now close your terminal and open it again and make sure `rimp` is correctly installed by running:
+
+```sh
+$ rimp --version
+
+Rimp X.X.X.
+```
+
+## MacOS and Linux
+
+```sh
+sudo cmake --install build --config Release
+
+$ rimp --version
+
+Rimp X.X.X.
+```
+
+# Tab-Completion
+
+After the Installation, Completion scripts are installed for available shells on your computer. Available shells are read from `/etc/shells` file.
+
+> Since Powershell doesn't support Programmable Completions (or at least I don't know how), Tab-Completion isn't available on Windows.
+
+**ZSH**: The completion system needs to be activated. If you’re using something like `oh-my-zsh` then this is already taken care of, otherwise you’ll need to add the following to your `.zshrc`
+
+```sh
+autoload -U compinit
+compinit
+```
+**Fish**: Just reload your shell and you are good to go.
+
+**Bash**: Add the following line to your `.bashrc` to load the script at shell startup:
+
+```sh
+[ -r /usr/share/bash-completion/completions/rimp ] && source /usr/share/bash-completion/completions/rimp
 ```
 
 # Code Style

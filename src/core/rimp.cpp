@@ -55,14 +55,7 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    string source_path;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
-                                    "Tag == \"" + tag + "\"", source_path,
-                                    error_msg);
-
-    if (returned != SQLITE_OK)
-        return returned;
-    if (source_path.empty()) {
+    if (!data_file.exists(DEFAULT_TAGS_TABLE, tag, error_msg)) {
         error_msg =
             "The Tag \'" + tag +
             "\' doesn't exist. You can add it by running:\n"
@@ -71,8 +64,12 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
             " [SOURCE]\'. See \'rimp --help\' for more information.";
         return EINVAL;
     }
-    if (!filesystem::exists(source_path)) {
-        error_msg = "No such file or directory \'" + source_path +
+    Records source_path;
+    data_file.select(DEFAULT_TAGS_TABLE, source_path, error_msg, "Path",
+                     "Tag == \"" + tag + "\"");
+
+    if (!filesystem::exists(source_path[1].front())) {
+        error_msg = "No such file or directory \'" + source_path[1].front() +
                     "\'. The file "
                     " or directory associated with \'" +
                     tag + "\' Tag is missing.";
@@ -81,7 +78,7 @@ int rimp::paste(string tag, filesystem::path dest, string &error_msg) {
     }
 
     error_code code;
-    filesystem::copy(filesystem::path(source_path), dest,  // NOLINT
+    filesystem::copy(filesystem::path(source_path[1].front()), dest,  // NOLINT
                      filesystem::copy_options::recursive, code);
     error_msg = code.message();
     return code.value();
@@ -135,13 +132,7 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    string old_source;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
-                                    "Tag == \"" + tag + "\"", old_source,
-                                    error_msg);
-    if (returned != SQLITE_OK)
-        return returned;
-    if (old_source.empty()) {
+    if (!data_file.exists(DEFAULT_TAGS_TABLE, tag, error_msg)) {
         error_msg = "The Tag \'" + tag +
                     "\' doesn't exist. Please enter an "
                     "existing tag.";
@@ -149,10 +140,10 @@ int rimp::edit(string tag, filesystem::path new_source, string &error_msg) {
     }
 
     auto abs_path = filesystem::absolute(new_source);
-    returned = data_file.update({"Tag = \"" + tag + "\"",
-                                 "Path = \"" + abs_path.string() + "\""},
-                                "Tag == \"" + tag + "\"",
-                                DEFAULT_TAGS_TABLE, error_msg);
+    int returned = data_file.update({"Tag = \"" + tag + "\"",
+                                     "Path = \"" + abs_path.string() + "\""},
+                                    "Tag == \"" + tag + "\"",
+                                    DEFAULT_TAGS_TABLE, error_msg);
 
     return returned;
 }
@@ -165,30 +156,145 @@ int rimp::remove(string tag, int flags, string &error_msg) {
 
     auto data_file = rimp::setup();
 
-    string source;
-    int returned = data_file.select(DEFAULT_TAGS_TABLE, "Path",
-                                    "Tag == \"" + tag + "\"", source,
-                                    error_msg);
-    if (returned != SQLITE_OK)
-        return returned;
-    if (source.empty()) {
+    if (!data_file.exists(DEFAULT_TAGS_TABLE, tag, error_msg)) {
         error_msg = "The Tag \'" + tag +
                     "\' doesn't exist. Please enter an "
                     "existing tag.";
         return EINVAL;
     }
+    Records source;
+    data_file.select(DEFAULT_TAGS_TABLE, source, error_msg,
+                     "Path", "Tag == \"" + tag + "\"");
 
     if ((flags & REMOVE_FORCE_FLAG) == REMOVE_FORCE_FLAG) {
         error_code issue;
-        filesystem::remove_all(filesystem::path(source), issue);
+        filesystem::remove_all(filesystem::path(source[1].front()), issue);
         if (issue.value()) {
             error_msg = issue.message();
             return issue.value();
         }
     }
 
-    returned = data_file.deleteRecord(DEFAULT_TAGS_TABLE,
-                                      "Tag == \"" + tag + "\"", error_msg);
+    int returned = data_file.deleteRecord(DEFAULT_TAGS_TABLE,
+                                          "Tag == \"" + tag + "\"", error_msg);
+
+    return returned;
+}
+
+int rimp::list(ostream &out, int flags, string &error_msg, string format,
+               string col_sep, string row_sep) {
+    auto data_file = rimp::setup();
+
+    Records records;
+    int returned = 0;
+    bool header = true;
+    if ((flags & LIST_NO_HEADER_FLAG) == LIST_NO_HEADER_FLAG) {
+        header = false;
+    }
+    if ((flags & LIST_TAGS_FLAG) == LIST_TAGS_FLAG) {
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
+                                    "Tag", "", header);
+    } else if ((flags & LIST_PATHS_FLAG) == LIST_PATHS_FLAG) {
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
+                                    "Path", "", header);
+    } else {
+        returned = data_file.select(DEFAULT_TAGS_TABLE, records, error_msg,
+                                    "*", "", header);
+    }
+
+    if (returned != SQLITE_OK) {
+        return returned;
+    } else if (records.empty()) {
+        error_msg = "No tag is available!";
+        return 1;
+    }
+
+    char main_sep = '-';
+
+    if ((flags & LIST_NO_DECORATE_FLAG) == LIST_NO_DECORATE_FLAG) {
+        for (int i = 0; i < records.size(); i++) {
+            for (int j = 0; j < records[i].size(); j++) {
+                out << records[i][j]
+                    << (j < records[i].size() - 1 ? col_sep : "");
+            }
+            out << (i < records.size() - 1 ? row_sep : "\n");
+        }
+    } else if (!format.empty()) {
+        for (int i = 0; i < records.size(); i++) {
+            for (int j = 0; j < format.size(); j++) {
+                if (format[j] != '%') {
+                    out << format[j];
+                    continue;
+                }
+
+                j++;
+                switch (format[j]) {
+                    case 't':
+                        out << records[i][0];
+                        break;
+                    case 'p':
+                        out << records[i][1];
+                        break;
+                    case 'i':
+                        out << i + 1;
+                        break;
+                    case 'n':
+                        out << "\n";
+                        break;
+                    case 'b':
+                        out << "\t";
+                        break;
+                    case 'c':
+                        out << col_sep;
+                        break;
+                    case 'r':
+                        out << row_sep;
+                        break;
+                    default:
+                        out << "%" << format[j];
+                        break;
+                }
+            }
+        }
+    } else {
+        vector<int> lengths;
+        int total_length = (records.front().size() - 1) * col_sep.size();
+        for (int i = 0; i < records.front().size(); i++) {
+            int tmp = 0;
+            for (int j = 0; j < records.size(); j++) {
+                tmp = max(tmp, static_cast<int>(records[j][i].size()));
+            }
+            lengths.push_back(tmp);
+            total_length += tmp;
+        }
+
+        // Printing the Top border.
+        out << string(total_length, main_sep) << "\n";
+        // Printing the Records.
+        for (int i = 0; i < records.size(); i++) {
+            if (i == 0 && header) {
+                // Printing the Header.
+                for (int j = 0; j < records[i].size(); j++) {
+                    out << setfill(' ') << setw(lengths[j]) << left
+                        << records[i][j]
+                        << ((j < records[i].size() - 1) ? col_sep : "\n");
+                }
+                // Printing Header seperator.
+                for (int j = 0; j < lengths.size(); j++) {
+                    out << string(lengths[j], main_sep)
+                        << ((j < lengths.size() - 1) ? col_sep : "\n");
+                }
+                i++;
+            }
+            for (int j = 0; j < records[i].size(); j++) {
+                out << setfill(' ') << setw(lengths[j]) << left << records[i][j]
+                    << ((j < records[i].size() - 1) ? col_sep : "");
+            }
+            out << (i < records.size() - 1 ? row_sep : "\n");
+        }
+        // Printing the Bottom border.
+        out << string(total_length, main_sep) << "\n";
+    }
 
     return returned;
 }

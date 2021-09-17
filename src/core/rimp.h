@@ -21,24 +21,28 @@
 #ifndef SRC_CORE_RIMP_H_
 #define SRC_CORE_RIMP_H_
 
+#include <algorithm>
 #include <cerrno>
 #include <string>
+#include <vector>
 
 #include "src/database/database.h"
 #include "src/parser/flags.h"
 #include "src/paths/paths.h"
 
+using namespace std;  // NOLINT
+
 const SQLTable DEFAULT_TAGS_TABLE("Mappings", {"Tag TEXT PRIMARY KEY NOT NULL",
                                                "Path TEXT NOT NULL"});
 
-using namespace std;  // NOLINT
-
 namespace rimp {
 SQLDatabase setup();
-int paste(string tag, filesystem::path dest, string &error_msg);       // NOLINT
-int add(string tag, filesystem::path source, string &error_msg);       // NOLINT
-int edit(string tag, filesystem::path new_source, string &error_msg);  // NOLINT
-int remove(string tag, int flags, string &error_msg);                  // NOLINT
+int paste(string tag, filesystem::path dest, string &error_msg);          // NOLINT
+int add(string tag, filesystem::path source, string &error_msg);          // NOLINT
+int edit(string tag, filesystem::path new_source, string &error_msg);     // NOLINT
+int remove(string tag, int flags, string &error_msg);                     // NOLINT
+int list(ostream &out, int flags, string &error_msg, string format = "",  // NOLINT
+         string col_sep = "  ", string row_sep = "\n");
 }  // namespace rimp
 
 #endif  // SRC_CORE_RIMP_H_

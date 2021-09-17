@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11.0)
 
-project(rimp VERSION 1.0.0)
+project(rimp VERSION 1.1.0)
 
 # Variables for important folders.
 include("${PROJECT_SOURCE_DIR}/cmake/folders.cmake")
@@ -41,3 +41,8 @@ target_link_libraries (${PROJECT_NAME}
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION "bin")
+
+option(COMP_INSTALL "Whether to Install Shell Completion Scripts or Not" ON)
+if(${COMP_INSTALL})
+    include ("${cmake_dir}/completion_install.cmake")
+endif()

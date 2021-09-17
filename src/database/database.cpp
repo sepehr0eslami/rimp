@@ -20,11 +20,33 @@
 
 #include "src/database/database.h"
 
-int select_callback(void *result, int argc, char **argv, char **columns_name) {
-    for (int i = 0; i < argc; i++) {
-        string str = argv[i];
-        *reinterpret_cast<string *>(result) = str;
+int getRecords(void *result, int argc, char **argv, char **columns_name) {
+    auto records = reinterpret_cast<Records *>(result);
+    if (records->size() == 0) {
+        vector<string> columns;
+        for (int i = 0; i < argc; i++) {
+            columns.push_back(columns_name[i]);
+        }
+        records->push_back(columns);
     }
+    vector<string> data;
+    for (int i = 0; i < argc; i++) {
+        data.push_back(argv[i]);
+    }
+    records->push_back(data);
+
+    return 0;
+}
+
+int getRecordsNoHeader(void *result, int argc, char **argv,
+                       char **columns_name) {
+    auto records = reinterpret_cast<Records *>(result);
+    vector<string> data;
+    for (int i = 0; i < argc; i++) {
+        data.push_back(argv[i]);
+    }
+    records->push_back(data);
+
     return 0;
 }
 
@@ -122,18 +144,33 @@ int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
     return returned;
 }
 
-int SQLDatabase::select(SQLTable target_table, string column, string condition,
-                        string &result, string &error_msg) {
+int SQLDatabase::select(SQLTable target_table, Records &result,
+                        string &error_msg, string column, string condition,
+                        bool header) {
     string query = "SELECT " + column + " FROM " + target_table.getName() +
-                   " WHERE " + condition;
+                   (condition.empty() ? "" : " WHERE " + condition) + ";";
 
     int returned = 0;
     char *error_char = nullptr;
-    returned = sqlite3_exec(sqlite_object_, query.c_str(), select_callback,
-                            &result, &error_char);
+    returned = (header == true
+                    ? sqlite3_exec(sqlite_object_, query.c_str(), getRecords,
+                                   &result, &error_char)
+                    : sqlite3_exec(sqlite_object_, query.c_str(),
+                                   getRecordsNoHeader, &result, &error_char));
 
     if (error_char != nullptr)
         error_msg = error_char;
     sqlite3_free(error_char);
     return returned;
+}
+
+bool SQLDatabase::exists(SQLTable target_table, string tag, string &error_msg) {
+    Records records;
+    int returned = this->select(target_table, records, error_msg,
+                                "*", "Tag == \"" + tag + "\"");
+
+    if (returned != SQLITE_OK)
+        throw runtime_error{error_msg};
+
+    return !records.empty();
 }
