@@ -16,15 +16,18 @@
 
 
 ## Why?
+
 I wanted a tool that allows you to:
 
-- Tag files/folders using the command line 
+- Tag files/folders using the command line.
 
-- Paste those files/folders elsewhere with one simple command
+- Paste those files/folders elsewhere with one simple command.
 
-- Remove or update an existing tag
+- Remove or update an existing tag.
 
-- List previously added Tags and the Path they point to, prettily formatted. 
+- List previously added Tags and the Path they point to, prettily formatted.
+
+- Use proper Tab Completion in any modern Shell
 
 # Installation
 
@@ -88,17 +91,13 @@ You can compile the source code yourself by following the instructions available
 
 Currently, completion scripts are available for the following shells:
 
-<!-- TODO: Update the Links before merge -->
-
-| Shell | Script                                                                                                             |
-| ----- | ------------------------------------------------------------------------------------------------------------------ |
-| ZSH   | [rimp_completion.zsh](https://github.com/sepehr0eslami/rimp/blob/develop/scripts/completion/rimp_completion.zsh)   |
-| Fish  | [rimp_completion.fish](https://github.com/sepehr0eslami/rimp/blob/develop/scripts/completion/rimp_completion.fish) |
-| Bash  | [rimp_completion.bash](https://github.com/sepehr0eslami/rimp/blob/develop/scripts/completion/rimp_completion.bash) |
+| Shell | Script                                                                                                            |
+| ----- | ----------------------------------------------------------------------------------------------------------------- |
+| ZSH   | [rimp_completion.zsh](https://github.com/sepehr0eslami/rimp/blob/master/scripts/completion/rimp_completion.zsh)   |
+| Fish  | [rimp_completion.fish](https://github.com/sepehr0eslami/rimp/blob/master/scripts/completion/rimp_completion.fish) |
+| Bash  | [rimp_completion.bash](https://github.com/sepehr0eslami/rimp/blob/master/scripts/completion/rimp_completion.bash) |
 
 > Since Powershell doesn't support Programmable Completions (or at least I don't know how), Tab-Completion isn't available on Windows.
-
-<!-- TODO: Update the Links before merge -->
 
 ### ZSH
 
@@ -111,7 +110,7 @@ compinit
 Then, simply run the command below to download and install `rimp`'s completion script:
 
 ```sh
-curl -o "_rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/scripts/completion/rimp_completion.zsh" && sudo install -D -m '0644' _rimp $(echo $FPATH | awk -F ':' '{print $2"/_rimp"}') && rm _rimp
+curl -o "_rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/master/scripts/completion/rimp_completion.zsh" && sudo install -D -m '0644' _rimp $(echo $FPATH | awk -F ':' '{print $2"/_rimp"}') && rm _rimp
 ```
 
 ### Fish
@@ -119,7 +118,7 @@ curl -o "_rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/sc
 Just run the command below to download and install `rimp`'s completion script:
 
 ```sh
-curl -o "rimp.fish" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/scripts/completion/rimp_completion.fish" && sudo install -D -m '0644' rimp.fish /usr/share/fish/completions/rimp.fish && rm rimp.fish
+curl -o "rimp.fish" "https://raw.githubusercontent.com/sepehr0eslami/rimp/master/scripts/completion/rimp_completion.fish" && sudo install -D -m '0644' rimp.fish /usr/share/fish/completions/rimp.fish && rm rimp.fish
 ```
 
 ### Bash
@@ -127,7 +126,7 @@ curl -o "rimp.fish" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develo
 First, run the command below to download and install `rimp`'s completion script:
 
 ```sh
-curl -o "rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/develop/scripts/completion/rimp_completion.bash" && sudo install -D -m '0644' rimp /usr/share/bash-completion/completions/rimp && rm rimp
+curl -o "rimp" "https://raw.githubusercontent.com/sepehr0eslami/rimp/master/scripts/completion/rimp_completion.bash" && sudo install -D -m '0644' rimp /usr/share/bash-completion/completions/rimp && rm rimp
 ```
 
 Then add the following line to your `.bashrc` to load the script at shell startup:
@@ -163,8 +162,6 @@ See rimp SUBCOMMAND --help to read about a specific subcommand.
 Just hit Tab while typing a sub-command, tag name, option, or path and the shell environment will automatically complete what you’re typing or suggest options to you.
 
 # Roadmap
-
-- Tab Completion for sub-commands and tags
 
 - A new sub-command to run shell commands on File/Folders associated with a Tag
 
