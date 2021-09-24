@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 - 2021-09-24
+
+### Fixed
+
+- **`list` Sub-command's malfunction:** Unexpected and random behavior of `list` sub-command to assume flags are present when they are not ([f1fe191](https://github.com/sepehr0eslami/rimp/commit/f1fe191))
+- **Missing dependencies in `HACKING.md`:** It was forgotten to mention "SQLite" as a dependency ([2b3475f](https://github.com/sepehr0eslami/rimp/commit/2b3475f))
+
 ## 1.1.0 - 2021-09-17
 
 ### Added

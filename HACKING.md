@@ -7,6 +7,8 @@ Download and Install the latest version of [Git](https://git-scm.com/downloads),
 
 > ⚠️ This Project heavily relies on features of C++17, so make sure you compiler support C++17 (or newer).
 
+Additionally, you need SQLite3 to run this application. [Download](https://www.sqlite.org/download.html) the latest version of SQLite3 for Windows (32/64-bit based on your system), then extract it and move `sqlite3.dll` to `C:\System32`.
+
 ## MacOS
 
 ```sh
@@ -18,20 +20,19 @@ brew install git cmake make
 ### Ubuntu, Debian and derivatives
 
 ```sh
-sudo apt-get install git cmake build-essential 
+sudo apt-get install git cmake build-essential libsqlite3-dev
 ```
 
 ### Red Hat, Fedora, CentOS and derivatives
 
 ```sh
-sudo yum groupinstall 'Development Tools'
-sudo yum install git cmake gcc gcc-c++ make
+sudo yum install git cmake gcc gcc-c++ make sqlite-devel
 ```
 
 ### Arch, Manjaro and derivatives
 
 ```sh
-sudo pacman -S git cmake base-devel
+sudo pacman -S git cmake base-devel sqlite
 ```
 
 
