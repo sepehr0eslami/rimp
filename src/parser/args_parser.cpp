@@ -124,7 +124,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     auto remove_tag_option = remove_app_->add_option("TAG", given_tag_,
                                                      "The desired Tag");
 
-    bool remove_force_flag;
+    bool remove_force_flag = false;
     remove_app_->add_flag("--force, -f", remove_force_flag,
                           "Cause the remove subcommand to delete the file "
                           "associated with TAG in adition to TAG "
@@ -138,19 +138,19 @@ ArgsParser::ArgsParser(int argc, char **argv) {
                                           "List stored Tags and the "
                                           "Path they point to");
 
-    bool list_tags_flag;
+    bool list_tags_flag = false;
     auto t_flag = list_app_->add_flag("--tags, -t", list_tags_flag,
                                       "Only show the stored Tags");
-    bool list_paths_flag;
+    bool list_paths_flag = false;
     auto p_flag = list_app_->add_flag("--paths, -p", list_paths_flag,
                                       "Only show the stored Paths");
 
-    bool list_no_decorate_flag;
+    bool list_no_decorate_flag = false;
     auto d_flag = list_app_->add_flag("--no-decorate, -d",
                                       list_no_decorate_flag,
                                       "Do not decorate the output at all");
 
-    bool list_no_header_flag;
+    bool list_no_header_flag = false;
     auto e_flag = list_app_->add_flag("--no-header, -e",
                                       list_no_header_flag,
                                       "Don't print the Header");
