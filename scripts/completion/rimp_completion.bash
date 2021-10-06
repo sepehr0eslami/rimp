@@ -80,7 +80,7 @@ function _rimp_list {
 
 function _rimp() {
     local cur="$2"
-    TAGS=$(rimp list -det)
+    TAGS=$(rimp list -det 2>/dev/null)
     COMPREPLY=()
 
     __rimp_find_word "$SUBCMDS"

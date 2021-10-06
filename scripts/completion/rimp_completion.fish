@@ -1,6 +1,6 @@
 set -l I "not __fish_seen_subcommand_from --help -h --version -v"
-set -l TAGS "(rimp list -det)"
-set -l TAGS_DESC "(rimp list -dec \t)"
+set -l TAGS "(rimp list -det 2>/dev/null)"
+set -l TAGS_DESC "(rimp list -dec \t 2>/dev/null)"
 set -l SUBCMDS "paste add edit remove list"
 set -l SUBCMDS_DESC "paste\t'Insert the file associated with TAG in [DEST]'" \
                     "add\t'Attach the given TAG to SOURCE'" \
@@ -16,7 +16,6 @@ complete -fc rimp -n "$I" -s h -l help -d "Print this help message and exit"
 # Paste
 complete -fc rimp -n "__fish_seen_subcommand_from paste; and not __fish_seen_subcommand_from $TAGS" -a "$TAGS_DESC"
 complete -fc rimp -n "__fish_seen_subcommand_from paste; and __fish_seen_subcommand_from $TAGS" -a "(__fish_complete_directories)"
-
 
 # Add
 complete -Fc rimp -n "__fish_seen_subcommand_from add"
