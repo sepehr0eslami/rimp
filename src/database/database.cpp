@@ -61,7 +61,7 @@ SQLDatabase::SQLDatabase(filesystem::path database_path)
             "Please make sure the file and Its parent directory are accessible "
             "for you(You have Read/Write access to both); and if the issue "
             "didn't resolve, Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n");
+            "https://github.com/sepehr0eslami/rimp/issues");
         throw runtime_error{error_msg};
     }
 }

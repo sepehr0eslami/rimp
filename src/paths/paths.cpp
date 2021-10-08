@@ -47,7 +47,7 @@ filesystem::path Paths::getUserHomeDir() {
             "Error getting your Profile directory path(SHGetKnownFolderPath): "
             "Directory seems to be Virtual hence not accesible for Rimp."
             "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
 
     } else if (result == E_INVALIDARG) {
         throw runtime_error{
@@ -57,7 +57,7 @@ filesystem::path Paths::getUserHomeDir() {
             "Directory doesn't exist and Rimp was unable to create it. Run "
             "Rimp as Administrator to automatically create the directory.\n"
             "If the issue didn't resolve, Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     filesystem::path path(home_path);
@@ -81,7 +81,7 @@ filesystem::path Paths::getUserDataDir() {
             "(SHGetKnownFolderPath): "
             "Directory seems to be Virtual hence not accesible for Rimp."
             "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
 
     } else if (result == E_INVALIDARG) {
         throw runtime_error{
@@ -92,7 +92,7 @@ filesystem::path Paths::getUserDataDir() {
             "Directory doesn't exist and Rimp was unable to create it. Run "
             "Rimp as Administrator to automatically create the directory.\n"
             "If the issue didn't resolve, Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     filesystem::path path(data_path);
@@ -116,7 +116,7 @@ filesystem::path Paths::getUserConfigDir() {
             "(SHGetKnownFolderPath): "
             "Directory seems to be Virtual hence not accesible for Rimp."
             "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
 
     } else if (result == E_INVALIDARG) {
         throw runtime_error{
@@ -127,7 +127,7 @@ filesystem::path Paths::getUserConfigDir() {
             "Directory doesn't exist and Rimp was unable to create it. Run "
             "Rimp as Administrator to automatically create the directory.\n"
             "If the issue didn't resolve, Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     filesystem::path path(config_path);
@@ -153,7 +153,7 @@ filesystem::path Paths::getUserHomeDir() {
             ":\n"
             "Error getting your home directory path (getpwuid).\n"
             "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     home_env = user_info->pw_dir;
@@ -163,7 +163,7 @@ filesystem::path Paths::getUserHomeDir() {
             ":\n"
             "Error getting your home directory path (pw_dir).\n"
             "Please file a bug report at\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     return filesystem::path(home_env);
@@ -197,7 +197,7 @@ filesystem::path Paths::getUserHomeDir() {
             ":\n"
             "Error getting your home directory path (getpwuid).\n"
             "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     home_env = user_info->pw_dir;
@@ -207,7 +207,7 @@ filesystem::path Paths::getUserHomeDir() {
             ":\n"
             "Error getting your home directory path (pw_dir).\n"
             "Please file a bug report at\n"
-            "https://github.com/sepehr0eslami/rimp/issues\n"};
+            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     return filesystem::path(home_env);
@@ -289,7 +289,7 @@ bool Paths::createDir(filesystem::path path) {
         error_msg.append("directory yourself.\n");
         error_msg.append("If the issue didn't resolve, Please file a bug ");
         error_msg.append("report at:\n");
-        error_msg.append("https://github.com/sepehr0eslami/rimp/issues\n");
+        error_msg.append("https://github.com/sepehr0eslami/rimp/issues");
         throw runtime_error{error_msg};
         return false;
     }
@@ -314,7 +314,7 @@ bool Paths::createFile(filesystem::path path) {
         error_msg.append("should have Read/Write access\n");
         error_msg.append("If the issue didn't resolve, Please file a bug ");
         error_msg.append("report at:\n");
-        error_msg.append("https://github.com/sepehr0eslami/rimp/issues\n");
+        error_msg.append("https://github.com/sepehr0eslami/rimp/issues");
         throw runtime_error{error_msg};
         return false;
     }

@@ -57,7 +57,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     try {
         main_app_ = new CLI::App(rimp_header_, "rimp");
     } catch (bad_alloc e) {
-        cerr << e.what() << " was catched in " << __FILE__ << "\n";
+        cerr << e.what() << " was catched in " << __FILE__;
         returned_ = 112;
         return;
     }
