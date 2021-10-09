@@ -21,8 +21,8 @@
 #include <iostream>
 #include <string>
 
-#include "core/rimp.h"
-#include "parser/args_parser.h"
+#include "src/core/rimp.h"
+#include "src/parser/args_parser.h"
 
 using namespace std;  // NOLINT
 
