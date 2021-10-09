@@ -44,8 +44,8 @@ filesystem::path getUserConfigDir();
 // OS-Independent functions.
 filesystem::path getRimpDataDir();
 filesystem::path getRimpConfigDir();
-filesystem::path getUserDataFile();
-filesystem::path getUserConfigFile();
+filesystem::path getRimpDataFile();
+filesystem::path getRimpConfigFile();
 bool createDir(filesystem::path path);
 bool createFile(filesystem::path path);
 }  // namespace Paths

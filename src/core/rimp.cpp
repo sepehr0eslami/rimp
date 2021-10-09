@@ -21,7 +21,7 @@
 #include "src/core/rimp.h"
 
 SQLDatabase rimp::setup() {
-    SQLDatabase data_file(Paths::getUserDataFile());
+    SQLDatabase data_file(Paths::getRimpDataFile());
     string error;
     int returned = data_file.createTable(DEFAULT_TAGS_TABLE, error);
 

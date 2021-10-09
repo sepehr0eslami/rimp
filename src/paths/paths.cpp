@@ -259,7 +259,7 @@ filesystem::path Paths::getRimpConfigDir() {
     return rimp_config_dir.append(RIMP_DIRECTORY_NAME);
 }
 
-filesystem::path Paths::getUserDataFile() {
+filesystem::path Paths::getRimpDataFile() {
     filesystem::path user_data_file = Paths::getRimpDataDir();
     user_data_file.append(RIMP_DATA_FILE_NAME);
 
@@ -268,7 +268,7 @@ filesystem::path Paths::getUserDataFile() {
     return user_data_file;
 }
 
-filesystem::path Paths::getUserConfigFile() {
+filesystem::path Paths::getRimpConfigFile() {
     filesystem::path user_config_file = Paths::getRimpConfigDir();
     return user_config_file.append(RIMP_CONFIG_FILE_NAME);
 }
