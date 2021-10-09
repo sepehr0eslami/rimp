@@ -32,8 +32,9 @@ int main(int argc, char **argv) {
 
     try {
         ArgsParser parser(argc, argv);
-        if (parser.returned_ != 0)
+        if (parser.returned_ != 0) {
             return parser.returned_;
+        }
 
         if (parser.given_subcmd_ == "paste") {
             ret = rimp::paste(parser.given_tag_,

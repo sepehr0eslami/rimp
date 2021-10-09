@@ -84,8 +84,9 @@ int SQLDatabase::createTable(SQLTable table, string &error_msg) {
     returned = sqlite3_exec(sqlite_object_, table.getSchema().c_str(), nullptr,
                             nullptr, &error_char);
 
-    if (error_char != nullptr)
+    if (error_char != nullptr) {
         error_msg = error_char;
+    }
     sqlite3_free(error_char);
     return returned;
 }
@@ -102,8 +103,9 @@ int SQLDatabase::insert(vector<string> values, SQLTable target_table, string &er
     returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
                             &error_char);
 
-    if (error_char != nullptr)
+    if (error_char != nullptr) {
         error_msg = error_char;
+    }
     sqlite3_free(error_char);
     return returned;
 }
@@ -122,8 +124,9 @@ int SQLDatabase::update(vector<string> new_values, string condition,
     returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
                             &error_char);
 
-    if (error_char != nullptr)
+    if (error_char != nullptr) {
         error_msg = error_char;
+    }
     sqlite3_free(error_char);
     return returned;
 }
@@ -138,8 +141,9 @@ int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
     returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
                             &error_char);
 
-    if (error_char != nullptr)
+    if (error_char != nullptr) {
         error_msg = error_char;
+    }
     sqlite3_free(error_char);
     return returned;
 }
@@ -158,8 +162,9 @@ int SQLDatabase::select(SQLTable target_table, Records &result,
                     : sqlite3_exec(sqlite_object_, query.c_str(),
                                    getRecordsNoHeader, &result, &error_char));
 
-    if (error_char != nullptr)
+    if (error_char != nullptr) {
         error_msg = error_char;
+    }
     sqlite3_free(error_char);
     return returned;
 }
@@ -169,8 +174,9 @@ bool SQLDatabase::exists(SQLTable target_table, string tag, string &error_msg) {
     int returned = this->select(target_table, records, error_msg,
                                 "*", "Tag == \"" + tag + "\"");
 
-    if (returned != SQLITE_OK)
+    if (returned != SQLITE_OK) {
         throw runtime_error{error_msg};
+    }
 
     return !records.empty();
 }

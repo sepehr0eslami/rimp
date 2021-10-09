@@ -25,9 +25,9 @@ SQLDatabase rimp::setup() {
     string error;
     int returned = data_file.createTable(DEFAULT_TAGS_TABLE, error);
 
-    if (returned != SQLITE_OK)
+    if (returned != SQLITE_OK) {
         throw runtime_error{error};
-
+    }
     return data_file;
 }
 

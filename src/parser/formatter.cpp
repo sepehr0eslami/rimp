@@ -31,8 +31,9 @@ string CustomFormatter::make_subcommand(const CLI::App *sub) const {
     auto positionals = sub->get_options({});
 
     for (auto positional : positionals) {
-        if (positional->get_name(true).empty())
+        if (positional->get_name(true).empty()) {
             continue;
+        }
         string current_positional = positional->get_name(true);
         if (!positional->get_required()) {
             current_positional.insert(0, "[");
@@ -54,21 +55,25 @@ string CustomFormatter::make_option_opts(const CLI::Option *opt) const {
         out << " " << opt->get_option_text();
     } else {
         if (opt->get_type_size() != 0) {
-            if (!opt->get_type_name().empty())
+            if (!opt->get_type_name().empty()) {
                 out << " " << get_label(opt->get_type_name());
-            if (!opt->get_default_str().empty())
+            }
+            if (!opt->get_default_str().empty()) {
                 out << "=" << opt->get_default_str();
+            }
             if (opt->get_expected_max() ==
-                CLI::detail::expected_max_vector_size)
+                CLI::detail::expected_max_vector_size) {
                 out << " ...";
-            else if (opt->get_expected_min() > 1)
+            } else if (opt->get_expected_min() > 1) {
                 out << " x " << opt->get_expected();
-
-            if (opt->get_required())
+            }
+            if (opt->get_required()) {
                 out << " " << get_label("REQUIRED");
+            }
         }
-        if (!opt->get_envname().empty())
+        if (!opt->get_envname().empty()) {
             out << " (" << get_label("Env") << ":" << opt->get_envname() << ")";
+        }
         if (!opt->get_needs().empty()) {
             out << " " << get_label("Needs") << ":";
             for (const CLI::Option *op : opt->get_needs())

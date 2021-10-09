@@ -202,16 +202,20 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     }
 
     /* ------------------------ Get the parsed Flags ------------------------ */
-    if (remove_force_flag)
+    if (remove_force_flag) {
         given_flags_ |= REMOVE_FORCE_FLAG;
-    if (list_tags_flag)
+    }
+    if (list_tags_flag) {
         given_flags_ |= LIST_TAGS_FLAG;
-    else if (list_paths_flag)
+    } else if (list_paths_flag) {
         given_flags_ |= LIST_PATHS_FLAG;
-    if (list_no_decorate_flag)
+    }
+    if (list_no_decorate_flag) {
         given_flags_ |= LIST_NO_DECORATE_FLAG;
-    if (list_no_header_flag)
+    }
+    if (list_no_header_flag) {
         given_flags_ |= LIST_NO_HEADER_FLAG;
+    }
 }
 
 /**

@@ -274,8 +274,9 @@ filesystem::path Paths::getUserConfigFile() {
 }
 
 bool Paths::createDir(filesystem::path path) {
-    if (filesystem::exists(path))
+    if (filesystem::exists(path)) {
         return true;
+    }
 
     try {
         filesystem::create_directories(path);
@@ -298,8 +299,9 @@ bool Paths::createDir(filesystem::path path) {
 }
 
 bool Paths::createFile(filesystem::path path) {
-    if (filesystem::exists(path))
+    if (filesystem::exists(path)) {
         return true;
+    }
 
     ofstream file(path.string());
     if (!file.is_open()) {
