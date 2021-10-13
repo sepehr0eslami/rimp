@@ -30,18 +30,17 @@
 #include "src/parser/flags.h"
 #include "src/paths/paths.h"
 
-using namespace std;  // NOLINT
+using namespace std;
 
 const SQLTable DEFAULT_TAGS_TABLE("Mappings", {"Tag TEXT PRIMARY KEY NOT NULL", "Path TEXT NOT NULL"});
 
 namespace rimp {
 SQLDatabase setup();
-int paste(string tag, filesystem::path dest, string &error_msg);                                 // NOLINT
-int add(string tag, filesystem::path source, string &error_msg);                                 // NOLINT
-int edit(string tag, filesystem::path new_source, string &error_msg);                            // NOLINT
-int remove(string tag, int flags, string &error_msg);                                            // NOLINT
-int list(ostream &out, int flags, string &error_msg, string format = "", string col_sep = "  ",  // NOLINT
-         string row_sep = "\n");
+int paste(string tag, filesystem::path dest, string &error_msg);
+int add(string tag, filesystem::path source, string &error_msg);
+int edit(string tag, filesystem::path new_source, string &error_msg);
+int remove(string tag, int flags, string &error_msg);
+int list(ostream &out, int flags, string &error_msg, string format = "", string col_sep = "  ", string row_sep = "\n");
 }  // namespace rimp
 
 #endif  // SRC_CORE_RIMP_H_

@@ -26,7 +26,7 @@
 #include "external/CLI11/include/CLI/CLI.hpp"
 #include "src/parser/flags.h"
 
-using namespace std;  // NOLINT
+using namespace std;
 
 class ArgsParser {
  public:

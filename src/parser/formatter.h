@@ -25,7 +25,7 @@
 
 #include "external/CLI11/include/CLI/CLI.hpp"
 
-using namespace std;  // NOLINT
+using namespace std;
 
 class CustomFormatter : public CLI::Formatter {
  public:

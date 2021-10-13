@@ -24,7 +24,7 @@
 #include "src/core/rimp.h"
 #include "src/parser/args_parser.h"
 
-using namespace std;  // NOLINT
+using namespace std;
 
 int main(int argc, char **argv) {
     string errors;

@@ -25,7 +25,7 @@
 #include <string>
 #include <vector>
 
-using namespace std;  // NOLINT
+using namespace std;
 
 class SQLTable {
  public:

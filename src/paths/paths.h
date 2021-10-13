@@ -27,7 +27,7 @@
 
 #include "src/paths/filesystem.h"
 
-using namespace std;  // NOLINT
+using namespace std;
 
 const char RIMP_DIRECTORY_NAME[] = "rimp";
 const char RIMP_DATA_FILE_NAME[] = "tags.db";

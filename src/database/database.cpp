@@ -81,7 +81,7 @@ int SQLDatabase::createTable(SQLTable table, string &error_msg) {
     return returned;
 }
 
-int SQLDatabase::insert(vector<string> values, SQLTable target_table, string &error_msg) {  // NOLINT
+int SQLDatabase::insert(vector<string> values, SQLTable target_table, string &error_msg) {
     string query = "INSERT INTO " + target_table.getName() + " VALUES(";
     for (int i = 0; i < values.size(); i++) {
         query.append(values[i]);

@@ -29,7 +29,7 @@
 #include "src/database/table.h"
 #include "src/paths/filesystem.h"
 
-using namespace std;  // NOLINT
+using namespace std;
 
 typedef vector<vector<string>> Records;
 
@@ -43,13 +43,13 @@ class SQLDatabase {
 
     filesystem::path getDatabaseFile() const;
     sqlite3 *getSqliteObject() const;
-    int createTable(SQLTable table, string &error_msg);                                                 // NOLINT
-    int insert(vector<string> values, SQLTable target_table, string &error_msg);                        // NOLINT
-    int update(vector<string> new_values, string condition, SQLTable target_table, string &error_msg);  // NOLINT
-    int deleteRecord(SQLTable target_table, string condition, string &error_msg);                       // NOLINT
-    int select(SQLTable target_table, Records &result, string &error_msg, string column = "*",          // NOLINT
-               string condition = "", bool header = true);
-    bool exists(SQLTable target_table, string tag, string &error_msg);  // NOLINT
+    int createTable(SQLTable table, string &error_msg);
+    int insert(vector<string> values, SQLTable target_table, string &error_msg);
+    int update(vector<string> new_values, string condition, SQLTable target_table, string &error_msg);
+    int deleteRecord(SQLTable target_table, string condition, string &error_msg);
+    int select(SQLTable target_table, Records &result, string &error_msg, string column = "*", string condition = "",
+               bool header = true);
+    bool exists(SQLTable target_table, string tag, string &error_msg);
 
  private:
     filesystem::path database_file_;
