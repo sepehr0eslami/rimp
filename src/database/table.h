@@ -28,14 +28,14 @@
 using namespace std;
 
 class SQLTable {
- public:
+  public:
     SQLTable(string table_name, vector<string> table_columns);
 
     string getName() const;
     vector<string> getColumns() const;
     string getSchema() const;
 
- private:
+  private:
     string name_;
     vector<string> columns_;
 };

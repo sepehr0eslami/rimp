@@ -29,7 +29,7 @@
 using namespace std;
 
 class ArgsParser {
- public:
+  public:
     ArgsParser(int argc, char **argv);
     ~ArgsParser();
     string version_;
@@ -45,7 +45,7 @@ class ArgsParser {
     int given_flags_ = 0;
     int returned_ = 0;
 
- private:
+  private:
     CLI::App *main_app_;
     CLI::App *paste_app_;
     CLI::App *add_app_;

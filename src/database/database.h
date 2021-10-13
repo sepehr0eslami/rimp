@@ -37,7 +37,7 @@ int getRecords(void *result, int argc, char **argv, char **columns_name);
 int getRecordsNoHeader(void *result, int argc, char **argv, char **columns_name);
 
 class SQLDatabase {
- public:
+  public:
     explicit SQLDatabase(filesystem::path database_file);
     ~SQLDatabase();
 
@@ -51,7 +51,7 @@ class SQLDatabase {
                bool header = true);
     bool exists(SQLTable target_table, string tag, string &error_msg);
 
- private:
+  private:
     filesystem::path database_file_;
     sqlite3 *sqlite_object_;
 };

@@ -28,7 +28,7 @@
 using namespace std;
 
 class CustomFormatter : public CLI::Formatter {
- public:
+  public:
     CustomFormatter() : Formatter() {}
     string make_subcommand(const CLI::App *sub) const override;
     string make_option_opts(const CLI::Option *opt) const override;
