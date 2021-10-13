@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -20,16 +20,11 @@
 
 #include "src/database/table.h"
 
-SQLTable::SQLTable(string table_name, vector<string> table_columns)
-    : name_(table_name), columns_(table_columns) {}
+SQLTable::SQLTable(string table_name, vector<string> table_columns) : name_(table_name), columns_(table_columns) {}
 
-string SQLTable::getName() const {
-    return name_;
-}
+string SQLTable::getName() const { return name_; }
 
-vector<string> SQLTable::getColumns() const {
-    return columns_;
-}
+vector<string> SQLTable::getColumns() const { return columns_; }
 
 string SQLTable::getSchema() const {
     string schema = "CREATE TABLE IF NOT EXISTS " + name_ + "(";

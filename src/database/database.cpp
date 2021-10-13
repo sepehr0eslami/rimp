@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -38,8 +38,7 @@ int getRecords(void *result, int argc, char **argv, char **columns_name) {
     return 0;
 }
 
-int getRecordsNoHeader(void *result, int argc, char **argv,
-                       char **columns_name) {
+int getRecordsNoHeader(void *result, int argc, char **argv, char **columns_name) {
     auto records = reinterpret_cast<Records *>(result);
     vector<string> data;
     for (int i = 0; i < argc; i++) {
@@ -50,39 +49,30 @@ int getRecordsNoHeader(void *result, int argc, char **argv,
     return 0;
 }
 
-SQLDatabase::SQLDatabase(filesystem::path database_path)
-    : database_file_(database_path) {
+SQLDatabase::SQLDatabase(filesystem::path database_path) : database_file_(database_path) {
     int returned = 0;
     returned = sqlite3_open(database_file_.string().c_str(), &sqlite_object_);
     if (returned) {
         string error_msg = sqlite3_errmsg(sqlite_object_);
         error_msg.append(": " + database_file_.string() + "\n");
         error_msg.append(
-            "Please make sure the file and Its parent directory are accessible "
-            "for you(You have Read/Write access to both); and if the issue "
-            "didn't resolve, Please file a bug report at:\n"
+            "Please make sure the file and Its parent directory are accessible for you"
+            "(You have Read/Write access to both); and if the issue didn't resolve, Please file a bug report at:\n"
             "https://github.com/sepehr0eslami/rimp/issues");
         throw runtime_error{error_msg};
     }
 }
 
-SQLDatabase::~SQLDatabase() {
-    sqlite3_close(sqlite_object_);
-}
+SQLDatabase::~SQLDatabase() { sqlite3_close(sqlite_object_); }
 
-filesystem::path SQLDatabase::getDatabaseFile() const {
-    return database_file_;
-}
+filesystem::path SQLDatabase::getDatabaseFile() const { return database_file_; }
 
-sqlite3 *SQLDatabase::getSqliteObject() const {
-    return sqlite_object_;
-}
+sqlite3 *SQLDatabase::getSqliteObject() const { return sqlite_object_; }
 
 int SQLDatabase::createTable(SQLTable table, string &error_msg) {
     int returned = 0;
     char *error_char = nullptr;
-    returned = sqlite3_exec(sqlite_object_, table.getSchema().c_str(), nullptr,
-                            nullptr, &error_char);
+    returned = sqlite3_exec(sqlite_object_, table.getSchema().c_str(), nullptr, nullptr, &error_char);
 
     if (error_char != nullptr) {
         error_msg = error_char;
@@ -100,8 +90,7 @@ int SQLDatabase::insert(vector<string> values, SQLTable target_table, string &er
 
     int returned = 0;
     char *error_char = nullptr;
-    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
-                            &error_char);
+    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr, &error_char);
 
     if (error_char != nullptr) {
         error_msg = error_char;
@@ -110,8 +99,7 @@ int SQLDatabase::insert(vector<string> values, SQLTable target_table, string &er
     return returned;
 }
 
-int SQLDatabase::update(vector<string> new_values, string condition,
-                        SQLTable target_table, string &error_msg) {
+int SQLDatabase::update(vector<string> new_values, string condition, SQLTable target_table, string &error_msg) {
     string query = "UPDATE " + target_table.getName() + " SET ";
     for (int i = 0; i < new_values.size(); i++) {
         query.append(new_values[i]);
@@ -121,8 +109,7 @@ int SQLDatabase::update(vector<string> new_values, string condition,
 
     int returned = 0;
     char *error_char = nullptr;
-    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
-                            &error_char);
+    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr, &error_char);
 
     if (error_char != nullptr) {
         error_msg = error_char;
@@ -131,15 +118,12 @@ int SQLDatabase::update(vector<string> new_values, string condition,
     return returned;
 }
 
-int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
-                              string &error_msg) {
-    string query = "DELETE FROM " + target_table.getName() +
-                   " WHERE " + condition + ";";
+int SQLDatabase::deleteRecord(SQLTable target_table, string condition, string &error_msg) {
+    string query = "DELETE FROM " + target_table.getName() + " WHERE " + condition + ";";
 
     int returned = 0;
     char *error_char = nullptr;
-    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr,
-                            &error_char);
+    returned = sqlite3_exec(sqlite_object_, query.c_str(), nullptr, nullptr, &error_char);
 
     if (error_char != nullptr) {
         error_msg = error_char;
@@ -148,19 +132,15 @@ int SQLDatabase::deleteRecord(SQLTable target_table, string condition,
     return returned;
 }
 
-int SQLDatabase::select(SQLTable target_table, Records &result,
-                        string &error_msg, string column, string condition,
+int SQLDatabase::select(SQLTable target_table, Records &result, string &error_msg, string column, string condition,
                         bool header) {
     string query = "SELECT " + column + " FROM " + target_table.getName() +
                    (condition.empty() ? "" : " WHERE " + condition) + ";";
 
     int returned = 0;
     char *error_char = nullptr;
-    returned = (header == true
-                    ? sqlite3_exec(sqlite_object_, query.c_str(), getRecords,
-                                   &result, &error_char)
-                    : sqlite3_exec(sqlite_object_, query.c_str(),
-                                   getRecordsNoHeader, &result, &error_char));
+    returned = (header == true ? sqlite3_exec(sqlite_object_, query.c_str(), getRecords, &result, &error_char)
+                               : sqlite3_exec(sqlite_object_, query.c_str(), getRecordsNoHeader, &result, &error_char));
 
     if (error_char != nullptr) {
         error_msg = error_char;
@@ -171,12 +151,10 @@ int SQLDatabase::select(SQLTable target_table, Records &result,
 
 bool SQLDatabase::exists(SQLTable target_table, string tag, string &error_msg) {
     Records records;
-    int returned = this->select(target_table, records, error_msg,
-                                "*", "Tag == \"" + tag + "\"");
+    int returned = this->select(target_table, records, error_msg, "*", "Tag == \"" + tag + "\"");
 
     if (returned != SQLITE_OK) {
         throw runtime_error{error_msg};
     }
-
     return !records.empty();
 }

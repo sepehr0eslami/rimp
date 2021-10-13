@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -43,8 +43,7 @@ string CustomFormatter::make_subcommand(const CLI::App *sub) const {
         final_name.append(current_positional);
     }
 
-    CLI::detail::format_help(out, final_name, sub->get_description(),
-                             column_width_);
+    CLI::detail::format_help(out, final_name, sub->get_description(), column_width_);
 
     return out.str();
 }
@@ -61,8 +60,7 @@ string CustomFormatter::make_option_opts(const CLI::Option *opt) const {
             if (!opt->get_default_str().empty()) {
                 out << "=" << opt->get_default_str();
             }
-            if (opt->get_expected_max() ==
-                CLI::detail::expected_max_vector_size) {
+            if (opt->get_expected_max() == CLI::detail::expected_max_vector_size) {
                 out << " ...";
             } else if (opt->get_expected_min() > 1) {
                 out << " x " << opt->get_expected();
@@ -76,8 +74,7 @@ string CustomFormatter::make_option_opts(const CLI::Option *opt) const {
         }
         if (!opt->get_needs().empty()) {
             out << " " << get_label("Needs") << ":";
-            for (const CLI::Option *op : opt->get_needs())
-                out << " " << op->get_name();
+            for (const CLI::Option *op : opt->get_needs()) out << " " << op->get_name();
         }
         // if (!opt->get_excludes().empty()) {
         //  out << " " << get_label("Excludes") << ":";
@@ -87,7 +84,6 @@ string CustomFormatter::make_option_opts(const CLI::Option *opt) const {
     }
     return out.str();
 }
-string CustomFormatter::make_option_name(const CLI::Option *opt,
-                                         bool is_positional) const {
+string CustomFormatter::make_option_name(const CLI::Option *opt, bool is_positional) const {
     return opt->get_name(is_positional, !is_positional);
 }

@@ -35,27 +35,19 @@
 filesystem::path Paths::getUserHomeDir() {
     // Use Windows API to get User's Home folder path.
     wchar_t *home_path = nullptr;
-    auto result = SHGetKnownFolderPath(FOLDERID_Profile,
-                                       KF_FLAG_CREATE,
-                                       nullptr,
-                                       &home_path);
+    auto result = SHGetKnownFolderPath(FOLDERID_Profile, KF_FLAG_CREATE, nullptr, &home_path);
 
     if (result == E_FAIL) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your Profile directory path(SHGetKnownFolderPath): "
-            "Directory seems to be Virtual hence not accesible for Rimp."
-            "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your Profile directory path(SHGetKnownFolderPath): Directory seems to be "
+                            "Virtual hence not accesible for Rimp. Please file a bug report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
 
     } else if (result == E_INVALIDARG) {
         throw runtime_error{
             __FILE__
-            ":\n"
-            "Error getting your Profile directory path(SHGetKnownFolderPath): "
-            "Directory doesn't exist and Rimp was unable to create it. Run "
-            "Rimp as Administrator to automatically create the directory.\n"
+            ":\nError getting your Profile directory path(SHGetKnownFolderPath): Directory doesn't exist and Rimp was "
+            "unable to create it. Run Rimp as Administrator to automatically create the directory.\n"
             "If the issue didn't resolve, Please file a bug report at:\n"
             "https://github.com/sepehr0eslami/rimp/issues"};
     }
@@ -68,31 +60,21 @@ filesystem::path Paths::getUserHomeDir() {
 filesystem::path Paths::getUserDataDir() {
     // Use Windows API to get LocalAppData folder path.
     wchar_t *data_path = nullptr;
-    auto result = SHGetKnownFolderPath(FOLDERID_LocalAppData,
-                                       KF_FLAG_CREATE,
-                                       nullptr,
-                                       &data_path);
+    auto result = SHGetKnownFolderPath(FOLDERID_LocalAppData, KF_FLAG_CREATE, nullptr, &data_path);
 
     if (result == E_FAIL) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your LocalAppData directory path"
-            "(SHGetKnownFolderPath): "
-            "Directory seems to be Virtual hence not accesible for Rimp."
-            "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your LocalAppData directory path(SHGetKnownFolderPath): Directory seems "
+                            " to be Virtual hence not accesible for Rimp. Please file a bug report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
 
     } else if (result == E_INVALIDARG) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your LocalAppData directory path"
-            "(SHGetKnownFolderPath): "
-            "Directory doesn't exist and Rimp was unable to create it. Run "
-            "Rimp as Administrator to automatically create the directory.\n"
-            "If the issue didn't resolve, Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your LocalAppData directory path(SHGetKnownFolderPath): Directory "
+                            "doesn't exist and Rimp was unable to create it. Run Rimp as Administrator to "
+                            "automatically create the directory.\n"
+                            "If the issue didn't resolve, Please file a bug report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     filesystem::path path(data_path);
@@ -103,31 +85,21 @@ filesystem::path Paths::getUserDataDir() {
 filesystem::path Paths::getUserConfigDir() {
     // Use Windows API to get RoamingAppData folder path.
     wchar_t *config_path = nullptr;
-    auto result = SHGetKnownFolderPath(FOLDERID_RoamingAppData,
-                                       KF_FLAG_CREATE,
-                                       nullptr,
-                                       &config_path);
+    auto result = SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_CREATE, nullptr, &config_path);
 
     if (result == E_FAIL) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your RoamingAppData directory path"
-            "(SHGetKnownFolderPath): "
-            "Directory seems to be Virtual hence not accesible for Rimp."
-            "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your RoamingAppData directory path(SHGetKnownFolderPath): Directory "
+                            "seems to be Virtual hence not accesible for Rimp. Please file a bug report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
 
     } else if (result == E_INVALIDARG) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your RoamingAppData directory path"
-            "(SHGetKnownFolderPath): "
-            "Directory doesn't exist and Rimp was unable to create it. Run "
-            "Rimp as Administrator to automatically create the directory.\n"
-            "If the issue didn't resolve, Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your RoamingAppData directory path(SHGetKnownFolderPath): Directory "
+                            "doesn't exist and Rimp was unable to create it. Run Rimp as Administrator to "
+                            "automatically create the directory.\nIf the issue didn't resolve, Please file a bug "
+                            "report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     filesystem::path path(config_path);
@@ -148,22 +120,18 @@ filesystem::path Paths::getUserHomeDir() {
     // If $HOME wasn't set, fallback to getpwuid.
     const struct passwd *user_info = getpwuid(getuid());  // NOLINT
     if (user_info == nullptr) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your home directory path (getpwuid).\n"
-            "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your home directory path(getpwuid).\n"
+                            "Please file a bug report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     home_env = user_info->pw_dir;
     if (home_env == nullptr) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your home directory path (pw_dir).\n"
-            "Please file a bug report at\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your home directory path(pw_dir).\n"
+                            "Please file a bug report at\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     return filesystem::path(home_env);
@@ -192,22 +160,18 @@ filesystem::path Paths::getUserHomeDir() {
     // If $HOME wasn't set, fallback to getpwuid.
     const struct passwd *user_info = getpwuid(getuid());  // NOLINT
     if (user_info == nullptr) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your home directory path (getpwuid).\n"
-            "Please file a bug report at:\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your home directory path(getpwuid).\n"
+                            "Please file a bug report at:\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     home_env = user_info->pw_dir;
     if (home_env == nullptr) {
-        throw runtime_error{
-            __FILE__
-            ":\n"
-            "Error getting your home directory path (pw_dir).\n"
-            "Please file a bug report at\n"
-            "https://github.com/sepehr0eslami/rimp/issues"};
+        throw runtime_error{__FILE__
+                            ":\nError getting your home directory path(pw_dir).\n"
+                            "Please file a bug report at\n"
+                            "https://github.com/sepehr0eslami/rimp/issues"};
     }
 
     return filesystem::path(home_env);
@@ -281,16 +245,13 @@ bool Paths::createDir(filesystem::path path) {
     try {
         filesystem::create_directories(path);
     } catch (...) {
-        string error_msg = __FILE__
-            ":\n"
-            "Error Creating \"";
+        string error_msg = __FILE__ ":\nError Creating \"";
         error_msg.append(path.string());
-        error_msg.append("\" directory.\nMake sure Its parent directory is ");
-        error_msg.append("accessible for normal user or try creating the ");
-        error_msg.append("directory yourself.\n");
-        error_msg.append("If the issue didn't resolve, Please file a bug ");
-        error_msg.append("report at:\n");
-        error_msg.append("https://github.com/sepehr0eslami/rimp/issues");
+        error_msg.append(
+            "\" directory.\n"
+            "Make sure Its parent directory is accessible for normal user or try creating the directory yourself.\n"
+            "If the issue didn't resolve, Please file a bug report at:\n"
+            "https://github.com/sepehr0eslami/rimp/issues");
         throw runtime_error{error_msg};
         return false;
     }
@@ -306,17 +267,14 @@ bool Paths::createFile(filesystem::path path) {
     ofstream file(path.string());
     if (!file.is_open()) {
         file.close();
-        string error_msg = __FILE__
-            ":\n"
-            "Error Creating \"";
+        string error_msg = __FILE__ ":\nError Creating \"";
         error_msg.append(path.string());
-        error_msg.append("\" file.\nMake sure Its parent directory is ");
-        error_msg.append("accessible for normal user; You should be the ");
-        error_msg.append("owner and not root(Administrator in Windows) and ");
-        error_msg.append("should have Read/Write access\n");
-        error_msg.append("If the issue didn't resolve, Please file a bug ");
-        error_msg.append("report at:\n");
-        error_msg.append("https://github.com/sepehr0eslami/rimp/issues");
+        error_msg.append(
+            "\" file.\n"
+            "Make sure Its parent directory is accessible for normal user; You should be the owner and not root"
+            "(Administrator in Windows) and should have Read/Write access.\n"
+            "If the issue didn't resolve, Please file a bug report at:\n"
+            "https://github.com/sepehr0eslami/rimp/issues");
         throw runtime_error{error_msg};
         return false;
     }

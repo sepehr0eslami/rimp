@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -28,15 +28,13 @@
 /**
  * When constructed, Initialize all of the Descriptions, Options & Subcommands
  * and parse them to the respected variable of the object.
- * 
+ *
  * @param argc The standard arg count passed to main()
  * @param argv The standard arg array passed to main()
  */
 ArgsParser::ArgsParser(int argc, char **argv) {
     /* --------------------------- Version String --------------------------- */
-    version_ =
-        "Rimp " RIMP_VERSION
-        ".";
+    version_ = "Rimp " RIMP_VERSION ".";
 
     /* ---------------------------- Header String --------------------------- */
     rimp_header_ =
@@ -69,31 +67,21 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     main_app_->formatter(fmt);
 
     /* ---------------------- Paste App Configurations --------------------- */
-    paste_app_ = main_app_->add_subcommand("paste",
-                                           "Insert the file associated "
-                                           "with TAG in [DEST]");
-    auto paste_tag_option = paste_app_->add_option("TAG", given_tag_,
-                                                   "ُThe desired Tag");
+    paste_app_ = main_app_->add_subcommand("paste", "Insert the file associated with TAG in [DEST]");
+    auto paste_tag_option = paste_app_->add_option("TAG", given_tag_, "ُThe desired Tag");
     auto paste_dest_option = paste_app_->add_option("DEST", given_dest_,
-                                                    "The path to put the file "
-                                                    "associated with TAG in;\n"
-                                                    "Current directory is "
-                                                    "assumed when nothing is "
-                                                    "given");
+                                                    "The path to put the file associated with TAG in;\n"
+                                                    "Current directory is assumed when nothing is given");
     paste_tag_option->required(true);
     paste_tag_option->option_text(" ");
     paste_dest_option->option_text(" ");
     paste_app_->footer("");
 
     /* ----------------------- Add App Configurations ---------------------- */
-    add_app_ = main_app_->add_subcommand("add",
-                                         "Attach the given TAG to "
-                                         "SOURCE");
-    auto add_tag_option = add_app_->add_option("TAG", given_tag_,
-                                               "The desired Tag");
+    add_app_ = main_app_->add_subcommand("add", "Attach the given TAG to SOURCE");
+    auto add_tag_option = add_app_->add_option("TAG", given_tag_, "The desired Tag");
     auto add_source_option = add_app_->add_option("SOURCE", given_source_,
-                                                  "The path to the file which "
-                                                  "TAG should attach to");
+                                                  "The path to the file which TAG should attach to");
 
     add_tag_option->required(true);
     add_source_option->required(true);
@@ -102,14 +90,10 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     add_app_->footer("");
 
     /* ---------------------- Edit App Configurations ---------------------- */
-    edit_app_ = main_app_->add_subcommand("edit",
-                                          "Detach TAG from its source and "
-                                          "attach it to NEW_SOURCE");
-    auto edit_tag_option = edit_app_->add_option("TAG", given_tag_,
-                                                 "The desired Tag");
+    edit_app_ = main_app_->add_subcommand("edit", "Detach TAG from its source and attach it to NEW_SOURCE");
+    auto edit_tag_option = edit_app_->add_option("TAG", given_tag_, "The desired Tag");
     auto edit_source_option = edit_app_->add_option("NEW_SOURCE", given_source_,
-                                                    "Path to the new file that "
-                                                    "TAG should point to");
+                                                    "Path to the new file that TAG should point to");
 
     edit_tag_option->required(true);
     edit_source_option->required(true);
@@ -118,53 +102,41 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     edit_app_->footer("");
 
     /* ---------------------- Remove App Configurations --------------------- */
-    remove_app_ = main_app_->add_subcommand("remove",
-                                            "Remove TAG from stored tags");
+    remove_app_ = main_app_->add_subcommand("remove", "Remove TAG from stored tags");
 
-    auto remove_tag_option = remove_app_->add_option("TAG", given_tag_,
-                                                     "The desired Tag");
+    auto remove_tag_option = remove_app_->add_option("TAG", given_tag_, "The desired Tag");
 
     bool remove_force_flag = false;
     remove_app_->add_flag("--force, -f", remove_force_flag,
-                          "Cause the remove subcommand to delete the file "
-                          "associated with TAG in adition to TAG "
+                          "Cause the remove subcommand to delete the file associated with TAG in adition to TAG "
                           "itself");
+
     remove_tag_option->required(true);
     remove_tag_option->option_text(" ");
     remove_app_->footer("");
 
     /* ----------------------- List App Configuration ----------------------- */
-    list_app_ = main_app_->add_subcommand("list",
-                                          "List stored Tags and the "
-                                          "Path they point to");
+    list_app_ = main_app_->add_subcommand("list", "List stored Tags and the Path they point to");
 
     bool list_tags_flag = false;
-    auto t_flag = list_app_->add_flag("--tags, -t", list_tags_flag,
-                                      "Only show the stored Tags");
+    auto t_flag = list_app_->add_flag("--tags, -t", list_tags_flag, "Only show the stored Tags");
     bool list_paths_flag = false;
-    auto p_flag = list_app_->add_flag("--paths, -p", list_paths_flag,
-                                      "Only show the stored Paths");
+    auto p_flag = list_app_->add_flag("--paths, -p", list_paths_flag, "Only show the stored Paths");
 
     bool list_no_decorate_flag = false;
-    auto d_flag = list_app_->add_flag("--no-decorate, -d",
-                                      list_no_decorate_flag,
-                                      "Do not decorate the output at all");
+    auto d_flag = list_app_->add_flag("--no-decorate, -d", list_no_decorate_flag, "Do not decorate the output at all");
 
     bool list_no_header_flag = false;
-    auto e_flag = list_app_->add_flag("--no-header, -e",
-                                      list_no_header_flag,
-                                      "Don't print the Header");
+    auto e_flag = list_app_->add_flag("--no-header, -e", list_no_header_flag, "Don't print the Header");
 
     list_app_->add_option("--column-separator, -c", given_col_sep_,
-                          "Use the given TEXT as the column separator instead "
-                          "of the default (two spaces)");
+                          "Use the given TEXT as the column separator instead of the default (two spaces)");
     list_app_->add_option("--row-separator, -r", given_row_sep_,
-                          "Use the given TEXT as the row separator instead "
-                          "of the default (new-line)");
+                          "Use the given TEXT as the row separator instead of the default (new-line)");
 
     string f_flag_help =
-        "Pretty-print the stored data in the given format, where the format "
-        "can contain any letter and some placeholders.\n"
+        "Pretty-print the stored data in the given format, where the format can contain any letter and some "
+        "placeholders.\n"
         "Available placeholders are as follows:\n"
         "%t --> current Tag \n"
         "%p --> current Path \n"
@@ -173,8 +145,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
         "%b --> tab \n"
         "%c --> column seperator (default: two spaces)\n"
         "%r --> row seperator (default: new-line)";
-    auto f_flag = list_app_->add_option("--format, -f", given_format_,
-                                        f_flag_help);
+    auto f_flag = list_app_->add_option("--format, -f", given_format_, f_flag_help);
 
     t_flag->excludes(p_flag);
     t_flag->excludes(f_flag);
@@ -221,6 +192,4 @@ ArgsParser::ArgsParser(int argc, char **argv) {
 /**
  * Deallocate the dynamicly-allocated memory(new keyword) by "delete".
  */
-ArgsParser::~ArgsParser() {
-    delete main_app_;
-}
+ArgsParser::~ArgsParser() { delete main_app_; }

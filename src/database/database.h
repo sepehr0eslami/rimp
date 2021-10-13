@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -34,8 +34,7 @@ using namespace std;  // NOLINT
 typedef vector<vector<string>> Records;
 
 int getRecords(void *result, int argc, char **argv, char **columns_name);
-int getRecordsNoHeader(void *result, int argc, char **argv,
-                       char **columns_name);
+int getRecordsNoHeader(void *result, int argc, char **argv, char **columns_name);
 
 class SQLDatabase {
  public:
@@ -44,13 +43,12 @@ class SQLDatabase {
 
     filesystem::path getDatabaseFile() const;
     sqlite3 *getSqliteObject() const;
-    int createTable(SQLTable table, string &error_msg);                           // NOLINT
-    int insert(vector<string> values, SQLTable target_table, string &error_msg);  // NOLINT
-    int update(vector<string> new_values, string condition,
-               SQLTable target_table, string &error_msg);                          // NOLINT
-    int deleteRecord(SQLTable target_table, string condition, string &error_msg);  // NOLINT
-    int select(SQLTable target_table, Records &result, string &error_msg,          // NOLINT
-               string column = "*", string condition = "", bool header = true);
+    int createTable(SQLTable table, string &error_msg);                                                 // NOLINT
+    int insert(vector<string> values, SQLTable target_table, string &error_msg);                        // NOLINT
+    int update(vector<string> new_values, string condition, SQLTable target_table, string &error_msg);  // NOLINT
+    int deleteRecord(SQLTable target_table, string condition, string &error_msg);                       // NOLINT
+    int select(SQLTable target_table, Records &result, string &error_msg, string column = "*",          // NOLINT
+               string condition = "", bool header = true);
     bool exists(SQLTable target_table, string tag, string &error_msg);  // NOLINT
 
  private:

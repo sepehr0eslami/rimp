@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -37,22 +37,15 @@ int main(int argc, char **argv) {
         }
 
         if (parser.given_subcmd_ == "paste") {
-            ret = rimp::paste(parser.given_tag_,
-                              filesystem::path(parser.given_dest_), errors);
+            ret = rimp::paste(parser.given_tag_, filesystem::path(parser.given_dest_), errors);
         } else if (parser.given_subcmd_ == "add") {
-            ret = rimp::add(parser.given_tag_,
-                            filesystem::path(parser.given_source_), errors);
+            ret = rimp::add(parser.given_tag_, filesystem::path(parser.given_source_), errors);
         } else if (parser.given_subcmd_ == "edit") {
-            ret = rimp::edit(parser.given_tag_,
-                             filesystem::path(parser.given_source_),
-                             errors);
-
+            ret = rimp::edit(parser.given_tag_, filesystem::path(parser.given_source_), errors);
         } else if (parser.given_subcmd_ == "remove") {
-            ret = rimp::remove(parser.given_tag_, parser.given_flags_,
-                               errors);
+            ret = rimp::remove(parser.given_tag_, parser.given_flags_, errors);
         } else if (parser.given_subcmd_ == "list") {
-            ret = rimp::list(cout, parser.given_flags_, errors,
-                             parser.given_format_, parser.given_col_sep_,
+            ret = rimp::list(cout, parser.given_flags_, errors, parser.given_format_, parser.given_col_sep_,
                              parser.given_row_sep_);
         }
     } catch (runtime_error e) {

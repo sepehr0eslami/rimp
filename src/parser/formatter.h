@@ -1,8 +1,8 @@
-/** 
+/**
  * Rimp(Reimplementer). Simple and fast File Tagger.
- * 
+ *
  * Copyright (C) 2021 Sepehr Eslami <sepehr0eslami@gmail.com>
- * 
+ *
  * This file is a part of Rimp.
  *
  * Rimp is free software: you can  redistribute  it  and/or modify  it under the
@@ -32,8 +32,7 @@ class CustomFormatter : public CLI::Formatter {
     CustomFormatter() : Formatter() {}
     string make_subcommand(const CLI::App *sub) const override;
     string make_option_opts(const CLI::Option *opt) const override;
-    string make_option_name(const CLI::Option *opt, bool is_positional) const
-        override;
+    string make_option_name(const CLI::Option *opt, bool is_positional) const override;
 };
 
 #endif  // SRC_PARSER_FORMATTER_H_
