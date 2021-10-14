@@ -127,7 +127,7 @@ ArgsParser::ArgsParser(int argc, char **argv) {
     auto d_flag = list_app_->add_flag("--no-decorate, -d", list_no_decorate_flag, "Do not decorate the output at all");
 
     bool list_no_header_flag = false;
-    auto e_flag = list_app_->add_flag("--no-header, -e", list_no_header_flag, "Don't print the Header");
+    list_app_->add_flag("--no-header, -e", list_no_header_flag, "Don't print the Header");
 
     list_app_->add_option("--column-separator, -c", given_col_sep_,
                           "Use the given TEXT as the column separator instead of the default (two spaces)");
