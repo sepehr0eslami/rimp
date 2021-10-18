@@ -23,7 +23,7 @@
 
 #include <string>
 
-#include "external/CLI11/include/CLI/CLI.hpp"
+#include "external/CLI11/CLI.hpp"
 
 using namespace std;  // NOLINT
 

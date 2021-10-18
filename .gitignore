@@ -107,6 +107,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-### External Projects ###
-external/CLI11

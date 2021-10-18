@@ -23,9 +23,6 @@ endif()
 
 find_package(SQLite3 REQUIRED)
 
-# Include the file which fetchs the "CLI11" repository.
-include("${cmake_dir}/CLI11.cmake")
-
 # Variable for the actuall source files that need to be compiled.
 file(GLOB_RECURSE source_files "${source_dir}/*.cpp")
 
