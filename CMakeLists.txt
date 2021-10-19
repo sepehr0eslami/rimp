@@ -21,23 +21,17 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     include("${cmake_dir}/check_code_style.cmake")
 endif()
 
-find_package(SQLite3 REQUIRED)
+add_subdirectory(external/SQLite)
 
 # Variable for the actuall source files that need to be compiled.
 file(GLOB_RECURSE source_files "${source_dir}/*.cpp")
 
 # Build the project's executable
-add_executable(${PROJECT_NAME} ${source_files})
+add_executable(rimp ${source_files})
 
-target_include_directories(${PROJECT_NAME} PUBLIC 
-    ${SQLITE3_INCLUDE_DIRS}
-)
+target_link_libraries(rimp PUBLIC SQLite3)
 
-target_link_libraries (${PROJECT_NAME} 
-    ${SQLITE3_LIBRARIES}
-)
-
-install(TARGETS ${PROJECT_NAME} DESTINATION "bin")
+install(TARGETS rimp DESTINATION "bin")
 
 option(COMP_INSTALL "Whether to Install Shell Completion Scripts or Not" ON)
 if(${COMP_INSTALL})

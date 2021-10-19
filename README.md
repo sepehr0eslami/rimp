@@ -33,11 +33,17 @@ I wanted a tool that allows you to:
 
 ## Windows
 
-To run this application, you just need SQLite3. [Download](https://www.sqlite.org/download.html) the latest version of SQLite3 for Windows, then extract it and move `sqlite3.dll` to `C:\System32`.
+Simply [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` for Windows (**rimp-win64.zip**) and extract it. Now create a folder called `rimp` in `C:\Program Files(x86)` and move the `rimp.exe` file to  that folder. 
 
-Now, create a folder called `rimp`, containing another folder called `bin`, in `C:\Program Files(x86)`. Then simply [Download](https://github.com/sepehr0eslami/rimp/releases/latest) `rimp` for Windows (**rimp-win64.zip**), extract it and move the `rimp.exe` file to the `bin` folder. Finally, add that folder to the Path Environment Variable (You can google how to do it or get help from this [Link](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)).
+Make sure `rimp` is correctly installed by opening CMD or Powershell and running:
 
-> ⚠️ You need to replace the Drive Letter Windows is installed on in the path to the `System32` and `Program File(86)` folder, in case it is not 'C'
+```bash
+rimp --version
+
+Rimp X.X.X
+```
+
+> If it didn't find the executable, try restarting your system and try again.
 
 ## MacOS
 

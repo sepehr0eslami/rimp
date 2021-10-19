@@ -1,4 +1,5 @@
 # Dependencies
+
 Before you start coding, you will need to install some dependencies:
 
 ## Windows
@@ -6,8 +7,6 @@ Before you start coding, you will need to install some dependencies:
 Download and Install the latest version of [Git](https://git-scm.com/downloads), [CMake](https://cmake.org/download/), and a C++ compiler of choice. 
 
 > ⚠️ This Project heavily relies on features of C++17, so make sure you compiler support C++17 (or newer).
-
-Additionally, you need SQLite3 to run this application. [Download](https://www.sqlite.org/download.html) the latest version of SQLite3 for Windows (32/64-bit based on your system), then extract it and move `sqlite3.dll` to `C:\System32`.
 
 ## MacOS
 
@@ -20,21 +19,20 @@ brew install git cmake make
 ### Ubuntu, Debian and derivatives
 
 ```sh
-sudo apt-get install git cmake build-essential libsqlite3-dev
+sudo apt-get install git cmake build-essential
 ```
 
 ### Red Hat, Fedora, CentOS and derivatives
 
 ```sh
-sudo yum install git cmake gcc gcc-c++ make sqlite-devel
+sudo yum install git cmake gcc gcc-c++ make
 ```
 
 ### Arch, Manjaro and derivatives
 
 ```sh
-sudo pacman -S git cmake base-devel sqlite
+sudo pacman -S git cmake base-devel
 ```
-
 
 # Compilation
 Now clone the source code and compile it following the usual CMake compilation steps:
@@ -42,9 +40,10 @@ Now clone the source code and compile it following the usual CMake compilation s
 ```sh
 git clone https://github.com/sepehr0eslami/rimp.git
 cd rimp
-cmake -S. -B.//build -DCMAKE_BUILD_TYPE=Release
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build 
 ```
+
 ## Compilation flags
 
 In addition to the default CMake flags, this compilation option is available too:
@@ -56,16 +55,16 @@ Determine whether to install Shell Completion scripts alongside rimp executable 
 By default this flag is set to `ON`, i.e., Completion scripts will be installed.
 
 # Installation
+
 After building the source code, you can install `rimp` by running:
 
 ## Windows
+
 Run CMD or Powershell as Administrator and then run the following command:
 
 ```sh
 cmake --install build --config Release
 ```
-
-Now all you have to do is adding the Installation Folder (`C:\Program Files(x86)\rimp\bin`)to the PATH environment variable (You can google how to do it or get help from this [Link](https://www.c-sharpcorner.com/article/add-a-directory-to-path-environment-variable-in-windows-10/)). Now close your terminal and open it again and make sure `rimp` is correctly installed by running:
 
 ```sh
 $ rimp --version

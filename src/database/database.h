@@ -21,11 +21,10 @@
 #ifndef SRC_DATABASE_DATABASE_H_
 #define SRC_DATABASE_DATABASE_H_
 
-#include <sqlite3.h>
-
 #include <string>
 #include <vector>
 
+#include "external/SQLite/sqlite3.h"
 #include "src/database/table.h"
 #include "src/paths/filesystem.h"
 
